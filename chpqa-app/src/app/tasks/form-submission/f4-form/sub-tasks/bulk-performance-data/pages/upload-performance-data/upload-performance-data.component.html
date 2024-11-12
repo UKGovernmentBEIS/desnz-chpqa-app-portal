@@ -1,0 +1,48 @@
+<section [id]="webCopy.sectionId">
+  <ng-container *ngTemplateOutlet="backButtonSection"></ng-container>
+
+  <ng-container *ngTemplateOutlet="contentSection; context: { templateUrl: (templateUrl$ | async), templateFileName: (templateFileName$ | async) }"></ng-container>
+</section>
+
+<ng-template #backButtonSection>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <nav aria-label="Back">
+        <a [routerLink]="backButton" class="govuk-back-link govuk-!-margin-top-5 govuk-!-margin-bottom-5">{{ webCopy.backButton }}</a>
+      </nav>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #contentSection let-templateUrl="templateUrl" let-templateFileName="templateFileName">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds" aria-live="polite">
+
+      <app-dynamic-form-errors-summary
+        [formUpdated]="formUpdated"
+        [form]="form"
+        [validationMessages]="validationMessages"
+      ></app-dynamic-form-errors-summary>
+
+      <span class="govuk-caption-l">{{ webCopy.caption }}</span>
+      <h1 class="govuk-heading-l">{{ webCopy.heading }}</h1>
+      <p class="govuk-body">{{ webCopy.bodyParagraph1 }}</p>
+      <p class="govuk-body">{{ webCopy.bodyParagraph2 }}</p>
+      <p class="govuk-body" 
+        [innerHTML]="webCopy.bodyParagraph3Part1 + templateUrl + webCopy.bodyParagraph3Part2 + templateFileName +  webCopy.bodyParagraph3Part3"></p>
+      <p class="govuk-body">{{ webCopy.bodyParagraph4 }}</p>
+
+      <form [formGroup]="form" [appFormError]="form">
+        <app-govuk-single-file-input
+          [title]="webCopy.formFileInputTitle"
+          [controlName]="fileFormControlName"
+          [validationMessages]="validationMessages.file"
+        ></app-govuk-single-file-input>
+      </form>
+
+      <button class="govuk-button" data-module="govuk-button" (click)="onContinue()">
+        {{ webCopy.continueButton }}
+      </button>
+    </div>
+  </div>
+</ng-template>

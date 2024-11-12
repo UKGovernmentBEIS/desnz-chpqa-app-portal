@@ -1,0 +1,8 @@
+<app-review-answers
+  [formTitle]="'Hours of operation'"
+  [formHeader]="formHeader"
+  [backLink]="backButton$ | async"
+  [reviewScreenValues]="reviewScreenValues"
+  [sectionStatus]="hoursOfOperationSectionStatus$ | async"
+  (formSubmitted)="handleFormSubmitted($event)">
+</app-review-answers>

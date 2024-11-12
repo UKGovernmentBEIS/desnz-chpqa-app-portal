@@ -1,0 +1,27 @@
+<div [formGroup]="rootFormGroup.form">
+  <div class="file-upload">
+    <h1 class="govuk-heading-m">{{ title }}</h1>
+    <label class="govuk-label disabled" [for]="controlName" [attr.aria-label] = "controlName">{{ label }} </label>
+    <div *ngIf="description" class="govuk-hint govuk-hint--disabled">
+      {{ description }}
+    </div>
+
+    <app-error-message class="error-message" [control]="control" [validationMessages]="validationMessages"></app-error-message>
+    <div class="govuk-form-group" [class.govuk-form-group--error]="hasError()">
+      <div>
+        <input hidden type="file" id="fileUploadInput" #fileInput [id]="controlName" [attr.name]="controlName" (change)="onFileSelected($event)" />
+
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-one-quarter">
+            <button type="button" class="govuk-button govuk-button--secondary" data-module="govuk-button" (click)="fileInput.click()">Browse</button>
+          </div>
+          <div class="govuk-grid-column-two-quarters">
+            <p class="govuk-body govuk-!-padding-left-3">
+              {{ selectedFile ? selectedFile.name : 'No files selected' }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

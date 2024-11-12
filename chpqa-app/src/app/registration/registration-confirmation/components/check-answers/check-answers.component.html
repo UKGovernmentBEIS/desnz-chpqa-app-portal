@@ -1,0 +1,165 @@
+<nav aria-label="Back">
+  <a [routerLink]="[BACK]" class="govuk-back-link govuk-!-margin-bottom-5">Back</a>
+</nav>
+<div class="govuk-grid-row" *ngIf="responsiblePerson$ | async as responsiblePerson">
+  <div class="govuk-grid-column-two-thirds" aria-live="polite">
+    <span class="govuk-caption-xl">Create user account</span>
+    <h1 class="govuk-heading-l">Check your answers</h1>
+
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Name</dt>
+        <dd class="govuk-summary-list__value">
+          {{ responsiblePerson.firstName + ' ' + responsiblePerson.lastName }}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a
+            class="govuk-body govuk-link govuk-link--no-visited-state"
+            [routerLink]="[ENTER_RESPONSIBLE_PERSON]"
+            skipLocationChange
+            [attr.aria-label]="ChangeLinkAriaLabel.FIRST_LAST_NAME"
+            >Change</a
+          >
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Registered with Companies House?</dt>
+        <dd class="govuk-summary-list__value">
+          {{ responsiblePerson.organisation.registrationNumber ? 'Yes' : 'No' }}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a
+            class="govuk-body govuk-link govuk-link--no-visited-state"
+            [routerLink]="[ENTER_RESPONSIBLE_PERSON]"
+            skipLocationChange
+            [attr.aria-label]="ChangeLinkAriaLabel.REGISTERED_WITH_COMPANIES_HOUSE"
+            >Change</a
+          >
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row" *ngIf="responsiblePerson.organisation.registrationNumber">
+        <dt class="govuk-summary-list__key">Companies House registration number</dt>
+        <dd class="govuk-summary-list__value">
+          {{ responsiblePerson.organisation.registrationNumber }}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a
+            class="govuk-body govuk-link govuk-link--no-visited-state"
+            [routerLink]="[ENTER_RESPONSIBLE_PERSON]"
+            skipLocationChange
+            [attr.aria-label]="ChangeLinkAriaLabel.COMPANIES_HOUSE_REGISTRATION_NUMBER"
+            >Change</a
+          >
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row" *ngIf="!responsiblePerson.organisation.registrationNumber">
+        <dt class="govuk-summary-list__key">Organisation Name</dt>
+        <dd class="govuk-summary-list__value">{{ responsiblePerson.organisation?.name }}</dd>
+        <dd class="govuk-summary-list__actions">
+          <a
+            class="govuk-body govuk-link govuk-link--no-visited-state"
+            [routerLink]="[ENTER_RESPONSIBLE_PERSON]"
+            skipLocationChange
+            [attr.aria-label]="ChangeLinkAriaLabel.ORGANISATION_NAME"
+            >Change</a
+          >
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Organisation address</dt>
+        <dd class="govuk-summary-list__value">
+          <p *ngIf="responsiblePerson.organisation.registrationNumber">{{ responsiblePerson.organisation?.name }}</p>
+          <p>{{ responsiblePerson.organisation?.address1 }}</p>
+          <p>{{ responsiblePerson.organisation?.address2 }}</p>
+          <p>{{ responsiblePerson.organisation?.town }}</p>
+          <p>{{ responsiblePerson.organisation?.county }}</p>
+          <p>{{ responsiblePerson.organisation?.postcode }}</p>
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a
+            class="govuk-body govuk-link govuk-link--no-visited-state"
+            [routerLink]="[ENTER_RESPONSIBLE_PERSON]"
+            skipLocationChange
+            [attr.aria-label]="ChangeLinkAriaLabel.ORGANISATION_ADDRESS"
+            >Change</a
+          >
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Consultant?</dt>
+        <dd class="govuk-summary-list__value">
+          {{ responsiblePerson.consultant.label }}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a
+            class="govuk-body govuk-link govuk-link--no-visited-state"
+            [routerLink]="[ENTER_RESPONSIBLE_PERSON]"
+            skipLocationChange
+            [attr.aria-label]="ChangeLinkAriaLabel.CONSULTANT"
+            >Change</a
+          >
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Job title</dt>
+        <dd class="govuk-summary-list__value">
+          {{ responsiblePerson.jobTitle }}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a
+            class="govuk-body govuk-link govuk-link--no-visited-state"
+            [routerLink]="[ENTER_RESPONSIBLE_PERSON]"
+            skipLocationChange
+            [attr.aria-label]="ChangeLinkAriaLabel.JOB_TITLE"
+            >Change</a
+          >
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Telephone number</dt>
+        <dd class="govuk-summary-list__value">
+          {{ responsiblePerson.telephone1 }}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a
+            class="govuk-body govuk-link govuk-link--no-visited-state"
+            [routerLink]="[ENTER_RESPONSIBLE_PERSON]"
+            skipLocationChange
+            [attr.aria-label]="ChangeLinkAriaLabel.TELEPHONE_NUMBER"
+            >Change</a
+          >
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Mobile number</dt>
+        <dd class="govuk-summary-list__value">
+          {{ responsiblePerson.telephone2 }}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a
+            class="govuk-body govuk-link govuk-link--no-visited-state"
+            [routerLink]="[ENTER_RESPONSIBLE_PERSON]"
+            skipLocationChange
+            [attr.aria-label]="ChangeLinkAriaLabel.MOBILE_NUMBER"
+            >Change</a
+          >
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Password</dt>
+        <dd class="govuk-summary-list__value">********</dd>
+        <dd class="govuk-summary-list__actions">
+          <a
+            class="govuk-body govuk-link govuk-link--no-visited-state"
+            [routerLink]="[CHOOSE_PASSWORD]"
+            skipLocationChange
+            [attr.aria-label]="ChangeLinkAriaLabel.PASSWORD"
+            >Change</a
+          >
+        </dd>
+      </div>
+    </dl>
+
+    <button type="submit" class="govuk-button" data-module="govuk-button" (click)="submitClick()">Confirm and complete</button>
+  </div>
+</div>

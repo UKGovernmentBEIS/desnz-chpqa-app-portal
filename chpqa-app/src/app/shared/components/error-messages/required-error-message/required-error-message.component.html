@@ -1,0 +1,6 @@
+<p
+  *ngIf="control?.hasError('required') && control.touched"
+  id="{{ control }}-issued-error"
+  class="govuk-error-message">
+  {{ errorMessage }}
+</p>

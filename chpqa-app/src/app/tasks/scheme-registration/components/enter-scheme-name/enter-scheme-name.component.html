@@ -1,0 +1,32 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <nav aria-label="Back">
+      <a [routerLink]="[BACK]" class="govuk-back-link govuk-!-margin-bottom-5">Back</a>
+    </nav>
+  </div>
+</div>
+
+<div class="govuk-grid-row" *ngIf="vm$ | async as vm">
+  <div class="govuk-grid-column-two-thirds">
+    <form [formGroup]="vm.form" (ngSubmit)="onSubmit(vm.form, vm.loggedInUser)">
+      <app-dynamic-form-errors-summary [formUpdated]="formUpdated" [form]="vm.form"
+        [validationMessages]="validationMessages">
+      </app-dynamic-form-errors-summary>
+      <div class="govuk-form-group">
+        <span class="govuk-caption-l">{{ copy.caption }}</span>
+        <h1 class="govuk-heading-l">Enter a scheme name</h1>
+
+        <p class="govuk-body">This will be the unique identifier for this scheme.</p>
+
+        <div class="govuk-form-group">
+          <app-govuk-text-input id="scheme-name" label="Scheme name" controlName="name"
+            description="For example, ProHeat Services Limited"
+            [validationMessages]="validationMessages.name">
+          </app-govuk-text-input>
+        </div>
+      </div>
+
+      <button type="submit" class="govuk-button" data-module="govuk-button">{{ copy.continueButton }}</button>
+    </form>
+  </div>
+</div>

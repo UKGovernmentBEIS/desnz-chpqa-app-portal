@@ -1,0 +1,19 @@
+<div class="govuk-panel govuk-panel--confirmation">
+    <h1 class="govuk-panel__title">Last submission date set</h1>
+  </div>
+  
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full govuk-!-margin-top-5 govuk-!-margin-bottom-5">
+      <h2 class="govuk-heading-m">What happens next</h2>
+      <p class="govuk-body">
+        Two weeks before {{ date$ | async | date: 'dd/MM/yyyy' }}, an email will be sent to all Responsible Persons advising them of the impending deadline.
+      </p>
+    </div>
+  </div>
+  
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full govuk-!-margin-top-5">
+      <button type="button" class="govuk-button" (click)="onReturnToDashboard()">Return to dashboard</button>
+    </div>
+  </div>
+  

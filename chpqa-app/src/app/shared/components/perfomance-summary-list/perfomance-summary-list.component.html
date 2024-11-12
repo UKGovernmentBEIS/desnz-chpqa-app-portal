@@ -1,0 +1,39 @@
+<div class="scrollable-table-container">
+  <table class="govuk-table govuk-table--small-text-until-tablet">
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header">Tag</th>
+        <th scope="col" class="govuk-table__header">Serial number</th>
+        <th scope="col" class="govuk-table__header">{{ categoryLabel }}</th>
+        <th scope="col" class="govuk-table__header">{{ typeLabel }}</th>
+        <th scope="col" class="govuk-table__header">Include in CHPQA<br />calculations?</th>
+        <th scope="col" class="govuk-table__header govuk-!-text-align-right">Annual total</th>
+        <td scope="col" class="govuk-table__header"></td>
+      </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+      <tr class="govuk-table__row" *ngFor="let item of details; let i = index">
+        <th scope="row" class="govuk-table__header">{{ item.tag }}</th>
+        <td class="govuk-table__cell">{{ item.serialNumber }}</td>
+        <td class="govuk-table__cell">{{ item.category?.name ?? '-' }}</td>
+        <td class="govuk-table__cell">{{ item.type?.name ?? '-' }}</td>
+        <td class="govuk-table__cell">{{ item.includeInCalculations?.label ?? '-' }}</td>
+        <td class="govuk-table__cell govuk-table__cell--numeric">
+          <div>
+            {{ item.annualTotal !== null ? (item.annualTotal | decimalFormatter) + ' ' + measurementUnit : '-' }}
+          </div>
+          @if (item.tfi && showTFI) {
+            <div>
+              {{ (item.tfi | decimalFormatter) + '% TFI' }}
+            </div>
+          }
+        </td>
+        <td class="govuk-table__cell">
+          <a href="#" class="govuk-link" role="button" tabindex="0" (click)="onLinkClick($event, item, i)" [attr.aria-label]="item.ariaLabel">
+            {{ selectedScheme?.latestSubmissionStatus <= SubmissionStatusEnum.DueForRenewal ? 'Edit' : 'View' }}</a
+          >
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

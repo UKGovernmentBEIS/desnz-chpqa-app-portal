@@ -1,0 +1,67 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <nav aria-label="Back">
+      <a (click)="goBack()" class="govuk-back-link govuk-!-margin-top-5 govuk-!-margin-bottom-5">Back</a>
+    </nav>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full" aria-live="polite">
+
+    <!-- Show assessor's form validation messages -->
+    @defer (when isUserAnAssessor) {
+      <app-dynamic-form-errors-summary
+        *ngIf="assessorForm"
+        [formUpdated]="assessorFormUpdated"
+        [form]="assessorForm"
+        [validationMessages]="assessorFormValidationMessages"
+      ></app-dynamic-form-errors-summary>
+    }
+    @if (showDeleteSuccessBanner) {
+      @if (meterDeletionInformation$ | async; as meterDeletionInfo) {
+        <app-govuk-notification-banner [isSuccess]="true" [text]="meterDeletionInfo.name + ' deleted successfully'"> </app-govuk-notification-banner>
+      }
+    }
+    <span class="govuk-caption-l">Meter details</span>
+    <h1 class="govuk-heading-l">{{formHeader}}</h1>
+    @if (meters.length > 0) {
+      @for (meter of paginatedMeters; track meter.tagNumber; let idx = $index) {
+        <app-metrics-summary-list
+          [title]="'Meter ' + meter.name"
+          [details]="mapMeterToDetails(meter)"
+          [isDetailsVisible]="(currentPage - 1) * itemsPerPage + idx === 0"
+          [id]="meter.id"
+          [latestSubmissionStatus]="latestSubmissionStatus"
+          (delete)="handleDelete(meter.id, (currentPage - 1) * itemsPerPage + idx, 'Meter ' + meter.name)"
+          (change)="handleChange(meter, (currentPage - 1) * itemsPerPage + idx)"
+          (downloadFile)="onDownloadFile($event)"
+          metric="meter">
+        </app-metrics-summary-list>
+      }
+      <app-pagination [totalItems]="meters.length" [itemsPerPage]="itemsPerPage" (pageChanged)="onPageChange($event)"> </app-pagination>
+    } @else {
+      <p class="govuk-body">You must add at least one meter.</p>
+    }
+    @if (isUserAnAssessor) {
+      <app-review-decision-form
+      (formInfo)="handleAssessorFormInfo($event)"
+        (formSubmitted)="handleAssessorFormSubmission($event)"
+      ></app-review-decision-form>
+    } @else {
+      <div>
+        <button
+          *ngIf="!(isSubmissionNonEditable$ | async)"
+          class="govuk-button govuk-button--secondary"
+          data-module="govuk-button"
+          [disabled]="submissionFormType === SubmissionFormTypeEnum.F4s && meters.length === 3"
+          (click)="addAnotherMeter()">
+          Add another meter
+        </button>
+      </div>
+      @if (meters.length > 0) {
+      <button class="govuk-button" data-module="govuk-button" (click)="onContinue()">Confirm and complete</button>
+      }
+    }
+  </div>
+</div>

@@ -1,0 +1,11 @@
+{
+	"themes": [
+		{
+			"name": "chpqa-theme",
+			"types": [
+				"login",
+				"email"
+			]
+		}
+	]
+}

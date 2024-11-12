@@ -1,0 +1,38 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <nav aria-label="Back">
+      <a [routerLink]="[backButton$ | async]" skipLocationChange class="govuk-back-link govuk-!-margin-top-5 govuk-!-margin-bottom-5">Back</a>
+    </nav>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <span class="govuk-caption-l">Audit recommendation</span>
+    <h1 class="govuk-heading-l">
+      Is this submission recommended for audit?
+    </h1>
+    <app-dynamic-form-errors-summary
+      [formUpdated]="formUpdated"
+      [form]="form"
+      [validationMessages]="validationMessages">
+    </app-dynamic-form-errors-summary>
+    <form [formGroup]="form" [appFormError]="form" [appFormStateSync]="form" [formName]="reviewScreenName">
+      <div class="govuk-form-group">
+        <app-govuk-radio-input
+          controlName="isRecommended"
+          [options]="options"
+          [disabled]="!isAssessorFormEditable"
+          [validationMessages]="validationMessages.isRecommended">
+        </app-govuk-radio-input>
+      </div>
+    </form>
+
+    <button
+      class="govuk-button"
+      data-module="govuk-button"
+      (click)="onSubmit()">
+      Continue
+    </button>
+  </div>
+</div>

@@ -1,0 +1,50 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <nav aria-label="Back">
+      <a (click)="goBack()" class="govuk-back-link govuk-!-margin-top-5 govuk-!-margin-bottom-5">Back</a>
+    </nav>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds" aria-live="polite">
+    <form [formGroup]="form" *ngIf="outputUnits$ | async as outputUnits">
+      <app-dynamic-form-errors-summary [formUpdated]="formUpdated" [form]="form" [validationMessages]="validationMessages"> </app-dynamic-form-errors-summary>
+      <span class="govuk-caption-l">Meter details</span>
+      <h1 class="govuk-heading-l">What are the output range and units?</h1>
+      <div class="govuk-form-group">
+        <app-govuk-number-input
+          label="Output range: minimum flow rate"
+          controlName="outputRangeMin"
+          widthClass="govuk-grid-column-one-half"
+          [validationMessages]="validationMessages.outputRangeMin">
+        </app-govuk-number-input>
+      </div>
+      <div class="govuk-form-group">
+        <app-govuk-number-input
+          label="Output range: maximum flow rate"
+          controlName="outputRangeMax"
+          widthClass="govuk-grid-column-one-half"
+          [validationMessages]="validationMessages.outputRangeMax">
+        </app-govuk-number-input>
+      </div>
+      <div class="govuk-form-group">
+        <app-govuk-select-input
+          [appOtherOption]="true"
+          [preselectOther]="customOutputUnit"
+          [options]="outputUnits"
+          controlName="outputUnit"
+          label="Output units"
+          placeholder="Select output units"
+          [validationMessages]="validationMessages.outputUnit"></app-govuk-select-input>
+      </div>
+      <div *ngIf="customOutputUnit" class="govuk-inset-text">
+        <div class="govuk-form-group">
+          <app-govuk-text-input id="output-units" label="Enter output units" controlName="outputUnitOther"> </app-govuk-text-input>
+        </div>
+      </div>
+
+      <button type="submit" class="govuk-button" data-module="govuk-button" (click)="onContinue()">Continue</button>
+    </form>
+  </div>
+</div>

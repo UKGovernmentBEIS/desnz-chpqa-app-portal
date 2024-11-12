@@ -1,0 +1,57 @@
+<section [id]="webCopy.sectionId">
+  <!-- Back Button Section -->
+  <ng-container *ngTemplateOutlet="backButtonSection"></ng-container>
+  <!-- Main Form Section -->
+  <ng-container *ngTemplateOutlet="mainFormSection"></ng-container>
+</section>
+
+<ng-template #backButtonSection>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <nav aria-label="Back">
+        <a [routerLink]="backButton$ | async" class="govuk-back-link govuk-!-margin-top-5 govuk-!-margin-bottom-5">{{ webCopy.backButton }}</a>
+      </nav>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #mainFormSection>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds" aria-live="polite">
+      <app-dynamic-form-errors-summary [formUpdated]="formUpdated" [form]="form" [validationMessages]="validationMessages"> </app-dynamic-form-errors-summary>
+      <span class="govuk-caption-l">{{ webCopy.caption }}</span>
+      <h1 class="govuk-heading-l">{{ webCopy.heading }}</h1>
+
+      <p class="govuk-body">{{ webCopy.paragraph }}</p>
+
+      <ul class="govuk-list govuk-list--bullet">
+        @for (confirmationText of webCopy.confirmationText; track confirmationText) {
+          <li>
+            <span class="govuk-body govuk-!-font-weight-bold">{{ confirmationText.title }} </span>
+            {{ confirmationText.text }}
+          </li>
+        }
+      </ul>
+
+      <!-- Form Section -->
+      <form [formGroup]="form" [appFormError]="form">
+        <ng-container *ngFor="let input of formInputs">
+          <div class="govuk-form-group">
+            <app-govuk-checkbox-input [label]="input.label" [controlName]="input.controlName" [validationMessages]="input.validationMessages">
+            </app-govuk-checkbox-input>
+          </div>
+        </ng-container>
+      </form>
+
+      <ng-container *ngIf="apiUpdateSubmitToAssessorPost$ | async as apiUpdateSubmitToAssessorPost">
+        <!-- Action Button -->
+        <ng-container *ngIf="!apiUpdateSubmitToAssessorPost.isLoading && !apiUpdateSubmitToAssessorPost.hasError">
+          <button class="govuk-button" data-module="govuk-button" (click)="onSubmit()">
+            <!-- Fix this text -->
+            {{ (submitToAssessorSectionStatus$ | async) === StatusEnum.Completed ? webCopy.confirmButton : webCopy.confirmButton }}
+          </button>
+        </ng-container>
+      </ng-container>
+    </div>
+  </div>
+</ng-template>

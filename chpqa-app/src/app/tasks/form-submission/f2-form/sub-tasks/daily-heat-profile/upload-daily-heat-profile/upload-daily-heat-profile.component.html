@@ -1,0 +1,75 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <nav aria-label="Back">
+      <a (click)="goBack()" class="govuk-back-link govuk-!-margin-top-5 govuk-!-margin-bottom-5">Back</a>
+    </nav>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds" aria-live="polite">
+    <app-dynamic-form-errors-summary
+      [formUpdated]="formUpdated"
+      [form]="form"
+      [validationMessages]="validationMessages">
+    </app-dynamic-form-errors-summary>
+    <span class="govuk-caption-l">Daily heat profile</span>
+    <h1 class="govuk-heading-l">Upload your scheme's daily heat profile</h1>
+    <p class="govuk-body">
+      The daily profile should show any day or night variations, weekday and
+      weekends, reflecting production patterns or occupancy over the 24-hour
+      period.
+    </p>
+    <details class="govuk-details" open>
+      <summary class="govuk-details__summary">
+        <span class="govuk-details__summary-text">
+          See an example of a daily heat profile
+        </span>
+      </summary>
+
+      <img
+        src="assets\images\daily-heat-profile.png"
+        alt="Example of a daily heat profile graph showing CHP heat output"
+        style="width: 100%" />
+    </details>
+    <details class="govuk-details">
+      <summary class="govuk-details__summary">
+        <span class="govuk-details__summary-text">
+          What document types can I upload?
+        </span>
+      </summary>
+      <div class="govuk-details__text">
+        <ul class="govuk-list govuk-list--bullet">
+          <li>Microsoft Office documents (Word, Excel, PowerPoint, Visio)</li>
+          <li>Image files (jpeg, png, tiff)</li>
+          <li>PDF files</li>
+          <li>Plain text files (txt)</li>
+        </ul>
+      </div>
+    </details>
+
+    <form [formGroup]="form" *ngIf="dailyHeatProfile$ | async">
+      <app-govuk-file-input
+        controlName="files"
+        label="Upload Diagram"
+        description="Upload up to 25 documents. A file can be up to 50MB"
+        [validationMessages]="validationMessages.files"
+        (fileAdded)="onFileAdded($event)"></app-govuk-file-input>
+      <app-govuk-file-input-list
+        [filesWithId]="files"
+        (fileDeleted)="deleteFile($event)"></app-govuk-file-input-list>
+      <app-govuk-textarea-input
+        label="Your comments (optional)"
+        description="Include anything you think will help your application"
+        controlName="comments">
+      </app-govuk-textarea-input>
+    </form>
+
+    <button
+      class="govuk-button"
+      data-module="govuk-button"
+      (click)="onContinue()">
+      Continue
+    </button>
+  </div>
+</div>

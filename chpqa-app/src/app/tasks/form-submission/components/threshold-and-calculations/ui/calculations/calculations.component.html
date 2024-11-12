@@ -1,0 +1,32 @@
+@switch (displayCalculations) {
+  @case (F4_SIMPLE) {
+    <p class="govuk-body">
+      Power Efficiency = 100 x CHPTPO / CHPTFI<br />
+      nPower = 100 x {{ submissionForm.totalPowerGenerated }} / {{ submissionForm.totalFuelEnergyInputs }} = {{ submissionForm.powerEfficiency }}%
+      <br />
+      Heat Efficiency = 100 x CHPQHO / CHPTFI<br />
+      nHeat = 100 x {{ submissionForm.qualifyingHeatOutput }} / {{ submissionForm.totalFuelEnergyInputs }} = {{ submissionForm.heatEfficiency }}%
+    </p>
+  }
+  @case (F4_COMPLEX) {
+    <p class="govuk-body">
+      Power Efficiency = 100 x (CHPTPO x FOP) / (CHPTFI x FOI)
+      <br />
+      nPower = 100 x ({{ submissionForm.totalPowerGenerated }} x {{ submissionForm.fop }}) / ({{ submissionForm.totalFuelEnergyInputs }} x
+      {{ submissionForm.foi }}) = {{ submissionForm.powerEfficiency }}%
+    </p>
+    <p class="govuk-body">
+      Heat Efficiency = 100 x (CHPQHO x FOH) / (CHPTFI x FOI)
+      <br />
+      nHeat = 100 x ({{ submissionForm.qualifyingHeatOutput }} x {{ submissionForm.foh }}) / ({{ submissionForm.totalFuelEnergyInputs }} x
+      {{ submissionForm.foi }}) = {{ submissionForm.heatEfficiency }}%
+    </p>
+    <p class="govuk-body">
+      CHPTPO = scheme total power output<br />
+      CHPTFI = scheme total fuel input<br />
+      CHPQHO = scheme qualifying heat output<br />
+      FOP = uncertainty adjustment factor power output<br />
+      FOI = uncertainty adjustment factor energy input
+    </p>
+  }
+}

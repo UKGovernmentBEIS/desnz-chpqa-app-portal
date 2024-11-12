@@ -1,0 +1,67 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full" aria-live="polite">
+    <nav aria-label="Back">
+      <a (click)="goBack()" class="govuk-back-link govuk-!-margin-top-5 govuk-!-margin-bottom-5">Back</a>
+    </nav>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div  [ngClass]="customWidthClass" aria-live="polite">
+    <!-- Show assessor's form validation messages -->
+    @defer (when isAssessorReview) {
+      <app-dynamic-form-errors-summary
+        *ngIf="assessorForm"
+        [formUpdated]="assessorFormUpdated"
+        [form]="assessorForm"
+        [validationMessages]="assessorFormValidationMessages"></app-dynamic-form-errors-summary>
+    }
+
+    <span class="govuk-caption-l">{{ formTitle }}</span>
+    <h1 class="govuk-heading-l">{{ formHeader }}</h1>
+
+    <dl class="govuk-summary-list">
+      <ng-container *ngFor="let field of reviewScreenValues">
+        <div class="govuk-summary-list__row govuk-!-padding-left-0">
+          <dt class="govuk-summary-list__key govuk-!-width-one-half">{{ field.label }}</dt>
+          <dd class="govuk-summary-list__value">
+            <ng-container [ngSwitch]="field.type">
+              <ng-container *ngSwitchCase="'text'">
+                {{ field.value }}
+              </ng-container>
+              <ng-container *ngSwitchCase="'file'">
+                @for (fileWithId of field.value; let i = $index; track fileWithId.file.name) {
+                  @if (fileWithId.id) {
+                    <a class="govuk-link" (click)="onDownloadFile(fileWithId.id, fileWithId.file.name)">
+                      {{ fileWithId.file.name }}
+                    </a>
+                  } @else {
+                    <p class="govuk-body">{{fileWithId.file.name}}</p>
+                  }
+                  <br />
+                }
+              </ng-container>
+              <ng-container *ngSwitchCase="'textarea'">
+                {{ field.value }}
+              </ng-container>
+            </ng-container>
+          </dd>
+          <ng-container *ngIf="selectedScheme$ | async as selectedScheme">
+            <ng-container
+              *ngIf="selectedScheme?.latestSubmissionStatus <= SubmissionStatusEnum.DueForRenewal">
+              <dd class="govuk-summary-list__actions" *ngIf="sectionStatus !== StatusEnum.InProgress && field.showChangeLink">
+                <a class="govuk-link" [routerLink]="field.changeLink" skipLocationChange [attr.aria-label]="field.ariaLabel">Change</a>
+              </dd>
+            </ng-container>
+          </ng-container>
+        </div>
+      </ng-container>
+    </dl>
+    <ng-container *ngIf="isAssessorReview || (isUserAnAssessorAdmin$ | async); else confirmButton">
+      <app-review-decision-form (formInfo)="handleAssessorFormInfo($event)" (formSubmitted)="handleAssessorFormSubmission($event)"></app-review-decision-form>
+    </ng-container>
+    <ng-template #confirmButton>
+      <button type="submit" class="govuk-button" data-module="govuk-button" (click)="onSubmit()">Confirm and complete</button>
+    </ng-template>
+  </div>
+</div>

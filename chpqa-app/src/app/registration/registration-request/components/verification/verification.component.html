@@ -1,0 +1,29 @@
+<nav aria-label="Back">
+  <a [routerLink]="[BACK]" skipLocationChange class="govuk-back-link govuk-!-margin-bottom-5">Back</a>
+</nav>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-l">We've sent you a verification email</h1>
+    <p class="govuk-body">
+      We've sent a verification email to: {{ (email$ | async) }}
+    </p>
+    <p class="govuk-body">
+      You'll need to click a link in the email to activate your account.
+    </p>
+    <p class="govuk-body">The link will expire in 30 minutes.</p>
+
+    <details class="govuk-details">
+      <summary class="govuk-details__summary">
+        <span class="govuk-details__summary-text">I did not get an email</span>
+      </summary>
+      <div class="govuk-details__text">
+        If your email address is incorrect, return to the previous page and enter<br>your email address again
+      </div>
+      <div class="govuk-details__text">
+        If the email address is correct,
+        <a class="govuk-link govuk-link--no-visited-state" href="">resend the verification email</a>.
+      </div>
+    </details>
+  </div>
+</div>

@@ -1,0 +1,111 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <nav aria-label="Back">
+      <a [routerLink]="backButton" class="govuk-back-link govuk-!-margin-top-5 govuk-!-margin-bottom-5">Back</a>
+    </nav>
+  </div>
+</div>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full" aria-live="polite">
+    <!-- Show assessor's form validation messages -->
+    @defer (when isUserAnAssessor) {
+      <app-dynamic-form-errors-summary
+        *ngIf="assessorForm"
+        [formUpdated]="assessorFormUpdated"
+        [form]="assessorForm"
+        [validationMessages]="assessorFormValidationMessages"></app-dynamic-form-errors-summary>
+    } @placeholder {
+      <app-dynamic-form-errors-summary [formUpdated]="formUpdated" [form]="form" [validationMessages]="validationMessages"> </app-dynamic-form-errors-summary>
+    }
+    <div class="govuk-grid-column-two-thirds govuk-!-padding-left-0" aria-live="polite">
+      <span class="govuk-caption-l">Heat monitoring:</span>
+      <h1 class="govuk-heading-l">{{ formHeader }}</h1>
+      @if (!isUserAnAssessor) {
+        <p class="govuk-body">
+          You'll need to provide heat outputs for all metering equipment that you use to monitor the scheme's performance. You only need to provide the annual total.
+        </p>
+        <p class="govuk-body">
+          You can complete this section automatically by downloading our spreadsheet template and upload its completed version on the upload performance data
+          screen.
+        </p>
+      }
+    </div>
+    <app-perfomance-summary-list
+      categoryLabel="Meter type"
+      typeLabel="Heat type"
+      subTask="heatOutputs"
+      [selectedScheme]="selectedScheme$ | async"
+      measurementUnit="kWh"
+      [details]="heatOutputs$ | async"
+      (change)="handleChange($event)"></app-perfomance-summary-list>
+
+    <h1 class="govuk-heading-m">Total heat output</h1>
+    <ng-container *ngIf="totalMetricsHeatOutputs$ | async as heatOutputs">
+      <div class="govuk-body">
+        <div class="govuk-!-font-weight-bold">Total heat output</div>
+        <div class="govuk-body">
+          {{ heatOutputs.qualifyingHeatOutput !== null ? heatOutputs.qualifyingHeatOutput + ' kWh' : '-' }}
+        </div>
+      </div>
+      <div class="govuk-body">
+        <div class="govuk-!-font-weight-bold">Total heat exported</div>
+        <div class="govuk-body">
+          {{ heatOutputs.totalHeatOutputs !== null ? heatOutputs.totalHeatOutputs + ' kWh' : '-' }}
+        </div>
+      </div>
+    </ng-container>
+
+    @if (isComplex$ | async) {
+      @defer (when isSubmittedOrInReview) {
+        <app-form-to-readonly-values
+          [form]="form"
+          [fieldOrder]="fieldOrder"
+          [fieldData]="webCopyFormControls"
+        ></app-form-to-readonly-values>
+      }
+
+      @if (!isSubmittedOrInReview) {
+        <form [formGroup]="form">
+          <div class="govuk-body">
+            <div class="govuk-form-group">
+              <div class="govuk-!-font-weight-bold">
+                {{ webCopyFormControls.estimatedTotalHeatOutputUsedInthePrimeMovers.label }}
+              </div>
+              <app-govuk-unit-input
+                [label]="webCopyFormControls.estimatedTotalHeatOutputUsedInthePrimeMovers.hint"
+                controlName="estimatedTotalHeatOutputUsedInthePrimeMovers"
+                unit="%"
+                widthClass="govuk-input--width-5"
+                [validationMessages]="validationMessages.estimatedTotalHeatOutputUsedInthePrimeMovers">
+              </app-govuk-unit-input>
+            </div>
+            <div class="govuk-form-group">
+              <div class="govuk-!-font-weight-bold">
+                {{ webCopyFormControls.estimatedTotalHeatOutputUsedIntheBoilers.label }}
+              </div>
+              <app-govuk-unit-input
+                [label]="webCopyFormControls.estimatedTotalHeatOutputUsedIntheBoilers.hint"
+                controlName="estimatedTotalHeatOutputUsedIntheBoilers"
+                unit="%"
+                widthClass="govuk-input--width-5"
+                [validationMessages]="validationMessages.estimatedTotalHeatOutputUsedIntheBoilers">
+              </app-govuk-unit-input>
+            </div>
+          </div>
+        </form>
+      }
+    }
+
+    @defer (when isUserAnAssessor) {
+      <div class="govuk-grid-column-two-thirds govuk-!-padding-left-0" aria-live="polite">
+        <app-review-decision-form (formInfo)="handleAssessorFormInfo($event)" (formSubmitted)="handleAssessorFormSubmission($event)"></app-review-decision-form>
+      </div>
+    }
+
+    @if (!isUserAnAssessor) {
+      <button class="govuk-button" data-module="govuk-button" (click)="onSubmit()">
+        {{ (areHeatOutputsCompleted$ | async) ? 'Confirm and complete' : 'Continue' }}
+      </button>
+    }
+  </div>
+</div>

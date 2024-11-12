@@ -1,0 +1,21 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <nav aria-label="Back">
+      <a (click)="goBack()" class="govuk-back-link govuk-!-margin-top-5 govuk-!-margin-bottom-5">Back</a>
+    </nav>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds" aria-live="polite">
+    <form [formGroup]="form" *ngIf="primeMoverDeletionInformation$ | async as primeMoverDeletionInformation">
+      <app-dynamic-form-errors-summary [formUpdated]="formUpdated" [form]="form" [validationMessages]="validationMessages"> </app-dynamic-form-errors-summary>
+      <span class="govuk-caption-l">Prime mover details</span>
+      <h1 class="govuk-heading-l">Are you sure you want to delete {{ primeMoverDeletionInformation.name }}?</h1>
+      <div class="govuk-form-group">
+        <app-govuk-radio-input controlName="confirmDelete" [options]="options" [validationMessages]="validationMessages.confirmDelete"> </app-govuk-radio-input>
+      </div>
+      <button type="submit" class="govuk-button" data-module="govuk-button" (click)="onContinue()">Continue</button>
+    </form>
+  </div>
+</div>

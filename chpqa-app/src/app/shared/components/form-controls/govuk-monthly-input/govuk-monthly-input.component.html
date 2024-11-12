@@ -1,0 +1,16 @@
+<div class="monthly-input-form" [formGroup]="form">
+  <div *ngFor="let month of months">
+    <app-govuk-number-input
+      [label]="month | titlecase"
+      [controlName]="month"
+      [validationMessages]="validationMessages.month"
+      [unit]="unit">
+    </app-govuk-number-input>
+  </div>
+  <div class="govuk-body">
+    <div class="govuk-!-font-weight-bold">Annual totals</div>
+    <div class="govuk-body">
+      {{ annualTotal === null ? '0 ' + unit : annualTotal + ' ' + unit }}
+    </div>
+  </div>
+</div>

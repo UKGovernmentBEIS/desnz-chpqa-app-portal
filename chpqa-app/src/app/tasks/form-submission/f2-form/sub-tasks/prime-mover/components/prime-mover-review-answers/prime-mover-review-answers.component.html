@@ -1,0 +1,69 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <nav aria-label="Back">
+      <a (click)="goBack()" class="govuk-back-link govuk-!-margin-top-5 govuk-!-margin-bottom-5">Back</a>
+    </nav>
+  </div>
+</div>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full" aria-live="polite">
+
+    <!-- Show assessor's form validation messages -->
+    @defer (when isUserAnAssessor) {
+      <app-dynamic-form-errors-summary
+        *ngIf="assessorForm"
+        [formUpdated]="assessorFormUpdated"
+        [form]="assessorForm"
+        [validationMessages]="assessorFormValidationMessages"
+      ></app-dynamic-form-errors-summary>
+    }
+    @if (showDeleteSuccessBanner) {
+      @if (primeMoverDeletionInformation$ | async; as primeMoverDeletionInfo) {
+        <app-govuk-notification-banner [isSuccess]="true" [text]="primeMoverDeletionInfo.name + ' deleted successfully'"> </app-govuk-notification-banner>
+      }
+    }
+    <span class="govuk-caption-l">Prime mover details</span>
+    <h1 class="govuk-heading-l">{{formHeader}}</h1>
+    @if (primeMovers.length > 0) {
+      @for (primeMover of paginatedPrimeMovers; track primeMover.index; let idx = $index) {
+        <app-metrics-summary-list
+          metric="prime mover"
+          [title]="'Prime Mover ' + primeMover.name"
+          [details]="mapPrimeMoverToDetails(primeMover)"
+          [isDetailsVisible]="(currentPage - 1) * itemsPerPage + idx === 0"
+          [id]="primeMover.id"
+          [latestSubmissionStatus]="latestSubmissionStatus"
+          (delete)="handleDelete(primeMover.id, (currentPage - 1) * itemsPerPage + idx, 'Prime Mover ' + primeMover.name)"
+          (change)="handleChange(primeMover, (currentPage - 1) * itemsPerPage + idx)"
+          (downloadFile)="onDownloadFile($event)">
+        </app-metrics-summary-list>
+      }
+      <app-pagination [totalItems]="primeMovers.length" [itemsPerPage]="itemsPerPage" (pageChanged)="onPageChange($event)"> </app-pagination>
+    } @else {
+      <p class="govuk-body">You must add at least one prime mover.</p>
+    }
+
+    @defer (when isUserAnAssessor) {
+      <app-review-decision-form
+        (formInfo)="handleAssessorFormInfo($event)"
+        (formSubmitted)="handleAssessorFormSubmission($event)"
+      ></app-review-decision-form>
+    }
+
+    @if (!isUserAnAssessor) {
+      <div>
+        <button
+          *ngIf="(submissionFormType === SubmissionFormTypeEnum.F4 || primeMovers.length === 0) && !(isSubmissionNonEditable$ | async)"
+          class="govuk-button govuk-button--secondary"
+          data-module="govuk-button"
+          (click)="addAnotherPrimeMover()">
+          Add another prime mover
+        </button>
+      </div>
+
+      @if (primeMovers.length > 0) {
+        <button class="govuk-button" data-module="govuk-button" (click)="onContinue()">Confirm and complete</button>
+      }
+    }
+  </div>
+</div>

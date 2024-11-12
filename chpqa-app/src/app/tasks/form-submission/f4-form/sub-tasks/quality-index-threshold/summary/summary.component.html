@@ -1,0 +1,8 @@
+<app-review-answers
+  [formTitle]="'Quality Index Threshold'"
+  [formHeader]="isAnAssessor ? 'Review quality index threshold' : 'Check your answers'"
+  [backLink]="backButton$ | async"
+  [reviewScreenValues]="reviewScreenValues"
+  [sectionStatus]="qualityIndexThresholdStatus$ | async"
+  (formSubmitted)="handleFormSubmitted($event)">
+</app-review-answers>

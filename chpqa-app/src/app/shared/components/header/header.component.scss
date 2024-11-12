@@ -1,0 +1,12 @@
+::ng-deep .sign_in_out_link {
+  float: right;
+  cursor: pointer;
+}
+
+.govuk-header__navigation-item--active a:link, .govuk-header__navigation-item--active a:hover, .govuk-header__navigation-item--active a:visited {
+  cursor: pointer;
+}
+
+#header:focus {
+  outline: none;
+}

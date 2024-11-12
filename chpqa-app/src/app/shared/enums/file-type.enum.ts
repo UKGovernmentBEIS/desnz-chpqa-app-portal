@@ -1,0 +1,16 @@
+export enum FileTypes {
+    doc = '.doc',
+    docx = '.docx',
+    xls = '.xls',
+    xlsx = '.xlsx',
+    ppt = '.ppt',
+    pptx = '.pptx',
+    vsd = '.vsd',
+    vsdx = '.vsdx',
+    jpeg = '.jpeg',
+    jpg = '.jpg',
+    png = '.png',
+    tiff = '.tiff',
+    pdf = '.pdf',
+    txt = '.txt',
+};

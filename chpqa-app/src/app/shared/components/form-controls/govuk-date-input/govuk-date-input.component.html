@@ -1,0 +1,24 @@
+<div [formGroup]="dateForm" [appCurrentDate]="currentDate">
+  <label class="govuk-label">{{ label }}</label>
+  <div *ngIf="description" class="govuk-hint">{{ description }}</div>
+  <div class="govuk-form-group" [class.govuk-form-group--error]="dateForm.invalid && dateForm.touched">
+    <app-error-message
+      *ngIf="dateForm.errors?.invalidDate && dateForm.touched"
+      class="error-message"
+      [control]="dateForm"
+      [validationMessages]="validationMessages"></app-error-message>
+  </div>
+  <div class="govuk-date-input__item">
+    <label class="govuk-label" for="day">Day</label>
+    <input class="govuk-input govuk-input--width-2" id="day" type="number" formControlName="day" (blur)="onBlur()" />
+  </div>
+  <div class="govuk-date-input__item">
+    <label class="govuk-label" for="month">Month</label>
+    <input class="govuk-input govuk-input--width-2" id="month" type="number" formControlName="month" (blur)="onBlur()" />
+  </div>
+
+  <div class="govuk-date-input__item">
+    <label class="govuk-label" for="year">Year</label>
+    <input class="govuk-input govuk-input--width-4" id="year" type="number" formControlName="year" (blur)="onBlur()" />
+  </div>
+</div>

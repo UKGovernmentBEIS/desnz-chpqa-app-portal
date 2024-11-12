@@ -1,0 +1,40 @@
+<form [formGroup]="form" (ngSubmit)="onContinue()">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full" aria-live="polite">
+        <nav aria-label="Back">
+          <a (click)="goBack()" class="govuk-back-link govuk-!-margin-top-5 govuk-!-margin-bottom-5">Back</a>
+        </nav>
+      </div>
+    </div>
+  
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full">
+        <h1 class="govuk-heading-xl">Set the last submission date</h1>
+        <p class="govuk-body">
+          Enter the final date that submissions need to be received by for a technical assessor to assess them.
+        </p>
+        <p class="govuk-body">
+          Two weeks before the date you provide here, an email will be sent to all Responsible Persons advising them of the impending deadline.
+        </p>
+        <p class="govuk-hint">The date must be at least two weeks in the future</p>
+      </div>
+    </div>
+  
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full">
+        <app-govuk-date-input
+          [controlName]="'submissionDate'"
+          [label]="'Day Month Year'"
+          [description]="'Please enter the last submission date.'"
+          [validationMessages]="{ required: 'The date is required', invalidDate: 'Enter a valid date' }"
+        ></app-govuk-date-input>
+      </div>
+    </div>
+  
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full govuk-!-margin-top-5">
+        <button type="submit" class="govuk-button">Continue</button>
+      </div>
+    </div>
+  </form>
+  

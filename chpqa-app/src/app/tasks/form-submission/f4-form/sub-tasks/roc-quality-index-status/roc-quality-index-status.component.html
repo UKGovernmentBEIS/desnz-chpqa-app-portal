@@ -1,0 +1,52 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <nav aria-label="Back">
+      <a [routerLink]="[BACK]" skipLocationChange class="govuk-back-link govuk-!-margin-bottom-5">Back</a>
+    </nav>
+  </div>
+</div>
+
+@if (vm$ | async; as vm) {
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds" aria-live="polite">
+      <span class="govuk-caption-l">ROC quality Index status</span>
+
+      @if (vm.rocscfdQualityIndexThresholdAchived) {
+        <h1 class="govuk-heading-l">You have met or exceeded the relevant ROC quality index threshold</h1>
+        <p class="govuk-body">
+          If your scheme wishes to claim a Renewables Obligation certificate, it will be validated against a threshold of
+          {{ vm.qualityIndexThreshold | number: '1.0-0' }} under normal operating conditions.
+        </p>
+      } @else {
+        <h1 class="govuk-heading-l">You have not met the relevant ROC quality index threshold</h1>
+        <p class="govuk-body">
+          If your scheme wishes to claim a Renewables Obligation certificate, it will be validated against a threshold of
+          {{ vm.qualityIndexThreshold | number: '1.0-0' }} under normal operating conditions.
+        </p>
+
+        <p class="govuk-body">
+          As you have not met this threshold, the scheme might miss out on certain financial incentives that are designed to encourage energy efficiency.
+        </p>
+      }
+
+      <h2 class="govuk-heading-s">
+        ROC quality index for this scheme
+        <p class="govuk-body">{{ vm.rocscfdQualityIndex }}</p>
+      </h2>
+
+      <details class="govuk-details">
+        <summary class="govuk-details__summary">
+          <span class="govuk-details__summary-text"> How this was calculated </span>
+        </summary>
+        <div class="govuk-details__text">The formula to calculate your ROC quality index status is:</div>
+        <div class="govuk-details__text">
+          <p class="govuk-body">QI = ( X x power ) + ( Y x heat )</p>
+          <p class="govuk-body">With the figures you’ve entered, this will be:</p>
+          <p class="govuk-body">( {{ X }} x {{ power }} ) + ( {{ Y }} x {{ heat }} )</p>
+        </div>
+      </details>
+
+      <button class="govuk-button" data-module="govuk-button" (click)="onConfirm()">Confirm and complete</button>
+    </div>
+  </div>
+}

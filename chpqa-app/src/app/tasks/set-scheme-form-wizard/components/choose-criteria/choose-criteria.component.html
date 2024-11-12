@@ -1,0 +1,47 @@
+<ng-container *ngIf="vm$ | async as vm">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <nav aria-label="Back">
+        <a [routerLink]="[vm.BACK]" class="govuk-back-link govuk-!-margin-top-5 govuk-!-margin-bottom-5">Back</a>
+      </nav>
+    </div>
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <form [formGroup]="vm.form" (ngSubmit)="onSubmit(vm.form)">
+        <div class="govuk-form-group">
+          <app-dynamic-form-errors-summary
+            [formUpdated]="formUpdated"
+            [form]="vm.form"
+            [validationMessages]="validationMessages">
+          </app-dynamic-form-errors-summary>
+          <span class="govuk-caption-l">Scheme details and performance</span>
+          <h1 class="govuk-heading-l">Does the scheme meet these criteria?</h1>
+
+          <p class="govuk-body">The scheme must:</p>
+          <ul class="govuk-list govuk-list--bullet">
+            <li>
+              have a single reciprocating engine and associated heat recovery equipment within the scheme boundary
+            </li>
+            <li>use a single conventional fuel (for example, natural gas)</li>
+            <li>not have any heat-only boilers</li>
+            <li>be less than 2MWe total power capacity</li>
+          </ul>
+
+          <div class="govuk-form-group">
+            <app-govuk-radio-input
+              controlName="criteria"
+              [options]="options"
+              [validationMessages]="validationMessages.criteria">
+            </app-govuk-radio-input>
+          </div>
+        </div>
+
+        <button type="submit" class="govuk-button" data-module="govuk-button">
+          Continue
+        </button>
+      </form>
+    </div>
+  </div>
+</ng-container>

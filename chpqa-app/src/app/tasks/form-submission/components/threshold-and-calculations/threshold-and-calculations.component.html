@@ -1,0 +1,39 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <nav aria-label="Back">
+      <a [routerLink]="back" class="govuk-back-link govuk-!-margin-top-5 govuk-!-margin-bottom-5">Back</a>
+    </nav>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <ng-container [ngTemplateOutlet]="captionTemplate"></ng-container>
+    <ng-container [ngTemplateOutlet]="headerTemplate"></ng-container>
+    <ng-container [ngTemplateOutlet]="bodyTemplate"></ng-container>
+    <ng-container [ngTemplateOutlet]="thresholdTemplate"></ng-container>
+
+    <details class="govuk-details">
+      <summary class="govuk-details__summary">
+        <span class="govuk-details__summary-text">
+          How this was calculated
+        </span>
+      </summary>
+
+      <div class="govuk-details__text">
+        <p class="govuk-body">
+          <ng-container [ngTemplateOutlet]="calculationsTemplate"></ng-container>
+        </p>
+      </div>
+    </details>
+    
+    <button
+      class="govuk-button"
+      data-module="govuk-button"
+      (click)="onContinue()"
+    >
+      Confirm and Continue
+    </button>
+  
+  </div>
+</div>

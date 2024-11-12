@@ -1,0 +1,18 @@
+@if (vm$ | async; as vm) {
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <nav aria-label="Back">
+        <a [routerLink]="[vm.backUrl]" class="govuk-back-link govuk-!-margin-bottom-5">Back</a>
+      </nav>
+    </div>
+  </div>
+
+  <app-address-search
+    [navigateTo]="addSiteAddressLink"
+    [prefilledValues]="vm.searchCriteria"
+    [caption]="copy.caption"
+    title="Find site address"
+    (search)="onSearch($event)"
+  >
+  </app-address-search>
+}

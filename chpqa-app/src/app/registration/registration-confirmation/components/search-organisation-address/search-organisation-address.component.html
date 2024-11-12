@@ -1,0 +1,13 @@
+@if (vm$ | async; as vm) {
+  <nav aria-label="Back">
+    <a [routerLink]="[vm.backUrl]" class="govuk-back-link govuk-!-margin-bottom-5">Back</a>
+  </nav>
+
+  <app-address-search
+    [navigateTo]="addOrganisationAddressLink"
+    [prefilledValues]="vm.searchAddressCriteria"
+    (search)="onSearch($event)"
+    title="Organisation address"
+    caption="Create an account"
+  ></app-address-search>
+}

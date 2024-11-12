@@ -1,0 +1,47 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <nav aria-label="Back">
+      <a [routerLink]="[BACK$ | async]" class="govuk-back-link govuk-!-margin-bottom-5">Back</a>
+    </nav>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <div class="govuk-form-group">
+      <span class="govuk-caption-xl">{{ copy.caption }}</span>
+      <h1 class="govuk-heading-l">Confirm site address</h1>
+
+      <div *ngIf="site$ | async as site" class="govuk-inset-text">
+        <div>{{ site?.address1 }}</div>
+        <div>{{ site?.address2 }}</div>
+        <div>{{ site?.town }}</div>
+        <div>{{ site?.county }}</div>
+        <div>{{ site?.postcode }}</div>
+      </div>
+    </div>
+
+    <button
+      type="button"
+      class="govuk-button"
+      data-module="govuk-button"
+      (click)="onContinue()">
+      Use this address
+    </button>
+
+    <p class="govuk-body">
+      <a
+        [routerLink]="[addDifferentAddressLink]"
+        class="govuk-link govuk-link--no-visited-state"
+        >Use a different address</a
+      >
+    </p>
+    <p class="govuk-body">
+      <a
+        [routerLink]="[addAddressManuallyLink]"
+        class="govuk-link govuk-link--no-visited-state"
+        >Enter address manually</a
+      >
+    </p>
+  </div>
+</div>

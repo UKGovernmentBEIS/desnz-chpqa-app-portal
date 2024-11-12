@@ -1,0 +1,35 @@
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full" aria-live="polite">
+      <nav aria-label="Back">
+        <a (click)="goBack()" class="govuk-back-link govuk-!-margin-top-1 govuk-!-margin-bottom-1">Back</a>
+      </nav>
+    </div>
+  </div>
+  
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full govuk-!-margin-top-3 govuk-!-margin-bottom-3">
+      <span class="govuk-caption-l govuk-!-margin-top-3 govuk-!-margin-bottom-3">Set last submission date</span>
+      <h1 class="govuk-heading-l govuk-!-margin-top-3 govuk-!-margin-bottom-3">Check your answers</h1>
+    </div>
+  </div>
+  
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <dl class="govuk-summary-list">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Last submission date</dt>
+          <dd class="govuk-summary-list__value">{{latestSubmissionDate}}</dd>
+          <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" href="#" (click)="change($event)" aria-label="Change last submission date">Change</a>
+          </dd>
+        </div>
+      </dl>
+    </div>
+  </div>
+  
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full govuk-!-margin-top-5">
+      <button type="button" class="govuk-button" (click)="onSubmit()">Confirm and complete</button>
+    </div>
+  </div>
+  

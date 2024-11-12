@@ -1,0 +1,69 @@
+<app-dynamic-form-errors-summary [formUpdated]="formUpdated" [form]="form" [validationMessages]="validationMessages"> </app-dynamic-form-errors-summary>
+
+<form (ngSubmit)="onSubmit()" [formGroup]="form" [appFormError]="form">
+  <div class="govuk-form-group">
+    <div class="govuk-form-group">
+      <app-govuk-text-input id="first-name" #formControl label="First name" controlName="firstName" [validationMessages]="validationMessages.firstName">
+      </app-govuk-text-input>
+    </div>
+
+    <div class="govuk-form-group">
+      <app-govuk-text-input id="last-name" #formControl label="Last name" controlName="lastName" [validationMessages]="validationMessages.lastName">
+      </app-govuk-text-input>
+    </div>
+
+    <div class="govuk-form-group">
+      <app-govuk-radio-input
+        #formControl
+        label="Is your organisation registered with Companies House?"
+        controlName="isCompanyHouseRegistered"
+        [options]="companyOptions">
+      </app-govuk-radio-input>
+    </div>
+
+    <div class="govuk-form-group">
+      <app-govuk-radio-input
+        label="Are you a consultant?"
+        description="A consultant can create schemes for different organisations"
+        controlName="consultant"
+        [options]="consultantOptions"
+        [validationMessages]="validationMessages.consultant">
+      </app-govuk-radio-input>
+    </div>
+
+    <div class="govuk-form-group">
+      <app-govuk-text-input id="job-title" label="Job title" controlName="jobTitle" [validationMessages]="validationMessages.jobTitle"> </app-govuk-text-input>
+    </div>
+
+    <div class="govuk-form-group">
+      <app-govuk-text-input
+        *ngIf="isAddingResponsiblePerson"
+        id="email"
+        label="Email address"
+        controlName="email"
+        [validationMessages]="validationMessages.email">
+      </app-govuk-text-input>
+    </div>
+
+    <div class="govuk-form-group">
+      <app-govuk-text-input
+        id="telephone1"
+        label="Telephone number"
+        controlName="telephone1"
+        type="number"
+        [validationMessages]="validationMessages.telephone1">
+      </app-govuk-text-input>
+    </div>
+
+    <div class="govuk-form-group">
+      <app-govuk-text-input
+        id="telephone2"
+        label="Mobile number (optional)"
+        controlName="telephone2"
+        type="number"
+        [validationMessages]="validationMessages.telephone2">
+      </app-govuk-text-input>
+    </div>
+  </div>
+  <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+</form>

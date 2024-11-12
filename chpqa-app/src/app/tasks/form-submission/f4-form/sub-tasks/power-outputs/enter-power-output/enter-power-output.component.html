@@ -1,0 +1,62 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <nav aria-label="Back">
+      <a [routerLink]="backButton" class="govuk-back-link govuk-!-margin-top-5 govuk-!-margin-bottom-5">Back</a>
+    </nav>
+  </div>
+</div>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds" aria-live="polite">
+    @defer (when isSubmittedOrInReview) {
+      <app-review-perfomance-summary
+        subtask="power outputs"
+        categoryLabel="Meter type"
+        typeLabel="Power Type"
+        measurementUnit="kWh"
+        [details]="perfomanceSummary"
+        [monthsData]="powerOutputMonths"
+        (return)="navigateBack()" />
+    } @placeholder {
+      <ng-container *ngTemplateOutlet="formSection"></ng-container>
+    }
+  </div>
+</div>
+
+<ng-template #formSection>
+  <form [formGroup]="form" (ngSubmit)="onContinue()">
+    <app-dynamic-form-errors-summary [formUpdated]="formUpdated" [form]="form" [validationMessages]="validationMessages"> </app-dynamic-form-errors-summary>
+    <span class="govuk-caption-l">Power Outputs</span>
+    <h1 class="govuk-heading-l">Enter power outputs for {{ powerOutputName }}</h1>
+
+    <div class="govuk-form-group">
+      <app-govuk-select-input
+        [options]="powerTypes"
+        controlName="type"
+        label="Power type"
+        placeholder="Select power type"
+        [validationMessages]="validationMessages.type"></app-govuk-select-input>
+    </div>
+    <div class="govuk-form-group">
+      <app-govuk-radio-input
+        label="Should this meter be included in CHPQA calculations?"
+        description="This will determine if the meter readings will be taken into consideration for the fraction of total power output"
+        controlName="includeInCalculations"
+        [options]="options"
+        [validationMessages]="validationMessages.includeInCalculations">
+      </app-govuk-radio-input>
+    </div>
+    @if (isComplex$ | async) {
+      <app-govuk-monthly-input
+        [monthsData]="powerOutputMonths"
+        [validationMessages]="validationMessages.months"
+        [unit]="'kWh'">
+      </app-govuk-monthly-input>
+    } @else {
+      <div class="govuk-form-group">
+        <app-govuk-unit-input label="Annual total of power outputs" unit="kWh" controlName="annualTotal" [validationMessages]="validationMessages.annualTotal">
+        </app-govuk-unit-input>
+      </div>
+    }
+    <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+  </form>
+</ng-template>

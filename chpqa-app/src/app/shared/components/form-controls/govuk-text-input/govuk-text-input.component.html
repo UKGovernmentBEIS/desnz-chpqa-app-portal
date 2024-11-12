@@ -1,0 +1,19 @@
+<div [formGroup]="formGroupDirective.form">
+  <label class="govuk-label disabled" [attr.aria-label] = "controlName" [for]="controlName">{{ label }} </label>
+  <div *ngIf="description" class="govuk-hint govuk-hint--disabled" [attr.id]="controlName + '-description'">
+    {{ description }}
+  </div>
+  <app-error-message class="error-message" [control]="control" [validationMessages]="validationMessages"> </app-error-message>
+  <div class="govuk-form-group" [class.govuk-form-group--error]="this.hasError()">
+    <input
+      class="govuk-input"
+      type="text"
+      [attr.maxlength]="maxLength"
+      [formControlName]="controlName"
+      [type]="inputType"
+      [ngClass]="widthClass"
+      [attr.id]="controlName"
+      [attr.name]="controlName"
+      [attr.aria-describedby]="description ? controlName + '-description' : null" />
+  </div>
+</div>

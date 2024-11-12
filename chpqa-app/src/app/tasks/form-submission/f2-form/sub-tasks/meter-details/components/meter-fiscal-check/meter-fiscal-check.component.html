@@ -1,0 +1,71 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <nav aria-label="Back">
+      <a (click)="goBack()" class="govuk-back-link govuk-!-margin-top-5 govuk-!-margin-bottom-5">Back</a>
+    </nav>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds" aria-live="polite">
+    <form [formGroup]="form" [appFormError]="form">
+      <app-dynamic-form-errors-summary
+        [formUpdated]="formUpdated"
+        [form]="form"
+        [validationMessages]="validationMessages">
+      </app-dynamic-form-errors-summary>
+      <span class="govuk-caption-l">Meter details</span>
+      <h1 class="govuk-heading-l">Is this your main fiscal meter ?</h1>
+
+      <div class="govuk-form-group">
+        <label class="govuk-label disabled" for="fiscal meter"
+          >This will be your main National Grid gas meter.
+        </label>
+        <div class="govuk-radios" data-module="govuk-radios">
+          <div class="govuk-radios__item">
+            <input
+              class="govuk-radios__input"
+              id="fiscal-true"
+              name="fiscal"
+              type="radio"
+              [value]="true"
+              formControlName="fiscal" />
+            <label class="govuk-label govuk-radios__label" for="fiscal-true">
+              Yes
+            </label>
+          </div>
+          <div
+            class="govuk-radios__conditional"
+            *ngIf="form.get('fiscal').value === true">
+            <app-govuk-number-input
+              label="Meter point reference number"
+              controlName="fiscalPoint"
+              [validationMessages]="validationMessages.fiscalPoint">
+            </app-govuk-number-input>
+          </div>
+
+          <div class="govuk-radios__item">
+            <input
+              class="govuk-radios__input"
+              id="fiscal-false"
+              name="fiscal"
+              type="radio"
+              [value]="false"
+              formControlName="fiscal" />
+            <label class="govuk-label govuk-radios__label" for="fiscal-false">
+              No
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <button
+        type="submit"
+        class="govuk-button"
+        data-module="govuk-button"
+        (click)="onContinue()">
+        Continue
+      </button>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,27 @@
+<div [formGroup]="rootFormGroup.form">
+  <div
+    class="govuk-form-group"
+    [class.govuk-form-group--error]="this.hasError()">
+    <app-error-message
+      class="error-message"
+      [control]="control"
+      [validationMessages]="validationMessages">
+    </app-error-message>
+
+    <fieldset class="govuk-fieldset" aria-describedby="waste-hint">
+      <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+        <div class="govuk-checkboxes__item">
+          <input
+            class="govuk-checkboxes__input"
+            type="checkbox"
+            [formControlName]="controlName"
+            [attr.id]="controlName"
+            [attr.name]="controlName" />
+          <label class="govuk-label govuk-checkboxes__label" [attr.for]="controlName">
+            {{ label }}
+          </label>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+</div>

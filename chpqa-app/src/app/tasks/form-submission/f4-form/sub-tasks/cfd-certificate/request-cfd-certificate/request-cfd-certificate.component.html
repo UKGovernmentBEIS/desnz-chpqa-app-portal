@@ -1,0 +1,28 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <nav aria-label="Back">
+      <a [routerLink]="[BACK]" skipLocationChange class="govuk-back-link govuk-!-margin-top-5 govuk-!-margin-bottom-5">Back</a>
+    </nav>
+  </div>
+</div>
+
+<div class="govuk-grid-row" *ngIf="form$ | async as form">
+  <div class="govuk-grid-column-two-thirds">
+    <app-dynamic-form-errors-summary [formUpdated]="formUpdated" [form]="form" [validationMessages]="validationMessages"> </app-dynamic-form-errors-summary>
+    <form [formGroup]="form" (ngSubmit)="onSubmit(form)">
+      <div class="govuk-form-group">
+        <span class="govuk-caption-l"> Contracts for Difference certificate </span>
+        <h1 class="govuk-heading-l">Do you need a Contracts for Difference certificate?</h1>
+
+        <p class="govuk-body">If you do, we will email the certificate to you. It will also be available in your scheme history.</p>
+
+        <div class="govuk-form-group">
+          <app-govuk-radio-input controlName="requestCfdCertificate" [options]="options" [validationMessages]="validationMessages.requestCfdCertificate">
+          </app-govuk-radio-input>
+        </div>
+      </div>
+
+      <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+    </form>
+  </div>
+</div>

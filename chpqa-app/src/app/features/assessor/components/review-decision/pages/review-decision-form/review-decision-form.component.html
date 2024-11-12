@@ -1,0 +1,34 @@
+@if (canLoadPage) {
+  <form
+    [formGroup]="form"
+    [appFormStateSync]="form"
+    [formName]="reviewScreenName"
+    [appFormError]="form"
+    (ngSubmit)="onSubmit()"
+  >
+
+    @switch (formType) {
+      @case (NORMAL_FORM) {
+        <div class="govuk-form-group">
+          <app-govuk-radio-input
+            controlName="assessmentOutcome"
+            [options]="options"
+            [validationMessages]="validationMessages.assessmentOutcome"
+            [disabled]="!isAssessorFormEditable || isDisabledForAssessorAdmin"
+          ></app-govuk-radio-input>
+        </div>
+      }
+    }
+
+    <app-govuk-textarea-input
+      [label]="isAssessorFormEditable ? reviewDecisionFormWebCopy.textArea.label:  reviewDecisionFormWebCopy.textArea.assessor2Label "
+      [description]="reviewDecisionFormWebCopy.textArea.description"
+      controlName="sectionAssessmentComment"
+      [disabled]="!isAssessorFormEditable || isDisabledForAssessorAdmin"
+    ></app-govuk-textarea-input>
+
+    <button type="submit" class="govuk-button" data-module="govuk-button" [disabled]="!isAssessorFormEditable || isDisabledForAssessorAdmin">
+      {{ reviewDecisionFormWebCopy.submitButton }}
+    </button>
+  </form>
+}

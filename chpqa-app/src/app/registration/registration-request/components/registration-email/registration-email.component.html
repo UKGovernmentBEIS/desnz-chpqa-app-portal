@@ -1,0 +1,34 @@
+<nav aria-label="Back">
+  <a [routerLink]="[BACK]" class="govuk-back-link govuk-!-margin-bottom-5">Back</a>
+</nav>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <app-dynamic-form-errors-summary [formUpdated]="formUpdated" [form]="registrationForm" [validationMessages]="validationMessages">
+    </app-dynamic-form-errors-summary>
+
+    <form [formGroup]="registrationForm" [appFormError]="registrationForm" (ngSubmit)="onSubmit()">
+      <div class="govuk-form-group">
+        <h1 class="govuk-heading-l">Enter your email address</h1>
+
+        <p class="govuk-body">This should be your work email address. We'll send you an email with a link to confirm you have access<br />to this address.</p>
+        <p class="govuk-body">
+          All system alerts, notices and official communications will be sent to this<br />
+          address.
+        </p>
+
+        <app-govuk-text-input
+          id="email"
+          maxLength="256"
+          label="Email address"
+          controlName="email"
+          inputType="email"
+          [validationMessages]="validationMessages.email"
+          widthClass="govuk-!-width-one-half"
+          [value]="email$ | async">
+        </app-govuk-text-input>
+      </div>
+
+      <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+    </form>
+  </div>
+</div>

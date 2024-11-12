@@ -1,0 +1,7 @@
+<app-review-answers
+  formTitle="Check your answers"
+  [backLink]="backButton"
+  [reviewScreenValues]="reviewScreenValues"
+  [sectionStatus]="reasonForReturningSchemeStatus$ | async"
+  (formSubmitted)="handleFormSubmitted()">
+</app-review-answers>

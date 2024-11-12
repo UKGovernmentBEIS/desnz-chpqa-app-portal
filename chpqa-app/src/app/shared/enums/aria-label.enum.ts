@@ -1,0 +1,153 @@
+export enum ChangeLinkAriaLabel {
+
+  FIRST_LAST_NAME = "Change your first and last name",
+
+  REGISTERED_WITH_COMPANIES_HOUSE = "Change if you are registered with Companies House",
+  COMPANIES_HOUSE_REGISTRATION_NUMBER = "Change your Companies House registration number",
+  ORGANISATION_NAME ="Change your organisation's name",
+  ORGANISATION_ADDRESS = "Change your organisation's address",
+  CONSULTANT = "Change if you are a consultant",
+  JOB_TITLE = "Change your job title",
+  TELEPHONE_NUMBER = "Change your telephone number",
+  MOBILE_NUMBER = "Change your mobile number",
+  PASSWORD = "Change your password",
+
+  SCHEME_NAME = "Change the scheme name",
+
+  ORGANISATION_DELEGATE = "Change which organisation you want to act as a delegate",
+  DELEGATE_RESPONSIBLE_PERSON = "Change the delegate responsible person",
+
+  SITE_CONTACTS_NAME = "Change the site contact's name",
+  SITE_CONTACTS_JOB_TITLE = "Change the site contact's job title",
+  SITE_CONTACTS_EMAIL_ADDRESS = "Change the site contact's email address",
+  SITE_CONTACTS_TELEPHONE_NUMBER = "Change the site contact's telephone number",
+  SITE_CONTACTS_MOBILE_NUMBER = "Change the site contact's mobile number",
+
+  TAG_NUMBER = "Change the tag number",
+  YEAR_COMMISIONED = "Change the year the prime mover was commissioned",
+  PRIME_MOVER_ENGINE_TYPE = "Change the prime mover engine type",
+  PRIME_MOVER_ENGINE = "Change the prime mover engine",
+  MECHANICAL_LOAD = "Change if the reciprocating engine drives a mechanical load",
+  PRIME_MOVER_DOCUMENTS = "Change the uploaded prime mover documents",
+  PRIME_MOVER_COMMENTS = "Change your comments about the prime mover",
+
+  METER_TAG_NUMBER = "Change the meter tag number",
+  METER_SERIAL_NUMBER = "Change the meter serial number",
+  YEAR_INSTALLED = "Change the year the meter was installed",
+  METER_SUB_TYPE = "Change the meter sub type",
+  METER_MEASUREMNT = "Change the meter measure type",
+  METER_EXISTING_PROPOSED = "Change if the meter is existing or proposed",
+  MAIN_METER = "Change if this is the main meter",
+  OUTPUT_RANGE = "Change the meter output range",
+  OUTPUT_UNITS = "Change the meter output units",
+  UNCERTAINTY = "Change the meter uncertainty percentage",
+  METER_DOCUMENTS = "Change the uploaded meter documents",
+  METER_COMMENTS = "Change your comments about this meter",
+
+  SCHEME_GENERAL_DESCRIPTION = "Change the general description of the scheme",
+  SCHEME_START_INSTALLATION = "Change when the scheme will start installation",
+  SCHEME_START_COMMISIONING = "Change when the scheme will start commissioning",
+  SCHEME_START_INITIAL_OPERATION = "Change when the scheme will start initial operation",
+  SCHEME_START_FIRST_FIRING = "Change when the scheme will start first firing",
+  SCHEME_DOCUMENTS = "Change uploaded files to support the scheme description",
+  SCHEME_COMMENTS = "Change your comments about the scheme description",
+
+  SITE_NON_PRODUCTION_HOURS = "Change the site non-production hours",
+  SITE_PRODUCTION_HOURS = "Change the site production hours",
+  SITE_TOTAL_OPERATING_HOURS = "Change the site total operating hours",
+
+  FIRST_YEAR_OF_OPERATION_HOURS = "Change the hours of the first year of operation",
+  LONG_TERM_ANNUAL_OPERATION_HOURS = "Change the hours of long term annual operation",
+  MAX_HEAT_HOURS = "Change the hours of MaxHeat under long term annual operation",
+
+  SCHEME_LINE_DIAGRAM_DOCUMENTS = "Change your uploaded scheme line diagram documents",
+  SCHEME_LINE_DIAGRAM_COMMENTS = "Change your comments on the scheme line diagram",
+  ENERGY_FLOW_DIAGRAM_DOCUMENTS = "Change your uploaded energy flow diagram documents",
+  ENERGY_FLOW_DIAGRAM_COMMENTS = "Change your comments on the energy flow diagram",
+  ANNUAL_HEAT_PROFILE_DOCUMENTS = "Change your uploaded annual heat profile documents",
+  ANNUAL_HEAT_PROFILE_COMMENTS = "Change your comments on the annual heat profile",
+  DAILY_HEAT_PROFILE_DOCUMENTS = "Change your uploaded daily heat profile documents",
+  DAILY_HEAT_PROFILE_COMMENTS = "Change your comments on the daily heat profile",
+  HEAT_LOAD_DURATION_CURVE_DOCUMENTS = "Change your uploaded heat load duration curve documents",
+  HEAT_LOAD_DURATION_CURVE_COMMENTS = "Change your comments on the heat load duration curve",
+  HEAT_DEMANDS_DOCUMENTS = "Change your uploaded calculation of heat demans documents",
+  HEAT_DEMANDS_COMMENTS = "Change your comments on the calculation of heat demands",
+
+  PERIOD_NAME = "Change the site period name",
+  PERIOD_START_DATE = "Change the period start date",
+  PERIOD_END_DATE = "Change the period end date",
+
+  ELECTRICITY_DEMAND = "Change the base electricity demand",
+  ELECTRICITY_DEMAND_HOURS = "Change the total hours for base electricity demand",
+  ELECTRICITY_DEMAND_PEAK = "Change the peak electricity demand",
+  ELECTRICITY_DEMAND_PEAK_HOURS = "Change the total hours for peak electricity demand",
+  ELECTRICITY_DEMAND_AVERAGE = "Change the average electricity demand",
+  ELECTRICITY_DEMAND_AVERAGE_HOURS = "Change the total hours for average electricity demand",
+  HEAT_STEAM_DEMAND = "Change the base heat or steam demand",
+  HEAT_STEAM_DEMAND_HOURS = "Change the total hours for base heat or steam demand",
+  HEAT_STEAM_DEMAND_PEAK = "Change the peak heat or steam demand",
+  HEAT_STEAM_DEMAND_PEAK_HOURS = "Change the total hours for peak heat or steam demand",
+  HEAT_STEAM_DEMAND_AVERAGE = "Change the average heat or steam demand",
+  HEAT_STEAM_DEMAND_AVERAGE_HOURS = "Change the total hours for average heat or steam demand",
+
+  FUTURE_SITE_PERIOD = "Change the name of the future site period",
+  YEAR_COVERED = "Change the year the projection will cover",
+
+  PRIME_MOVER_TYPE = "Change the prime mover type",
+  PRIME_MOVER_SUBTYPE = "Change the prime mover sub type",
+  PRIME_MOVER_EXISTING_PROPOSED = "Change if the prime mover is existing or proposed",
+  PRIME_MOVER_MANUFACTURER = "Change the prime mover manufacturer",
+  PRIME_MOVER_MODEL = "Change the prime mover model",
+
+  FUEL_CATEGORY = "Change the stream fuel category",
+  FUEL_TYPE = "Change the stream fuel type",
+  FIRST_YEAR_OF_OPERATION = "Change the projected average annual demands for the scheme's first year of operation",
+  LONG_TERM_ANNUAL_OPERATION = "Change the projected average annual demands for the scheme's long term annual operation",
+  MAX_HEAT_LONG_TERM_ANNUAL_OPERATION = "Change the projected average annual demands for MaxHeat under long term annual operation",
+  METERED_OR_CALCULATED = "Change if the stream will be metered or calculated",
+  PERCENTAGE_OF_UNCERTAINTY = "Change the percentage of uncertainty for the stream",
+  POWER_CATEGORY = "Change the stream power category",
+  HEAT_CATEGORY = "Change the stream heat category",
+
+  Z_RATIO = "Change if the Z ratio is determined by plant trials",
+  REASON_FOR_NO = "Change the reason why the Z ratio cannot be determined by plant trials",
+  STEAM_EXPORT_PRESSURE = "Change the turbine export pressure",
+  STEAM_TURBINE_SIZE = "Change the turbine size",
+  Z_RATIO_SCHEME = "Change the Z ratio of this scheme",
+
+  SOS_EXEMPTION_CERTIFICATE = "Change if you need an SoS exemption certificate",
+  ROC_CERTIFICATE = "Change if you need a Renewables Obligation certificate",
+  CFD_CERTIFICATE = "Change if you need a Contracts for Difference certificate",
+  THRESHOLD_CRITERIA = "Change the threshold criteria you wish your scheme to be assessed against",
+
+  PERFORMANCE_DATA_DOCUMENTS = "Change which document you want to upload for your performance data",
+  TOTAL_HOURS_OF_OPERATION = "Change your scheme's total hours of operation",
+  MONTHS_PERIOD_COVERS = "Change how many months this period covers",
+
+  FUEL_UNCERTAINTY_ADJUSTMENT_FACTOR = "Change the fuel uncertainty adjustment factor",
+  POWER_UNCERTAINTY_ADJUSTMENT_FACTOR = "Change the power uncertainty adjustment factor",
+  HEAT_UNCERTAINTY_ADJUSTMENT_FACTOR = "Change the heat uncertainty adjustment factor",
+  UNCERTAINTY_ADJUSTMENT_FACTOR_DOCUMENTS = "Change your supporting documents about the uncertainty adjustment factors",
+  UNCERTAINTY_ADJUSTMENT_FACTOR_COMMENTS = "Change your comments about the uncertainty adjustment factors",
+
+  CLIMATE_CHANGE_LEVY_SUPPORT = "Change the amount of annual Climate Change Levy support",
+
+  ANNUAL_CARBON_PRICE_SUPPORT = "Change the amount of annual Carbon Price support",
+  ANNUAL_RENEWABLE_HEAT_INCENTIVE = "Change the amount of annual Renewable Heat Incentive uplift support",
+  ANNUAL_ROC = "Change the amount of annual Renewables Obligaton Certificate support",
+  ANNUAL_CFD = "Change the amount of annual Contracts for Difference support",
+  ANNUAL_BUSINESS_RATES_REDUCTION = "Change the amount of annual Business Rates Reduction support",
+
+
+  RECOMMEND_FOR_AUDIT = "Change if you want to recommend the scheme for audit",
+  REASONS_RECOMMEND_FOR_AUDIT = "Change the reasons you want to recommend the scheme for audit",
+  COMMENTS_FOR_AUDITOR = "Change your comments for the auditor",
+
+  HEAT_REJECTION_FACILITY = "Change if the scheme has a heat rejection facility",
+
+  TOTAL_POWER_CAPACITY_UNDER_MAX_HEAT = "Change the total power capacity under MaxHeat",
+  SELECTED_THRESHOLD = "Change the selected threshold",
+  LAST_SUBMISSION_DATE = "Last submission date",
+
+  DEFAULT = "Change",
+}

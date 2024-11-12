@@ -1,0 +1,60 @@
+<nav aria-label="Back">
+  <a [routerLink]="[BACK]" class="govuk-back-link govuk-!-margin-bottom-5">Back</a>
+</nav>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds" aria-live="polite">
+    <app-dynamic-form-errors-summary [formUpdated]="formUpdated" [form]="form" [validationMessages]="validationMessages"> </app-dynamic-form-errors-summary>
+    <span class="govuk-caption-l">Create an account</span>
+    <h1 class="govuk-heading-l">Enter organisation address</h1>
+
+    <form (ngSubmit)="onSubmit()" [formGroup]="form" [appFormError]="form">
+      <div class="govuk-form-group">
+        <div class="govuk-form-group">
+          <app-govuk-text-input
+            id="address1"
+            label="Address line 1"
+            controlName="address1"
+            maxLength="255"
+            [validationMessages]="validationMessages.address1"></app-govuk-text-input>
+        </div>
+
+        <div class="govuk-form-group">
+          <app-govuk-text-input
+            id="address2"
+            label="Address line 2 (optional)"
+            controlName="address2"
+            maxLength="255"
+            [validationMessages]="validationMessages.address2"></app-govuk-text-input>
+        </div>
+
+        <div class="govuk-form-group">
+          <app-govuk-text-input id="town-city" label="Town or city" controlName="town" [validationMessages]="validationMessages.town"></app-govuk-text-input>
+        </div>
+
+        <div class="govuk-form-group">
+          <app-govuk-text-input
+            id="county"
+            label="County (optional)"
+            controlName="county"
+            [validationMessages]="validationMessages.county"></app-govuk-text-input>
+        </div>
+
+        <div class="govuk-form-group">
+          <app-govuk-text-input
+            id="postcode"
+            label="Postcode"
+            controlName="postcode"
+            widthClass="govuk-!-width-one-quarter"
+            description="For example, B78 2ND"
+            [validationMessages]="validationMessages.postcode"></app-govuk-text-input>
+        </div>
+      </div>
+
+      <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+    </form>
+    <p class="govuk-body">
+      <a [routerLink]="[searchForAddressLink]" class="govuk-link govuk-link--no-visited-state">Search for address</a>
+    </p>
+  </div>
+</div>

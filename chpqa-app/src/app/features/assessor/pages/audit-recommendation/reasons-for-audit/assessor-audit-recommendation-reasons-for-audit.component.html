@@ -1,0 +1,47 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <nav aria-label="Back">
+      <a [routerLink]="BACK" class="govuk-back-link govuk-!-margin-top-5 govuk-!-margin-bottom-5">Back</a>
+    </nav>
+  </div>
+</div>
+
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds" aria-live="polite">
+    <span class="govuk-caption-l">Audit recommendation</span>
+    <h1 class="govuk-heading-l">What are your reasons for recommending an audit?</h1>
+    <app-dynamic-form-errors-summary [formUpdated]="formUpdated" [form]="form" [validationMessages]="validationMessages"> </app-dynamic-form-errors-summary>
+    <form [formGroup]="form" [appFormError]="form" [appFormStateSync]="form" [formName]="reviewScreenName">
+      <div
+        class="govuk-form-group"
+        [class.govuk-form-group--error]="form.invalid">
+        <p class="govuk-error-message" *ngIf="form.invalid">
+          {{validationMessages.technicalPerformanceConcerns.requireCheckboxToBeChecked}}
+        </p>
+        <div class="govuk-form-group" *ngFor="let option of options">
+          <app-govuk-checkbox-input
+            [label]="option.label"
+            [controlName]="option.controlName"
+            [disabled]="!isAssessorFormEditable"
+            [validationMessages]="option.validationMessages">
+          </app-govuk-checkbox-input>
+        </div>
+      </div>
+
+      <app-govuk-textarea-input
+        label="Comments for audit recommendation (optional)"
+        description="This will be communicated to the auditor"
+        [maxChars]="2000"
+        [disabled]="!isAssessorFormEditable"
+        controlName="comments">
+      </app-govuk-textarea-input>
+    </form>
+    <button
+      class="govuk-button"
+      data-module="govuk-button"
+      (click)="onSubmit()">
+      Continue
+    </button>
+  </div>
+</div>

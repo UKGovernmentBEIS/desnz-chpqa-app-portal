@@ -1,0 +1,12 @@
+<ng-container *ngIf="commnets$ | async as commnets">
+  <app-comments-summary
+    [formCaption]="copy.screen1.caption"
+    [formHeader]="copy.screen1.heading"
+    [description1]="copy.screen1.description1"
+    [description2]="copy.screen1.description2"
+    [subheading]="copy.screen1.subheading"
+    [basePath]="basePath$ | async"
+    [comments]="commnets">
+  </app-comments-summary>
+  <button type="submit" class="govuk-button" data-module="govuk-button" (click)="onSubmit()">{{ copy.screen1.button }}</button>
+</ng-container>

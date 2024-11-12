@@ -1,0 +1,45 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <app-dynamic-form-errors-summary
+      [formUpdated]="formUpdated"
+      [form]="form"
+      [validationMessages]="validationMessages"
+    ></app-dynamic-form-errors-summary>
+
+    <form [formGroup]="form" [appFormError]="form" (ngSubmit)="onSubmit()">
+      <div class="govuk-form-group">
+        <span class="govuk-caption-l">{{ caption }}</span>
+        <h1 class="govuk-heading-l">{{ title }}</h1>
+
+        <div class="govuk-form-group">
+          <div class="govuk-form-group">
+            <app-govuk-text-input
+              [id]="postcodeControlName"
+              [controlName]="postcodeControlName"
+              [validationMessages]="validationMessages.postcode"
+              label="Postcode"
+              description="For example, B78 2ND"
+              [attr.pattern]="ukPostcodePattern"
+            ></app-govuk-text-input>
+          </div>
+        </div>
+
+        <div class="govuk-form-group">
+          <div class="govuk-form-group">
+            <app-govuk-text-input
+              [id]="nameOrBuildingNumberControlName"
+              [controlName]="nameOrBuildingNumberControlName"
+              label="Building number or name (optional)"
+            ></app-govuk-text-input>
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" class="govuk-button" data-module="govuk-button">Find Address</button>
+    </form>
+
+    <p class="govuk-body">
+      <a [routerLink]="[navigateTo]" class="govuk-link govuk-link--no-visited-state">Enter address manually</a>
+    </p>
+  </div>
+</div>

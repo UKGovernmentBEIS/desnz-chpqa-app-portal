@@ -1,0 +1,16 @@
+.file-upload {
+  width: 100%;
+}
+
+.upload-box {
+  border: 4px dashed black;
+  padding: 4rem 2rem 0rem 2rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  height: 6rem;
+}
+
+.upload-box.dragging {
+  background-color: #e0e0e0;
+}
+

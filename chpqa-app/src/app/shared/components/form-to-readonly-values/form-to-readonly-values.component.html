@@ -1,0 +1,20 @@
+<div class="govuk-body">
+    @for (controlName of fieldOrder; track fieldOrder ) {
+        <p class="govuk-body">
+            <span class="govuk-!-font-weight-bold">
+                {{ getLabel(controlName) }}
+            </span>
+
+            <br />
+
+            <span class="govuk-hint govuk-hint--disabled">
+                {{ getHint(controlName) }}
+            </span>
+
+            <br />
+            
+            {{ form.get(controlName).value }} {{ getMetricUnit(controlName) }}
+        </p>
+    }
+</div>
+  

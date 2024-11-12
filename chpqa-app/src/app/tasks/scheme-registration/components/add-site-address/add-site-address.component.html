@@ -1,0 +1,44 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <nav aria-label="Back">
+      <a [routerLink]="[BACK]" class="govuk-back-link govuk-!-margin-bottom-5">Back</a>
+    </nav>
+  </div>
+</div>
+
+<div class="govuk-grid-row" *ngIf="form$ | async as form">
+  <div class="govuk-grid-column-two-thirds">
+    <form [formGroup]="form" (ngSubmit)="onSubmit(form)">
+      <app-dynamic-form-errors-summary [formUpdated]="formUpdated" [form]="form" [validationMessages]="validationMessages"> </app-dynamic-form-errors-summary>
+      <div class="govuk-form-group">
+        <span class="govuk-caption-xl">{{ copy.caption }}</span>
+        <h1 class="govuk-heading-l">Enter site address manually</h1>
+
+        <div class="govuk-form-group">
+          <app-govuk-text-input maxLength="255" id="address1" label="Address line 1" controlName="address1"    [validationMessages]="validationMessages.address1"> </app-govuk-text-input>
+        </div>
+
+        <div class="govuk-form-group">
+          <app-govuk-text-input maxLength="255" id="address2" label="Address line 2 (optional)" controlName="address2"> </app-govuk-text-input>
+        </div>
+
+        <div class="govuk-form-group">
+          <app-govuk-text-input id="town-city" label="Town or city" controlName="town"   [validationMessages]="validationMessages.town"> </app-govuk-text-input>
+        </div>
+
+        <div class="govuk-form-group">
+          <app-govuk-text-input id="county" label="County (optional)" controlName="county"> </app-govuk-text-input>
+        </div>
+
+        <div class="govuk-form-group">
+          <app-govuk-text-input id="postcode" label="Postcode" controlName="postcode" description="For example, B78 2ND"   [validationMessages]="validationMessages.postcode"> </app-govuk-text-input>
+        </div>
+      </div>
+
+      <button type="submit" class="govuk-button" data-module="govuk-button">{{ copy.continueButton }}</button>
+      <p class="govuk-body">
+        <a [routerLink]="[searchAddress]" class="govuk-link govuk-link--no-visited-state">Search for address</a>
+      </p>
+    </form>
+  </div>
+</div>

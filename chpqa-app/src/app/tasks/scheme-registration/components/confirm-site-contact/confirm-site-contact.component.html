@@ -1,0 +1,39 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <nav aria-label="Back">
+      <a (click)="goBack()" class="govuk-back-link govuk-!-margin-top-5 govuk-!-margin-bottom-5">Back</a>
+    </nav>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <div class="govuk-form-group">
+      <span class="govuk-caption-xl">{{ copy.caption }}</span>
+      <h1 class="govuk-heading-l">Confirm site contact</h1>
+
+      <div *ngIf="isSiteContactPerson$ | async; else newSiteContact">
+        <div *ngIf="sameSiteContact$ | async as siteContact" class="govuk-inset-text">
+          <div>{{ siteContact.firstName }} {{ siteContact.lastName }}</div>
+          <div>{{ siteContact.email }}</div>
+          <div>{{ siteContact.jobTitle }}</div>
+          <div>{{ siteContact.telephone1 }}</div>
+        </div>
+      </div>
+      <ng-template #newSiteContact>
+        <div *ngIf="newSiteContact$ | async as newSiteContact" class="govuk-inset-text">
+          <div>{{ newSiteContact.firstName }} {{ newSiteContact.lastName }}</div>
+          <div>{{ newSiteContact.email }}</div>
+          <div>{{ newSiteContact.jobTitle }}</div>
+          <div>{{ newSiteContact.telephone1 }}</div>
+        </div>
+      </ng-template>
+    </div>
+
+    <button type="button" (click)="onContinue()" class="govuk-button" data-module="govuk-button">Use this person</button>
+    <p class="govuk-body">
+      <a [routerLink]="[addDifferentSiteContactLink]" class="govuk-link govuk-link--no-visited-state">Use a different site contact</a>
+    </p>
+ 
+  </div>
+</div>

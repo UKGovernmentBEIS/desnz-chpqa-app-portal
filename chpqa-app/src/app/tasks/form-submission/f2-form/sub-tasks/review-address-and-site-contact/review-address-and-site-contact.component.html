@@ -1,0 +1,95 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <nav aria-label="Back">
+      <a (click)="goBack()" class="govuk-back-link govuk-!-margin-top-5 govuk-!-margin-bottom-5">Back</a>
+    </nav>
+  </div>
+</div>
+
+@if (viewModel$ | async; as vm) {
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds" aria-live="polite">
+      <!-- Show assessor's form validation messages -->
+      @defer (when vm.isUserAnAssessor) {
+        <app-dynamic-form-errors-summary
+          *ngIf="assessorForm"
+          [formUpdated]="assessorFormUpdated"
+          [form]="assessorForm"
+          [validationMessages]="assessorFormValidationMessages"></app-dynamic-form-errors-summary>
+      }
+
+      <span class="govuk-caption-l">{{ formTitle }}</span>
+      <h1 class="govuk-heading-l">{{ formHeader }}</h1>
+      <h1 class="govuk-heading-m">Scheme details</h1>
+      <dl class="govuk-summary-list">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Scheme Name</dt>
+          <dd class="govuk-summary-list__value">
+            {{ vm.scheme?.name }}
+          </dd>
+        </div>
+      </dl>
+      <h1 class="govuk-heading-m">Responsible person details</h1>
+      <dl class="govuk-summary-list">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">{{ selectedPersonLabel }}</dt>
+          <dd class="govuk-summary-list__value">
+            {{ vm.scheme?.responsiblePerson?.firstName + ' ' + vm.scheme?.responsiblePerson?.lastName }}
+          </dd>
+        </div>
+      </dl>
+      <h1 class="govuk-heading-m">Site details</h1>
+      <dl class="govuk-summary-list">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Site address</dt>
+          <dd class="govuk-summary-list__value">
+            <div>{{ vm.scheme?.site?.address1 }}</div>
+            <div>{{ vm.scheme?.site?.town }}</div>
+            <div>{{ vm.scheme?.site?.county }}</div>
+            <div>{{ vm.scheme?.site?.postcode }}</div>
+          </dd>
+        </div>
+      </dl>
+      <h1 class="govuk-heading-m">Site contact details</h1>
+      <dl class="govuk-summary-list">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Name</dt>
+          <dd class="govuk-summary-list__value">
+            {{ vm.scheme?.site?.contactPerson?.firstName + ' ' + vm.scheme?.site?.contactPerson?.lastName }}
+          </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Job tile</dt>
+          <dd class="govuk-summary-list__value">
+            {{ vm.scheme?.site?.contactPerson?.jobTitle }}
+          </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Email address</dt>
+          <dd class="govuk-summary-list__value">
+            {{ vm.scheme?.site?.contactPerson?.email }}
+          </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Telephone number</dt>
+          <dd class="govuk-summary-list__value">
+            {{ vm.scheme?.site?.contactPerson?.telephone1 }}
+          </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Mobile number</dt>
+          <dd class="govuk-summary-list__value">
+            {{ vm.scheme?.site?.contactPerson?.telephone2 }}
+          </dd>
+        </div>
+      </dl>
+      <ng-container *ngIf="vm.isUserAnAssessor; else confirmButton">
+        <app-review-decision-form (formSubmitted)="handleAssessorFormSubmission($event)" (formInfo)="handleAssessorFormInfo($event)"></app-review-decision-form>
+      </ng-container>
+
+      <ng-template #confirmButton>
+        <button type="submit" class="govuk-button" data-module="govuk-button" (click)="submitClick(vm.isSubmissionNonEditable)">Confirm and complete</button>
+      </ng-template>
+    </div>
+  </div>
+}

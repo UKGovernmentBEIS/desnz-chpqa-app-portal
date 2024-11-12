@@ -1,0 +1,28 @@
+<a [href]="skipLinkPath" class="govuk-skip-link" data-module="govuk-skip-link">Skip to main content</a>
+<app-header [isAuthenticated]="isAuthenticated$ | async"></app-header>
+<app-feedback-banner *ngIf="isAuthenticated$ | async"></app-feedback-banner>
+@if (scheme$ | async; as scheme) {
+  <app-organisation-info-banner
+    [organisationName]="scheme.company.name"
+    [siteName]="scheme.site.name"
+    [schemeName]="scheme.name"></app-organisation-info-banner>
+}
+<div class="govuk-width-container">
+  <main id="main-content" role="main" tabindex="-1" class="govuk-main-wrapper">
+    <ngx-spinner
+      bdColor="rgba(0,0,0,0)"
+      template="<div class='loading-template'>
+                 <img src='assets/images/spinner.gif' alt='Loading...' />
+               </div>">
+    </ngx-spinner>
+    
+    <app-timeout-modal
+      [visible]="inactivityService.showWarning"
+      [countdown]="inactivityService.countdown"
+      (staySignedIn)="inactivityService.staySignedIn()"
+      (signOut)="inactivityService.logout()"></app-timeout-modal>
+
+    <router-outlet></router-outlet>
+  </main>
+</div>
+<app-footer [isAuthenticated]="isAuthenticated$ | async"></app-footer>

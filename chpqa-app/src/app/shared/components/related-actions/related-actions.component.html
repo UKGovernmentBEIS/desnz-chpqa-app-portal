@@ -1,0 +1,14 @@
+<h2 class="govuk-heading-m" id="subsection-title">Related actions</h2>
+<section role="complementary" aria-labelledby="subsection-title">
+  <ul class="govuk-list govuk-!-font-size-16">
+    <li *ngFor="let action of relatedActions">
+      <a
+        class="govuk-link govuk-link--no-visited-state"
+        [routerLink]="action.link"
+        [relativeTo]="route"
+        [ngClass]="{disabled: (isSubmissionNonEditable$ | async) && action.text !== 'View scheme history'}"
+        >{{ action.text }}</a
+      >
+    </li>
+  </ul>
+</section>

@@ -1,0 +1,23 @@
+<div [formGroup]="rootFormGroup.form">
+  <label class="govuk-label disabled" [for]="controlName" [attr.aria-label] = "controlName">{{ label }} </label>
+  <div
+    class="govuk-form-group"
+    [class.govuk-form-group--error]="this.hasError()">
+    <app-error-message
+      class="error-message"
+      [control]="control!"
+      [validationMessages]="validationMessages"
+      id="error-{{controlName}}"></app-error-message>
+    <div class="govuk-input__wrapper" [ngClass]="widthClass">
+      <input
+        [id]="controlName"
+        [formControl]="control"
+        class="govuk-input govuk-unit-input"
+        type="number"
+        spellcheck="false"
+        min="1"
+        [attr.aria-describedby]="hasError() ? 'error-' + controlName : null" />
+      <div class="govuk-input__suffix" aria-hidden="true">{{ unit }}</div>
+    </div>
+  </div>
+</div>

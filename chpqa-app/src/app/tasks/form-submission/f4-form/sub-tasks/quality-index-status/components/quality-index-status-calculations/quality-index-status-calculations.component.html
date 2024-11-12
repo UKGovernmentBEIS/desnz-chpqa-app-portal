@@ -1,0 +1,18 @@
+<div class="govuk-details__text">
+  @if (formSubmission.submissionFormType === F4_SIMPLE) {
+    <p class="govuk-body">
+      QI = ( {{ X }} x {{ power }} ) + (
+      {{ Y }} x {{ heat }} )
+    </p>
+  } @else if (formSubmission.submissionFormType === F4_COMPLEX) {
+      <p class="govuk-body">
+        QI = ( X x power ) + ( Y x heat )
+      </p>
+      <p class="govuk-body">
+        With the figures you’ve entered, this will be:
+      </p>
+      <p class="govuk-body">
+        ( {{ X }} x {{ power }} ) + ( {{ Y }} x {{ heat }} )
+      </p>
+  }
+</div>

@@ -1,0 +1,94 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <nav aria-label="Back">
+      <a (click)="goBack()" class="govuk-back-link govuk-!-margin-bottom-5">Back</a>
+    </nav>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds" aria-live="polite">
+    <form [formGroup]="form">
+      <app-dynamic-form-errors-summary
+        [formUpdated]="formUpdated"
+        [form]="form"
+        [validationMessages]="validationMessages">
+      </app-dynamic-form-errors-summary>
+      <span class="govuk-caption-l">Meter details</span>
+      <h1 class="govuk-heading-l">What is the percentage of uncertainty?</h1>
+      <p class="govuk-body">
+        This is a percentage that shows how much your final number might be off
+        due to small errors.
+      </p>
+      <p class="govuk-body">
+        For example, if a CHP system produces 1,000 units of energy with a 2%
+        uncertainty, the actual energy could be between 980 and 1020 units.
+      </p>
+      <details class="govuk-details">
+        <summary class="govuk-details__summary">
+          <span class="govuk-details__summary-text">
+            How to calculate uncertainty
+          </span>
+        </summary>
+        <div class="govuk-details__text">
+          <ol class="govuk-list govuk-list--number">
+            <li class="govuk-list--bold-marker">
+              <div class="govuk-!-font-weight-bold">
+                Identify measurement devices
+              </div>
+              List all the devices you use for monitoring in your CHP scheme
+              (for example electricity meters, heat meters)
+            </li>
+            <li class="govuk-list--bold-marker">
+              <div class="govuk-!-font-weight-bold">
+                Obtain manufacturer's uncertainty data
+              </div>
+              Check the specifications provided by the manufacturers of these
+              devices. They usually give the uncertainty as a percentage.
+            </li>
+            <li class="govuk-list--bold-marker">
+              <div class="govuk-!-font-weight-bold">
+                Calculate uncertainty for each device
+              </div>
+              Note the uncertainty percentage for each device as specified by
+              the manufacturer
+            </li>
+            <li class="govuk-list--bold-marker">
+              <div class="govuk-!-font-weight-bold">Express uncertainty</div>
+              Ensure that all uncertainties are expressed as percentages to two
+              decimal places
+            </li>
+            <li class="govuk-list--bold-marker">
+              <div class="govuk-!-font-weight-bold">
+                Provide indicative uncertainty if needed
+              </div>
+              If you don't have all the details now, provide an estimated
+              uncertainty. This helps us understand if the uncertainty is within
+              best practice.
+            </li>
+          </ol>
+          <div class="govuk-!-font-weight-bold">Example</div>
+          <ul class="govuk-list govuk-list--bullet">
+            <li>Electricity meter: manufacturer states ±1.50%</li>
+            <li>Heat meter: manufacturer states ±0.80%</li>
+          </ul>
+        </div>
+      </details>
+      <div class="govuk-form-group">
+        <app-govuk-unit-input
+          label="Uncertainty percentage"
+          controlName="uncertainty"
+          unit="%"
+          [validationMessages]="validationMessages.uncertainty">
+        </app-govuk-unit-input>
+      </div>
+      <button
+        type="submit"
+        class="govuk-button"
+        data-module="govuk-button"
+        (click)="onContinue()">
+        Continue
+      </button>
+    </form>
+  </div>
+</div>

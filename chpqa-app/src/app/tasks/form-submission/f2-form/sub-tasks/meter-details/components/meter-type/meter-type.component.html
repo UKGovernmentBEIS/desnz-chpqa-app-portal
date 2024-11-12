@@ -1,0 +1,37 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <nav aria-label="Back">
+      <a (click)="goBack()" class="govuk-back-link govuk-!-margin-top-5 govuk-!-margin-bottom-5">Back</a>
+    </nav>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds" aria-live="polite">
+    <form [formGroup]="form" *ngIf="subtypes$ | async as types">
+      <app-dynamic-form-errors-summary
+        [formUpdated]="formUpdated"
+        [form]="form"
+        [validationMessages]="validationMessages">
+      </app-dynamic-form-errors-summary>
+      <span class="govuk-caption-l">Meter details</span>
+      <h1 class="govuk-heading-l">Select the meter type</h1>
+      <div class="govuk-form-group">
+        <app-govuk-select-input
+          [options]="types"
+          controlName="meterType"
+          label="Meter type"
+          placeholder="Choose meter type"
+          [validationMessages]="
+            validationMessages.meterType
+          "></app-govuk-select-input>
+      </div>
+      <button
+        class="govuk-button"
+        data-module="govuk-button"
+        (click)="onContinue()">
+        Continue
+      </button>
+    </form>
+  </div>
+</div>

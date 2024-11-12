@@ -1,0 +1,78 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <nav aria-label="Back">
+      <a (click)="goBack()" class="govuk-back-link govuk-!-margin-bottom-5">Back</a>
+    </nav>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <span class="govuk-caption-l">View scheme history</span>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <h1 class="govuk-heading-l govuk-!-text-break-word">Scheme history</h1>
+    <p class="govuk-body">Select a scheme year to see data, certificates and assessment results for that submission.</p>
+  </div>
+</div>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <nav aria-label="Scheme history">
+      <ng-container *ngFor="let item of history">
+        <section role="navigation">
+          <div class="govuk-grid-row">
+            <div class="govuk-grid-column-three-quarters">
+              <h1 class="govuk-heading-m">
+                {{item.year}}
+              </h1>
+            </div>
+            <div class="govuk-grid-column-one-quarter">
+              <nav class="view-year-details" aria-label="View year details">
+                <a (click)="viewYearDetails(item)" class="govuk-link">View year details</a>
+              </nav>
+            </div>
+          </div>
+          <ul class="govuk-task-list">
+            <li class="govuk-task-list__item govuk-task-list__item--with-link">
+              <div class="govuk-task-list__name-and-hint govuk-!-width-one-third">
+                Assessor result
+              </div>
+              <div class="govuk-task-list__status left-align">
+                {{item.assessorResult | assessmentOutcomeLabel}}
+              </div>
+            </li>
+
+            <li class="govuk-task-list__item govuk-task-list__item--with-link" *ngIf="item.auditDecisionSummary">
+              <div class="govuk-task-list__name-and-hint govuk-!-width-one-third">
+                Audit decision summary
+              </div>
+              <div class="govuk-task-list__status left-align">
+                {{item.auditDecisionSummary}}
+              </div>
+            </li>
+
+            <li class="govuk-task-list__item govuk-task-list__item--with-link" *ngIf="item.certificatesList.length">
+              <div class="govuk-task-list__name-and-hint govuk-!-width-one-third">
+                Certificates
+              </div>
+              <div class="govuk-task-list__status left-align">
+                @for (fileWithId of item.certificatesList; track fileWithId.fileName ) {
+                  @if (fileWithId.id) {
+                    <a class="govuk-link" (click)="onDownloadFile(fileWithId.id,  fileWithId.fileName)">
+                      {{ fileWithId.fileName }}
+                    </a><br />
+                  } @else {
+                    <p class="govuk-body">{{fileWithId.fileName}}</p>
+                  }
+                }
+              </div>
+            </li>
+          </ul>
+        </section>
+      </ng-container>
+    </nav>
+  </div>
+</div>

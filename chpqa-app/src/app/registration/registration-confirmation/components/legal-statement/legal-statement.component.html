@@ -1,0 +1,33 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <nav aria-label="Back">
+      <a [routerLink]="[BACK]" class="govuk-back-link govuk-!-margin-bottom-5">Back</a>
+    </nav>
+  </div>
+</div>
+
+@if (form$ | async; as form) {
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <form [formGroup]="form" [appFormError]="form" (ngSubmit)="onContinue(form)">
+        <div class="govuk-form-group">
+          <span class="govuk-caption-xl">Create Account</span>
+          <h1 class="govuk-heading-l">Terms and conditions declaration</h1>
+          <p class="govuk-body">These terms and conditions govern your use of the Combined Heat and Power Quality Assurance programme (CHPQA).</p>
+
+          <p class="govuk-body">You must accept them to complete the registration of your account</p>
+
+          <p class="govuk-body"><a [routerLink]="TERMS_LINK" class="govuk-link">View terms and conditions</a></p>
+
+          <h4 class="govuk-heading-m">Your response</h4>
+
+          <div class="govuk-form-group">
+            <app-govuk-radio-input controlName="agreeToTerms" [options]="options"> </app-govuk-radio-input>
+          </div>
+        </div>
+
+        <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+      </form>
+    </div>
+  </div>
+}

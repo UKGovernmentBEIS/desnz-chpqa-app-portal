@@ -1,0 +1,30 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <nav aria-label="Back">
+      <a [routerLink]="backButton" class="govuk-back-link govuk-!-margin-top-5 govuk-!-margin-bottom-5">Back</a>
+    </nav>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div *ngIf="assessorsListResponse$ | async as assessorsListResponse" class="govuk-grid-column-full" aria-live="polite">
+    <form [formGroup]="form">
+      <app-dynamic-form-errors-summary [formUpdated]="formUpdated" [form]="form" [validationMessages]="validationMessages"> </app-dynamic-form-errors-summary>
+      <div class="govuk-grid-column-two-thirds govuk-!-padding-left-0" aria-live="polite">
+        <span class="govuk-caption-l"> {{ copy.caption }}</span>
+        <h1 class="govuk-heading-l">{{ copy.heading }}</h1>
+      </div>
+      <div class="govuk-grid-column-full govuk-!-padding-left-0" aria-live="polite">
+        <app-govuk-select-input
+        controlName="secondAssessor"
+        label=""
+        placeholder="Select second technical assessor"
+        [options]="assessorsListResponse.value"
+        [validationMessages]="validationMessages.assessor"></app-govuk-select-input>
+      </div>
+    </form>
+  </div>
+  <div class="govuk-grid-column-one-quarter govuk-button-alignment">
+    <button class="govuk-button" (click)="onContinue()">{{ copy.button }}</button>
+  </div>
+</div>

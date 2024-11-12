@@ -1,0 +1,8 @@
+<app-review-answers
+  [formTitle]="'Energy flow diagram'"
+  [formHeader]="formHeader"
+  [backLink]="backButton$ | async"
+  [reviewScreenValues]="reviewScreenValues"
+  [sectionStatus]="energyFlowSectionStatus$ | async"
+  (formSubmitted)="handleFormSubmitted()">
+</app-review-answers>

@@ -1,0 +1,85 @@
+{
+  "name": "chpqa-app",
+  "version": "0.0.0",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "start:staging": "ng serve --configuration=staging",
+    "build": "ng build",
+    "watch": "ng build --watch --configuration development",
+    "lint": "ng lint",
+    "generate-chpqa-api": "rimraf ./src/app/api-services/chpqa-api/generated && npx @openapitools/openapi-generator-cli generate -i https://proxy-chpqa-dev.azurewebsites.net/swagger/v1/swagger.json -g typescript-angular -o ./src/app/api-services/chpqa-api/generated",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/animations": "^17.3.0",
+    "@angular/common": "^17.3.0",
+    "@angular/compiler": "^17.3.0",
+    "@angular/core": "^17.3.0",
+    "@angular/forms": "^17.3.0",
+    "@angular/platform-browser": "^17.3.0",
+    "@angular/platform-browser-dynamic": "^17.3.0",
+    "@angular/router": "^17.3.0",
+    "@ng-bootstrap/ng-bootstrap": "^16.0.0",
+    "@ngrx/effects": "^17.1.1",
+    "@ngrx/router-store": "^17.1.1",
+    "@ngrx/schematics": "^17.1.1",
+    "@ngrx/store": "^17.1.1",
+    "@ngrx/store-devtools": "^17.1.1",
+    "@ngx-formly/core": "^6.3.6",
+    "govuk-frontend": "^5.2.0",
+    "immer": "^10.0.4",
+    "keycloak-angular": "^15.2.1",
+    "keycloak-js": "^23.0.7",
+    "ngx-page-scroll-core": "^12.0.0",
+    "ngx-remotedata": "^8.0.0",
+    "ngx-spinner": "^17.0.0",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0",
+    "zone.js": "~0.14.4"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "^17.3.0",
+    "@angular-eslint/builder": "17.2.1",
+    "@angular-eslint/eslint-plugin": "17.2.1",
+    "@angular-eslint/eslint-plugin-template": "17.2.1",
+    "@angular-eslint/schematics": "17.2.1",
+    "@angular-eslint/template-parser": "17.2.1",
+    "@angular/cli": "~17.3.0",
+    "@angular/compiler-cli": "^17.3.0",
+    "@ngneat/spectator": "^19.0.0",
+    "@openapitools/openapi-generator-cli": "^2.13.4",
+    "@types/jest": "^29.5.12",
+    "@typescript-eslint/eslint-plugin": "6.19.0",
+    "@typescript-eslint/parser": "6.19.0",
+    "eslint": "^8.56.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "jest": "^29.7.0",
+    "jest-preset-angular": "^14.2.2",
+    "prettier": "^3.3.3",
+    "prettier-eslint": "^16.3.0",
+    "rimraf": "^6.0.1",
+    "typescript": "~5.4.0"
+  },
+  "jest": {
+    "preset": "jest-preset-angular",
+    "setupFilesAfterEnv": [
+      "<rootDir>/src/setup.jest.ts"
+    ],
+    "testPathIgnorePatterns": [
+      "<rootDir>/node_modules/",
+      "<rootDir>/dist/"
+    ],
+    "globals": {
+      "ts-jest": {
+        "tsConfig": "<rootDir>/tsconfig.spec.json",
+        "stringifyContentPathRegex": "\\.html$"
+      }
+    }
+  }
+}

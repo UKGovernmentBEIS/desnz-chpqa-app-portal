@@ -1,0 +1,38 @@
+<div [formGroup]="rootFormGroup.form">
+  <div class="file-upload">
+    <label class="govuk-label govuk-label--m disabled" [attr.for]="controlName">{{ label }} </label>
+    <p class="govuk-body">{{caption}}</p>
+    <div *ngIf="description" class="govuk-hint govuk-hint--disabled">
+      {{ description }}
+    </div>
+    <app-error-message class="error-message" [control]="control" [validationMessages]="validationMessages"> </app-error-message>
+    <div class="govuk-form-group" [class.govuk-form-group--error]="hasError()">
+      <div
+        class="upload-box"
+        (dragover)="onDragOver($event)"
+        (dragleave)="onDragLeave($event)"
+        (drop)="onDrop($event)"
+        [class.dragging]="isDragging"
+        [attr.id]="controlName">
+        <input
+          hidden
+          type="file"
+          id="fileUploadInput"
+          #fileInput
+          multiple
+          [attr.id]="controlName"
+          [attr.name]="controlName"
+          (change)="onFileSelected($event)" />
+
+        <div>
+          <div class="govuk-grid-column-one-half">
+            <p class="govuk-body">Drag and drop files here or</p>
+          </div>
+          <div class="govuk-grid-column-one-half">
+            <button type="button" class="govuk-button govuk-button--secondary" data-module="govuk-button" (click)="fileInput.click()">Choose documents</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

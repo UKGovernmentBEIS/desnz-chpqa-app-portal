@@ -1,0 +1,18 @@
+<section id="responsible-dashboard">
+  <div *ngIf="dashboardResponse$ | async as remoteData">
+    <!-- Unhappy path: handle errors -->
+    <ng-container *ngIf="remoteData | isFailure">
+      <h4 style="color: red">{{ remoteData | failureValue }}</h4>
+    </ng-container>
+
+    <!-- Happy path (success) -->
+    <ng-container *ngIf="remoteData | isSuccess as response">
+      <app-dashboard
+        [isUserAnAssessor]="false"
+        [webCopy]="webCopy"
+        [schemes]="schemes"
+        (schemeSelected)="selectScheme($event)"
+      ></app-dashboard>
+    </ng-container>
+  </div>
+</section>

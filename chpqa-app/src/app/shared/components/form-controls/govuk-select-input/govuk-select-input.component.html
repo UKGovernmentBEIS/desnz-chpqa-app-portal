@@ -1,0 +1,25 @@
+<div [formGroup]="rootFormGroup.form">
+  <label [attr.for]="controlName" class="govuk-label">{{ label }}</label>
+  <div
+    class="govuk-form-group"
+    [class.govuk-form-group--error]="this.hasError()">
+    <app-error-message
+      class="error-message"
+      [control]="control"
+      [validationMessages]="validationMessages">
+    </app-error-message>
+    <div [ngClass]="widthClass">
+    <select
+      [id]="controlName"
+      [formControlName]="controlName"
+      class="govuk-select">
+      <option value="" disabled selected>
+        {{ placeholder }}
+      </option>
+      <option *ngFor="let option of options" [ngValue]="option">
+        {{ option.name }}
+      </option>
+    </select>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,47 @@
+@if (vm$ | async; as vm) {
+  <nav aria-label="Back">
+    <a [routerLink]="[vm.backUrl]" class="govuk-back-link govuk-!-margin-bottom-5">Back</a>
+  </nav>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <div class="govuk-form-group">
+        <span class="govuk-caption-l">Create an account</span>
+        <h1 class="govuk-heading-l">Confirm organisation address</h1>
+        <p class="govuk-body">This is your company's address as the Responsible Person or consultant.</p>
+
+        <div class="govuk-inset-text">
+          <div *ngIf="vm?.organisation?.name">{{ vm.organisation?.name }}<br /></div>
+          <div *ngIf="vm?.organisation?.address1">{{ vm.organisation?.address1 }}<br /></div>
+          <div *ngIf="vm?.organisation?.address2">{{ vm.organisation?.address2 }}<br /></div>
+          <div *ngIf="vm?.organisation?.town">{{ vm.organisation?.town }}<br /></div>
+          <div *ngIf="vm?.organisation?.county">{{ vm.organisation?.county }}<br /></div>
+          <div *ngIf="vm?.organisation?.postcode">{{ vm.organisation?.postcode }}<br /></div>
+          <div>
+            @for (sicCode of vm.organisationSicCodes; track sicCode.id) {
+                SIC Code: {{ sicCode.name }}: {{ sicCode.description }}<br />
+            } @empty {
+              SIC Code: -
+            }
+          </div>
+        </div>
+      </div>
+
+      <button
+        type="button"
+        (click)="onContinue()"
+        class="govuk-button"
+        data-module="govuk-button">
+        Use this address
+      </button>
+
+      <p class="govuk-body">
+        <a
+          [routerLink]="[searchAddress]"
+          class="govuk-link govuk-link--no-visited-state"
+          >Use a different address</a
+        >
+      </p>
+    </div>
+  </div>
+}

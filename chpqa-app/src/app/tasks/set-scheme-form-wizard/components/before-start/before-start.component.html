@@ -1,0 +1,34 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <nav aria-label="Back">
+      <a [routerLink]="[BACK]" class="govuk-back-link govuk-!-margin-top-5 govuk-!-margin-bottom-5">Back</a>
+    </nav>
+  </div>
+</div>
+
+<div class="govuk-grid-row" *ngIf="scheme$ | async as scheme">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-l">Scheme details and performance</h1>
+
+    <p class="govuk-body">
+      This form will take you approximately 30 minutes to complete.
+    </p>
+
+    <h2 class="govuk-heading-m">Before you start</h2>
+
+    <p class="govuk-body">You will need:</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>diagrams showing all activities for the scheme</li>
+      <li>details of the equipment involved in the scheme</li>
+      <li>monitoring data for the scheme</li>
+      <li>information about the scheme’s output</li>
+    </ul>
+
+    <button
+      class="govuk-button"
+      data-module="govuk-button"
+      (click)="onContinue(scheme.id)">
+      Continue
+    </button>
+  </div>
+</div>

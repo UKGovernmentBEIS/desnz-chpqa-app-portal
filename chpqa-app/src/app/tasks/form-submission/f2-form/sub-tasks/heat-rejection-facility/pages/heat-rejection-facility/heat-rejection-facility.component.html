@@ -1,0 +1,56 @@
+<section [id]="webCopy.sectionId">
+  <!-- Back Button Section -->
+  <ng-container *ngTemplateOutlet="backButtonSection"></ng-container>
+  <!-- Main Form Section -->
+  <ng-container *ngTemplateOutlet="mainFormSection"></ng-container>
+</section>
+
+<ng-template #backButtonSection>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <nav aria-label="Back">
+        <a [routerLink]="backButton" class="govuk-back-link govuk-!-margin-top-5 govuk-!-margin-bottom-5">{{ webCopy.backButton }}</a>
+      </nav>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #mainFormSection>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds" aria-live="polite">
+      <!-- Error Summary Component -->
+      <app-dynamic-form-errors-summary
+        [form]="form"
+        [validationMessages]="validationMessages"
+      ></app-dynamic-form-errors-summary>
+      <span class="govuk-caption-l">{{ webCopy.caption }}</span>
+      <h1 class="govuk-heading-l">{{ webCopy.heading }}</h1>
+
+
+      <!-- Form Section -->
+      <ng-container *ngIf="form">
+        <form
+          [formGroup]="form"
+          [appFormError]="form"
+          [appFormStateSync]="form"
+          [formName]="HeatRejectionFacilitySharedStateFormEnum.HeatRejectionFacilityFormInputs"
+        >
+          <ng-container *ngFor="let input of formInputs">
+            <div class="govuk-form-group">
+              <app-govuk-radio-input
+                [label]="input.label"
+                [controlName]="input.controlName"
+                [options]="options"
+                [validationMessages]="input.validationMessages"
+              ></app-govuk-radio-input>
+            </div>
+          </ng-container>
+        </form>
+      </ng-container>
+
+      <button class="govuk-button" data-module="govuk-button" (click)="onContinue()">
+        {{ webCopy.continueButton }}
+      </button>
+    </div>
+  </div>
+</ng-template>

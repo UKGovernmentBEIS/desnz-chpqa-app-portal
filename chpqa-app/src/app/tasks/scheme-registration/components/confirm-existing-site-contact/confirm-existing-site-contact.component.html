@@ -1,0 +1,31 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <nav aria-label="Back">
+      <a [routerLink]="[BACK]" class="govuk-back-link govuk-!-margin-bottom-5">Back</a>
+    </nav>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <div class="govuk-form-group">
+      <span class="govuk-caption-xl">{{ copy.caption }}</span>
+      <h1 class="govuk-heading-l">Confirm existing site contact</h1>
+
+      <p class="govuk-body">A contact already exists for this site. You can use this site contact or replace it with a different contact.</p>
+
+      <div *ngIf="existingSiteContact$ | async as siteContact" class="govuk-inset-text">
+        <div>{{ siteContact?.firstName }} {{ siteContact?.lastName }}</div>
+        <div>{{ siteContact?.email }}</div>
+        <div>{{ siteContact?.jobTitle }}</div>
+        <div>{{ siteContact?.telephone1 }}</div>
+      </div>
+    </div>
+
+    <button type="button" (click)="onContinue()" class="govuk-button" data-module="govuk-button">Use this person</button>
+
+    <p class="govuk-body">
+      <a [routerLink]="[addDifferentSiteContactLink]" class="govuk-link govuk-link--no-visited-state">Use a different site contact</a>
+    </p>
+  </div>
+</div>

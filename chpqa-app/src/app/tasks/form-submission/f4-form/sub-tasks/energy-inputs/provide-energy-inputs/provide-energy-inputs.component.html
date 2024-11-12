@@ -1,0 +1,111 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <nav aria-label="Back">
+      <a [routerLink]="backButton" class="govuk-back-link govuk-!-margin-top-5 govuk-!-margin-bottom-5">Back</a>
+    </nav>
+  </div>
+</div>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full" aria-live="polite">
+    <!-- Show assessor's form validation messages -->
+    @defer (when isUserAnAssessor) {
+      <app-dynamic-form-errors-summary
+        *ngIf="assessorForm"
+        [formUpdated]="assessorFormUpdated"
+        [form]="assessorForm"
+        [validationMessages]="assessorFormValidationMessages"></app-dynamic-form-errors-summary>
+    } @placeholder {
+      <app-dynamic-form-errors-summary
+        [formUpdated]="formUpdated"
+        [form]="form"
+        [validationMessages]="validationMessages"> </app-dynamic-form-errors-summary>
+    }
+
+    <div class="govuk-grid-column-two-thirds govuk-!-padding-left-0" aria-live="polite">
+      <span class="govuk-caption-l">Energy inputs</span>
+      <h1 class="govuk-heading-l">{{ formHeader }}</h1>
+      @if (!isUserAnAssessor) {
+        <p class="govuk-body">
+          You'll need to provide energy inputs for all metering equipment that you use to monitor the scheme's performance. You only need to provide the annual total.
+        </p>
+        <p class="govuk-body">
+          You can complete this section automatically by downloading our spreadsheet template and uploading its completed version on the upload performance data
+          screen.
+        </p>
+        <p class="govuk-body">All fuel energy inputs should be based on gross calorific value (higher calorific value) i.e. as shown on gas bills.</p>
+      }
+    </div>
+    <app-perfomance-summary-list
+      categoryLabel="Fuel category"
+      typeLabel="Fuel type"
+      measurementUnit="kWh"
+      [selectedScheme]="selectedScheme$ | async"
+      [showTFI]="isComplex$ | async"
+      [details]="energyInputs$ | async"
+      (change)="handleChange($event)"></app-perfomance-summary-list>
+
+    <h1 class="govuk-heading-m">Total fuel inputs</h1>
+    <div class="govuk-body">
+      <div class="govuk-!-font-weight-bold">Total fuel and energy inputs</div>
+      @if (totalFuelInputs$ | async; as totalFuelInputs) {
+        <div class="govuk-body">
+          {{ totalFuelInputs !== null ? (totalFuelInputs | decimalFormatter) + ' kWh' : '-' }}
+        </div>
+      }@else {
+        <p class="govuk-body">
+         0 kWh
+        </p>
+      }
+    </div>
+    @if (isComplex$ | async) {
+      @defer (when isSubmittedOrInReview) {
+        <app-form-to-readonly-values
+          [form]="form"
+          [fieldOrder]="fieldOrder"
+          [fieldData]="webCopyFormControls"
+        ></app-form-to-readonly-values>
+      }
+      
+      @if (!isSubmittedOrInReview) {
+        <form [formGroup]="form">
+          <div class="govuk-body">
+            <div class="govuk-form-group">
+              <div class="govuk-!-font-weight-bold">
+                {{ webCopyFormControls.estimatedTotalFuelEnergyPrimeEngines.label }}
+              </div>
+              <app-govuk-unit-input
+                [label]="webCopyFormControls.estimatedTotalFuelEnergyPrimeEngines.hint"
+                controlName="estimatedTotalFuelEnergyPrimeEngines"
+                unit="%"
+                widthClass="govuk-input--width-5"
+                [validationMessages]="validationMessages.estimatedTotalFuelEnergyPrimeEngines"
+              ></app-govuk-unit-input>
+            </div>
+            <div class="govuk-form-group">
+              <div class="govuk-!-font-weight-bold">
+                {{ webCopyFormControls.estimatedTotalFuelEnergyBoilers.label }}
+              </div>
+              <app-govuk-unit-input
+                [label]="webCopyFormControls.estimatedTotalFuelEnergyBoilers.hint"
+                controlName="estimatedTotalFuelEnergyBoilers"
+                unit="%"
+                widthClass="govuk-input--width-5"
+                [validationMessages]="validationMessages.estimatedTotalFuelEnergyBoilers"
+              ></app-govuk-unit-input>
+            </div>
+          </div>
+        </form>
+      }
+    }
+    @defer (when isUserAnAssessor) {
+      <div class="govuk-grid-column-two-thirds govuk-!-padding-left-0" aria-live="polite">
+        <app-review-decision-form (formInfo)="handleAssessorFormInfo($event)" (formSubmitted)="handleAssessorFormSubmission($event)"></app-review-decision-form>
+      </div>
+    }
+    @if (!isUserAnAssessor) {
+      <button class="govuk-button" data-module="govuk-button" (click)="submit()">
+        {{ (areEnergyInputsCompleted$ | async) ? 'Confirm and complete' : 'Continue' }}
+      </button>
+    }
+  </div>
+</div>

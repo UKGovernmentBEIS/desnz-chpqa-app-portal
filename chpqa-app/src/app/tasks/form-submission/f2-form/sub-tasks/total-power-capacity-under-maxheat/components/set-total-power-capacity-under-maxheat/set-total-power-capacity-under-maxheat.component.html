@@ -1,0 +1,50 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <nav aria-label="Back">
+      <a [routerLink]="[BACK]" class="govuk-back-link govuk-!-margin-top-5 govuk-!-margin-bottom-5">Back</a>
+    </nav>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds" aria-live="polite">
+    <form [formGroup]="form">
+      <app-dynamic-form-errors-summary
+        [formUpdated]="formUpdated"
+        [form]="form"
+        [validationMessages]="validationMessages">
+      </app-dynamic-form-errors-summary>
+      <span class="govuk-caption-l">Total Power under MaxHeat</span>
+      <h1 class="govuk-heading-l">
+        Provide the total power capacity of this scheme under MaxHeat conditions
+      </h1>
+
+      <p class="govuk-body">
+        MaxHeat is the maximum power output your scheme can produce while
+        operating under the highest heat demand conditions.
+      </p>
+
+      <p class="govuk-body">
+        We need this figure to assess the efficiency and performance of your
+        scheme.
+      </p>
+
+      <div class="govuk-form-group">
+        <app-govuk-unit-input
+          label="Total power capacity under MaxHeat conditions"
+          controlName="totalPowerCapacityUnderMaxHeat"
+          widthClass="govuk-!-width-one-third"
+          unit="MWh"
+          [validationMessages]="
+            validationMessages.totalPowerCapacityUnderMaxHeat
+          "></app-govuk-unit-input>
+      </div>
+      <button
+        class="govuk-button"
+        data-module="govuk-button"
+        (click)="onContinue()">
+        Continue
+      </button>
+    </form>
+  </div>
+</div>

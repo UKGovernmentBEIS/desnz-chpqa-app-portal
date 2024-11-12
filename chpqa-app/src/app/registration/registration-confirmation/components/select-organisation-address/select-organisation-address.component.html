@@ -1,0 +1,20 @@
+<nav aria-label="Back">
+  <a [routerLink]="[BACK]" class="govuk-back-link govuk-!-margin-bottom-5">Back</a>
+</nav>
+
+@if (vm$ | async; as vm) {
+  <app-address-select
+    caption="Create an account"
+    title="Select organisation address"
+    [navigateToEnterAddressManually]="addOrganisationAddressLink"
+    [navigateToSearchAgain]="BACK"
+    [searchCriteria]="
+      vm.searchCriteria?.postcode +
+      ' ' +
+      (vm.searchCriteria?.nameOrBuildingNumber ?? '')
+    "
+    [searchResults]="vm.searchResults"
+    [selectedResult]="vm.selectedResult"
+    (search)="onSubmit($event)"
+  ></app-address-select>
+}

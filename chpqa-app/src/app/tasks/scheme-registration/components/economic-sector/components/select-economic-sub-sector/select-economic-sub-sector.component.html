@@ -1,0 +1,33 @@
+<div class="govuk-grid-row">
+  <nav aria-label="Back">
+    <a [routerLink]="[BACK]" class="govuk-back-link govuk-!-margin-bottom-5">Back</a>
+  </nav>
+</div>
+
+@if (form$ | async; as form) {
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds" aria-live="polite">
+
+      <form [formGroup]="form" [appFormError]="form">
+        <span class="govuk-caption-l">{{ copy.caption}}</span>
+        <h1 class="govuk-heading-l">Which sub-sector does this scheme belong to?</h1>
+
+        <app-govuk-select-input
+          controlName="econSubSector"
+          placeholder="Select sector"
+          [options]="availableEconomicSubSectors"
+        ></app-govuk-select-input>
+
+        <button
+          type="submit"
+          class="govuk-button"
+          data-module="govuk-button"
+          (click)="onContinue(form)"
+        >
+        {{ copy.continueButton }}
+        </button>
+      </form>
+
+    </div>
+  </div>
+}

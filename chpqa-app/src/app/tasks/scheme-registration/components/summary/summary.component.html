@@ -1,0 +1,240 @@
+@if (vm$ | async; as vm) {
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <nav aria-label="Back">
+        <a [routerLink]="[BACK]" class="govuk-back-link govuk-!-margin-bottom-5">Back</a>
+      </nav>
+    </div>
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds" aria-live="polite">
+      <h1 class="govuk-heading-l">Check your answers</h1>
+
+      <h2 class="govuk-heading-m">Scheme details</h2>
+      <dl class="govuk-summary-list">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Scheme name</dt>
+          <dd class="govuk-summary-list__value">
+            {{ vm.scheme.name }}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a
+              class="govuk-body govuk-link govuk-link--no-visited-state"
+              [attr.aria-label]="ChangeLinkAriaLabel.SCHEME_NAME"
+              [routerLink]="[ENTER_SCHEME_NAME]"
+              >Change</a
+            >
+          </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            {{ sicOrEconSectionLabel }}
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{ sicOrEconSectionValue }}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            @if (showChangeButton) {
+              <a
+                class="govuk-body govuk-link govuk-link--no-visited-state"
+                [routerLink]="[SELECT_SIC_OR_ECON]"
+                [attr.aria-label]="sicOrEconAriaLabel"
+              >
+                Change
+              </a>
+            }
+          </dd>
+        </div>
+      </dl>
+
+      <h2 class="govuk-heading-m">Responsible person details</h2>
+      <dl class="govuk-summary-list">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Selected person</dt>
+          <dd class="govuk-summary-list__value">
+            {{ vm.scheme.responsiblePerson.firstName }}
+            {{ vm.scheme.responsiblePerson.lastName }}
+          </dd>
+        </div>
+      </dl>
+
+      <h2 class="govuk-heading-m">Site details</h2>
+      <dl class="govuk-summary-list">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Site address</dt>
+          <dd class="govuk-summary-list__value">
+            {{ vm.scheme.site.address1 }}<br/>
+            {{ vm.scheme.site.town }}<br/>
+            {{ vm.scheme.site.county }}<br/>
+            {{ vm.scheme.site.postcode }}
+          </dd>
+        </div>
+      </dl>
+      <h2 class="govuk-heading-m">Site contact details</h2>
+      <dl class="govuk-summary-list">
+          @if (vm.scheme.site.areYouTheSiteContactPerson) {
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">Name</dt>
+              <dd class="govuk-summary-list__value">
+                {{ vm.user?.firstName }}                {{ vm.user?.lastName }}
+              </dd>
+              <dd class="govuk-summary-list__actions">
+                <a
+                  class="govuk-body govuk-link govuk-link--no-visited-state"
+                  [routerLink]="[SITE_CONTACT_DETAILS]"
+                  [attr.aria-label]="ChangeLinkAriaLabel.SITE_CONTACTS_NAME"
+                  >Change</a
+                >
+              </dd>
+            </div>
+
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">Job title</dt>
+              <dd class="govuk-summary-list__value">
+                {{ vm.user?.jobTitle }}
+              </dd>
+              <dd class="govuk-summary-list__actions">
+                <a
+                  class="govuk-body govuk-link govuk-link--no-visited-state"
+                  [routerLink]="[SITE_CONTACT_DETAILS]"
+                  [attr.aria-label]="ChangeLinkAriaLabel.SITE_CONTACTS_JOB_TITLE"
+                  >Change</a
+                >
+              </dd>
+            </div>
+
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">Email address</dt>
+              <dd class="govuk-summary-list__value">
+                {{ vm.user?.email }}
+              </dd>
+              <dd class="govuk-summary-list__actions">
+                <a
+                  class="govuk-body govuk-link govuk-link--no-visited-state"
+                  [routerLink]="[SITE_CONTACT_DETAILS]"
+                  [attr.aria-label]="ChangeLinkAriaLabel.SITE_CONTACTS_EMAIL_ADDRESS"
+                  >Change</a
+                >
+              </dd>
+            </div>
+
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">Telephone number</dt>
+              <dd class="govuk-summary-list__value">
+                {{ vm.user?.telephone1 }}
+              </dd>
+              <dd class="govuk-summary-list__actions">
+                <a
+                  class="govuk-body govuk-link govuk-link--no-visited-state"
+                  [routerLink]="[SITE_CONTACT_DETAILS]"
+                  [attr.aria-label]="ChangeLinkAriaLabel.SITE_CONTACTS_TELEPHONE_NUMBER"
+                  >Change</a
+                >
+              </dd>
+            </div>
+
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">Mobile number</dt>
+              <dd class="govuk-summary-list__value">
+                {{ vm.user?.telephone2 }}
+              </dd>
+              <dd class="govuk-summary-list__actions">
+                <a
+                  class="govuk-body govuk-link govuk-link--no-visited-state"
+                  [routerLink]="[SITE_CONTACT_DETAILS]"
+                  [attr.aria-label]="ChangeLinkAriaLabel.SITE_CONTACTS_MOBILE_NUMBER"
+                  >Change</a
+                >
+              </dd>
+            </div>
+          } @else {
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">Name</dt>
+              <dd class="govuk-summary-list__value">
+                {{ vm.scheme.site?.contactPerson?.firstName }}
+                {{ vm.scheme.site?.contactPerson?.lastName }}
+              </dd>
+              <dd class="govuk-summary-list__actions">
+                <a
+                  class="govuk-body govuk-link govuk-link--no-visited-state"
+                  [routerLink]="[SITE_CONTACT_DETAILS]"
+                  [attr.aria-label]="ChangeLinkAriaLabel.SITE_CONTACTS_NAME"
+                  >Change</a
+                >
+              </dd>
+            </div>
+
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">Job title</dt>
+              <dd class="govuk-summary-list__value">
+                {{ vm.scheme.site?.contactPerson?.jobTitle }}
+              </dd>
+              <dd class="govuk-summary-list__actions">
+                <a
+                  class="govuk-body govuk-link govuk-link--no-visited-state"
+                  [routerLink]="[SITE_CONTACT_DETAILS]"
+                  [attr.aria-label]="ChangeLinkAriaLabel.SITE_CONTACTS_JOB_TITLE"
+                  >Change</a
+                >
+              </dd>
+            </div>
+
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">Email address</dt>
+              <dd class="govuk-summary-list__value">
+                {{ vm.scheme.site?.contactPerson?.email }}
+              </dd>
+              <dd class="govuk-summary-list__actions">
+                <a
+                  class="govuk-body govuk-link govuk-link--no-visited-state"
+                  [routerLink]="[SITE_CONTACT_DETAILS]"
+                  [attr.aria-label]="ChangeLinkAriaLabel.SITE_CONTACTS_EMAIL_ADDRESS"
+                  >Change</a
+                >
+              </dd>
+            </div>
+
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">Telephone number</dt>
+              <dd class="govuk-summary-list__value">
+                {{ vm.scheme.site?.contactPerson?.telephone1 }}
+              </dd>
+              <dd class="govuk-summary-list__actions">
+                <a
+                  class="govuk-body govuk-link govuk-link--no-visited-state"
+                  [routerLink]="[SITE_CONTACT_DETAILS]"
+                  [attr.aria-label]="ChangeLinkAriaLabel.SITE_CONTACTS_TELEPHONE_NUMBER"
+                  >Change</a
+                >
+              </dd>
+            </div>
+
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">Mobile number</dt>
+              <dd class="govuk-summary-list__value">
+                {{ vm.scheme.site?.contactPerson?.telephone2 }}
+              </dd>
+              <dd class="govuk-summary-list__actions">
+                <a
+                  class="govuk-body govuk-link govuk-link--no-visited-state"
+                  [routerLink]="[SITE_CONTACT_DETAILS]"
+                  [attr.aria-label]="ChangeLinkAriaLabel.SITE_CONTACTS_MOBILE_NUMBER"
+                  >Change</a
+                >
+              </dd>
+            </div>
+          }
+      </dl>
+
+      <button
+        type="submit"
+        class="govuk-button"
+        data-module="govuk-button"
+        (click)="onSubmit()">
+        Confirm and complete
+      </button>
+    </div>
+  </div>
+
+}

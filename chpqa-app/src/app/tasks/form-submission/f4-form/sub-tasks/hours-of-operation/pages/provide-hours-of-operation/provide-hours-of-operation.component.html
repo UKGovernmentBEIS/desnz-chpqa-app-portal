@@ -1,0 +1,39 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <nav aria-label="Back">
+      <a [routerLink]="[BACK]" skipLocationChange class="govuk-back-link govuk-!-margin-bottom-5">Back</a>
+    </nav>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds" aria-live="polite">
+    <form [formGroup]="form" [appFormStateSync]="form" [formName]="HoursOfOperationSharedStateFormEnum.HoursOfOperationFormInputs">
+      <app-dynamic-form-errors-summary [formUpdated]="formUpdated" [form]="form" [validationMessages]="validationMessages"> </app-dynamic-form-errors-summary>
+      <span class="govuk-caption-l">Hours of operation</span>
+      <h1 class="govuk-heading-l">What are your hours of operation?</h1>
+      <p class="govuk-body">
+        These will usually be spread over 12 months from January of each year, or over a 7 month period for Residential Community Heating schemes.
+      </p>
+      <div class="govuk-form-group">
+        <app-govuk-number-input
+          label="Total hours of operation"
+          controlName="hoursOfOperation"
+          widthClass="govuk-!-width-one-quarter"
+          [validationMessages]="validationMessages.hoursOfOperation">
+        </app-govuk-number-input>
+      </div>
+      @if ((submissionFormType$ | async) === SubmissionFormType.F4) {
+        <div class="govuk-form-group">
+          <app-govuk-number-input
+            label="How many months does this period cover?"
+            controlName="months"
+            widthClass="govuk-!-width-one-quarter"
+            [validationMessages]="validationMessages.months">
+          </app-govuk-number-input>
+        </div>
+      }
+      <button type="submit" class="govuk-button" data-module="govuk-button" (click)="onContinue()">Continue</button>
+    </form>
+  </div>
+</div>

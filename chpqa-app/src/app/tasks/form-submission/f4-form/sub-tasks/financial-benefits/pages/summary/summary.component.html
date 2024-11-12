@@ -1,0 +1,9 @@
+<app-review-answers
+  formHeader="Check your answers"
+  formTitle="Financial benefits"
+  [backLink]="backButton$ | async"
+  [reviewScreenValues]="reviewScreenValues"
+  [sectionStatus]="financialBenefitsSectionStatus$ | async"
+  customWidthClass="govuk-grid-column-full"
+  (formSubmitted)="handleFormSubmitted($event)">
+</app-review-answers>

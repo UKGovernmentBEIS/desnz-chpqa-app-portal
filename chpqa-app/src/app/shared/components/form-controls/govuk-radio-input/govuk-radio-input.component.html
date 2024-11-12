@@ -1,0 +1,50 @@
+<div
+  [formGroup]="rootFormGroup.form">
+  <label [class]="'govuk-label disabled ' + additionalClass" [attr.aria-label] = "controlName" [for]="controlName">{{ label }} </label>
+  <div *ngIf="description" class="govuk-hint govuk-hint--disabled">
+    {{ description }}
+  </div>
+  <div
+  class="govuk-form-group"
+  [class.govuk-form-group--error]="this.hasError()">
+  <app-error-message
+    class="error-message"
+    [control]="control"
+    [validationMessages]="validationMessages"></app-error-message>
+  <div class="govuk-radios" data-module="govuk-radios"  [attr.id]="controlName">
+    <ng-container *ngFor="let option of options; let i = index">
+      <div class="govuk-radios__item">
+        <input
+          class="govuk-radios__input"
+          [id]="controlName + '-' + i"
+          [name]="controlName"
+          type="radio"
+          [value]="option"
+          [formControlName]="controlName"
+          [checked]="control.value?.value === option.value"
+          [attr.disabled]="option.disabled || disabled ? '' : null" />
+        <label
+          class="govuk-label govuk-radios__label"
+          [innerHTML]="option.label"
+          [for]="controlName + '-' + i"
+        ></label>
+        <div *ngIf="option.hint && option.disabled" id="signIn-item-hint" class="govuk-hint govuk-radios__hint">
+          {{option.hint}}
+        </div>
+      </div>
+      <div class="govuk-radios__conditional" [ngSwitch]="control.value">
+        <div *ngSwitchCase="option">
+          <ng-container *ngIf="option.inputConfig">
+            <ng-container
+              *ngComponentOutlet="
+                getComponentType(option.inputConfig);
+                inputs: createInputs(option.inputConfig)
+              ">
+            </ng-container>
+          </ng-container>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+  </div>
+</div>

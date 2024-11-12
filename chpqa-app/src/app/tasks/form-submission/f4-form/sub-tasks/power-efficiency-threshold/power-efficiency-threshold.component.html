@@ -1,0 +1,28 @@
+@if (vm$ | async; as vm) {
+
+  <app-threshold-calculations>
+    <ng-template #caption>
+      <span class="govuk-caption-l">Power efficiency status</span>
+    </ng-template>
+
+    <ng-template #header>
+      <app-header [displayHeader]="vm.displayTemplate.header"></app-header>
+    </ng-template>
+
+    <ng-template #body>
+      <app-body [displayBody]="vm.displayTemplate.body"></app-body>
+    </ng-template>
+
+    <ng-template #threshold>
+      <p class="govuk-body">{{ vm.submissionForm.powerEfficiencyThreshold }}%</p>
+    </ng-template>
+
+    <ng-template #calculations>
+      <app-calculations
+        [displayCalculations]="vm.displayTemplate.calculations"
+        [submissionForm]="vm.submissionForm"
+      ></app-calculations>
+    </ng-template>
+  </app-threshold-calculations>
+
+}

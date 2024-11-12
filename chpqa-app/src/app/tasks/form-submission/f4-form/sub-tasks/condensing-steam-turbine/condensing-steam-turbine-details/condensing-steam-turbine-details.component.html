@@ -1,0 +1,141 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <nav aria-label="Back">
+      <a [routerLink]="backButton" class="govuk-back-link govuk-!-margin-top-5 govuk-!-margin-bottom-5">Back</a>
+    </nav>
+  </div>
+</div>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds" aria-live="polite">
+    <app-dynamic-form-errors-summary
+      [formUpdated]="formUpdated"
+      [form]="form"
+      [validationMessages]="validationMessages">
+    </app-dynamic-form-errors-summary>
+    <form [formGroup]="form">
+      <span class="govuk-caption-l">Condensing steam turbine details</span>
+      <h1 class="govuk-heading-l">
+        Provide your condensing steam turbine details
+      </h1>
+      <p class="govuk-body">
+        As your scheme has a condensing steam turbine, you’ll need to provide
+        the following details.
+      </p>
+      <div class="govuk-form-group">
+        <app-govuk-radio-input
+          controlName="zRatioDetermined"
+          label="Is the Z ratio of this scheme determined by plant trials?"
+          [options]="zRatioDeterminedOptions"
+          [validationMessages]="validationMessages.zRatioDetermined">
+        </app-govuk-radio-input>
+      </div>
+      <div class="govuk-form-group">
+        <app-govuk-unit-input
+          label="Steam turbine size"
+          controlName="steamTurbineSize"
+          unit="MWe"
+          widthClass="govuk-!-width-one-third"
+          [validationMessages]="validationMessages.steamTurbineSize">
+        </app-govuk-unit-input>
+      </div>
+      <div class="govuk-form-group">
+        <app-govuk-unit-input
+          label="Steam export pressure"
+          controlName="steamExportPressure"
+          unit="Bar(a)"
+          widthClass="govuk-!-width-one-third"
+          [validationMessages]="validationMessages.steamExportPressure">
+        </app-govuk-unit-input>
+      </div>
+      <details class="govuk-details">
+        <summary class="govuk-details__summary">
+          <span class="govuk-details__summary-text">
+            How to calculate the Z ratio
+          </span>
+        </summary>
+        <div class="govuk-details__text">
+          <p class="govuk-!-font-weight-bold">Measurement method</p>
+          You will need to:
+          <ul class="govuk-list govuk-list--bullet">
+            <li>carefully manipulate the CHP operation</li>
+            <li>
+              ensure you have adequate metering of power and steam outputs
+            </li>
+            <li>
+              decide how to carry out the test without disrupting operations or
+              putting plant or personnel at risk
+            </li>
+          </ul>
+          <ol class="govuk-list govuk-list--number">
+            <li>Start with the condensers at the highest load possible </li>
+            <li>
+              Ensure boilers supplying the turbine steam are on fixed output
+              (firing set point) to give a constant flow, pressure and
+              temperature at the turbine inlet
+            </li>
+            <li>
+              Increase the steam extraction or export in small steps, reducing
+              the flow to the condensers, and observe changes in export and
+              power generation
+            </li>
+          </ol>
+          <p class="govuk-body">
+            If some or the entire site heat load can initially be provided by a
+            standby boiler plant, which can then automatically be backed off as
+            the extraction is increased, this will enable the test to cover the
+            greatest operating range.
+          </p>
+          <p class="govuk-body">
+            You may otherwise have to vent surplus steam during the test to
+            permit a reasonable range of condenser loading to be covered.
+          </p>
+          <p class="govuk-body">
+            Where there is more than one pass-out pressure you may be able to
+            determine the Z ratio for each pressure by keeping the other
+            pass-out(s) constant.
+          </p>
+          <p class="govuk-body">
+            Otherwise, you can determine the mean isentropic efficiency in a
+            single experiment and work out the individual Z ratios by
+            calculation.
+          </p>
+          <p class="govuk-!-font-weight-bold">Calculation method</p>
+          <p class="govuk-body">
+            This also involves on-site measurements but avoids the need to alter
+            the turbine operation.
+          </p>
+          <p class="govuk-body">
+            You will need to use steam tables (this may be via software), a
+            steam enthalpy-entropy diagram, and take measurements of:
+          </p>
+          <ul class="govuk-list govuk-list--bullet">
+            <li>carefully manipulate the CHP operation</li>
+            <li>
+              at least two of the three mass flows (steam in, steam out and
+              condensate out) and the power output
+            </li>
+            <li>
+              the pass-out steam pressure and temperature and condenser vacuum
+              (pressure)
+            </li>
+          </ul>
+        </div>
+      </details>
+      <div class="govuk-form-group">
+        <app-govuk-number-input
+          label="Z ratio of this scheme"
+          controlName="zRatio"
+          widthClass="govuk-!-width-one-quarter"
+          [validationMessages]="validationMessages.zRatio">
+        </app-govuk-number-input>
+      </div>
+      <button
+        type="submit"
+        class="govuk-button"
+        data-module="govuk-button"
+        (click)="onContinue()">
+        Continue
+      </button>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,34 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <nav aria-label="Back">
+      <a (click)="goBack()" class="govuk-back-link govuk-!-margin-top-5 govuk-!-margin-bottom-5">Back</a>
+    </nav>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds" aria-live="polite">
+    <form [formGroup]="form">
+      <app-dynamic-form-errors-summary [formUpdated]="formUpdated" [form]="form" [validationMessages]="validationMessages"> </app-dynamic-form-errors-summary>
+      <span class="govuk-caption-l">Prime mover details</span>
+      <h1 class="govuk-heading-l">Select the engine model</h1>
+      <div class="govuk-form-group">
+        <app-govuk-select-input
+          [appOtherOption]="customUnit"
+          [preselectOther]="customUnit"
+          [disableControl]="customUnit"
+          [options]="models$ | async"
+          controlName="model"
+          label="Model"
+          placeholder="Select model"
+          [validationMessages]="validationMessages.model"></app-govuk-select-input>
+      </div>
+      <div *ngIf="customUnit" class="govuk-inset-text">
+        <div class="govuk-form-group">
+          <app-govuk-text-input id="model-name" label="Enter a model name" controlName="modelOther"> </app-govuk-text-input>
+        </div>
+      </div>
+      <button class="govuk-button" data-module="govuk-button" (click)="onContinue()">Continue</button>
+    </form>
+  </div>
+</div>

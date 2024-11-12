@@ -1,0 +1,8 @@
+<app-review-answers
+  [formTitle]="'Scheme line diagram'"
+  [formHeader]="formHeader"
+  [backLink]="backButton$ | async"
+  [reviewScreenValues]="reviewScreenValues"
+  [sectionStatus]="schemeLineDiagramSectionStatus$ | async"
+  (formSubmitted)="handleFormSubmitted()">
+</app-review-answers>

@@ -1,0 +1,24 @@
+<section role="status">
+  <div class="govuk-width-container">
+    <div class="govuk-phase-banner govuk-grid-row">
+      <p class="govuk-phase-banner__content govuk-grid-column-two-thirds">
+        <strong class="govuk-tag govuk-phase-banner__content__tag">
+          BETA
+        </strong>
+        <span class="govuk-phase-banner__text">
+          This is a new service – Help us improve it and
+          <a class="govuk-link" href="mailto:chppolicy@beis.gov.uk">give your feedback</a>.
+        </span>
+      </p>
+      @if(fullName$ | async; as fullName) {
+        <p class="govuk-phase-banner__content govuk-grid-column-one-third govuk-!-text-align-right">
+          You are signed in as:
+          <span class="govuk-phase-banner__text govuk-!-font-weight-bold">
+            {{ fullName }}
+          </span>
+        </p>
+      }
+    </div>
+    <br />
+  </div>
+</section>

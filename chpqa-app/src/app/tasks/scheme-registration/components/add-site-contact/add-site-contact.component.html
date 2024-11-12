@@ -1,0 +1,48 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <nav aria-label="Back">
+      <a [routerLink]="[BACK]" class="govuk-back-link govuk-!-margin-bottom-5">Back</a>
+    </nav>
+  </div>
+</div>
+
+<div class="govuk-grid-row" *ngIf="vm$ | async">
+  <div class="govuk-grid-column-two-thirds">
+    <form [formGroup]="form" [appFormError]="form" (ngSubmit)="onSubmit()">
+      <div class="govuk-form-group">
+        <span class="govuk-caption-xl">{{ copy.caption }}</span>
+        <h1 class="govuk-heading-l">Edit site contact</h1>
+
+        <p class="govuk-body">
+          These are the details of the site contact. If you modify them, the details will be updated for all schemes associated with this site address.
+        </p>
+
+        <div class="govuk-form-group">
+          <app-govuk-text-input id="first-name" label="First Name" controlName="firstName"> </app-govuk-text-input>
+        </div>
+
+        <div class="govuk-form-group">
+          <app-govuk-text-input id="last-name" label="Last Name" controlName="lastName"> </app-govuk-text-input>
+        </div>
+
+        <div class="govuk-form-group">
+          <app-govuk-text-input id="job-title" label="Job title" controlName="jobTitle"> </app-govuk-text-input>
+        </div>
+
+        <div class="govuk-form-group">
+          <app-govuk-text-input id="email" label="Email address" controlName="email"> </app-govuk-text-input>
+        </div>
+
+        <div class="govuk-form-group">
+          <app-govuk-text-input id="telephone1" label="Telephone number" controlName="telephone1"> </app-govuk-text-input>
+        </div>
+
+        <div class="govuk-form-group">
+          <app-govuk-text-input id="telephone2" label="Mobile number (optional)" controlName="telephone2"> </app-govuk-text-input>
+        </div>
+      </div>
+
+      <button type="submit" class="govuk-button" data-module="govuk-button">{{ copy.continueButton }}</button>
+    </form>
+  </div>
+</div>

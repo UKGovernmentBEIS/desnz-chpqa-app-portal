@@ -1,0 +1,24 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <nav aria-label="Back">
+      <a [routerLink]="[BACK]" class="govuk-back-link govuk-!-margin-bottom-5">Back</a>
+    </nav>
+  </div>
+</div>
+
+@if (vm$ | async; as vm) {
+  <app-address-select
+    [caption]="copy.caption"
+    title="Select site address"
+    [navigateToSearchAgain]="BACK"
+    [navigateToEnterAddressManually]="addSiteAddressLink"
+    [searchCriteria]="
+      vm.searchCriteria.postcode +
+      ' ' +
+      (vm.searchCriteria.nameOrBuildingNumber ?? '')
+    "
+    [searchResults]="vm.searchResults"
+    [selectedResult]="vm.selectedResult"
+    (search)="onSubmit($event)"
+  ></app-address-select>
+}

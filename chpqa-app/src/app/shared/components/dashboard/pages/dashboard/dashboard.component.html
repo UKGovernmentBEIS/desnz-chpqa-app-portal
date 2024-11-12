@@ -1,0 +1,212 @@
+<div class="govuk-grid-row govuk-!-margin-top-6">
+    <div class="govuk-grid-column-three-quarters">
+      <h1 class="govuk-heading-l">{{ webCopy.heading }}</h1>
+      <p class="govuk-body">{{ webCopy.description }}</p>
+
+      <!-- Search section -->
+      <ng-container *ngTemplateOutlet="searchSection"></ng-container>
+
+      <ng-container *ngIf="applyFilter">
+        <p class="govuk-body govuk-!-font-weight-bold">{{ filteredSchemes.length }} search results</p>
+      </ng-container>
+
+      <!-- No results template -->
+      <ng-container *ngIf="filteredSchemes.length === 0 && applyFilter">
+        <ng-container *ngTemplateOutlet="noResultsTemplate"></ng-container>
+      </ng-container>
+
+      <!-- Filter toggle link -->
+      <a href="#" class="govuk-link govuk-link--no-visited-state" (click)="toggleFilters($event)">
+        <span class="sorting-arrows govuk-!-margin-left-0">
+          <span *ngIf="filtersVisible; else arrowDown" class="arrow-down"></span>
+          <ng-template #arrowDown>
+            <span class="arrow-right"></span>
+          </ng-template>
+        </span>
+        {{ filtersVisible ? webCopy.filtersToggle.hide : webCopy.filtersToggle.show }}
+      </a>
+
+      <!-- Filters section -->
+      <ng-container *ngIf="filtersVisible">
+        <ng-container *ngTemplateOutlet="filterSection"></ng-container>
+      </ng-container>
+      
+      <ng-container *ngIf="applyFilter">
+        <ng-container *ngTemplateOutlet="filterSummary"></ng-container>
+      </ng-container>
+    </div>
+
+    <!-- Related actions section -->
+    <div class="govuk-grid-column-one-quarter">
+      <app-related-actions></app-related-actions>
+    </div>
+</div>
+  
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <!-- Scheme list table -->
+    <ng-container *ngTemplateOutlet="tableSection"></ng-container>
+
+    <!-- Pagination Component -->
+    <ng-container *ngTemplateOutlet="paginationSection"></ng-container>
+  </div>
+</div>
+
+<!-- Search Section Template -->
+<ng-template #searchSection>
+  <div class="govuk-form-group govuk-grid-row govuk-!-margin-bottom-2">
+    <div class="govuk-grid-column-three-quarters">
+      <label class="govuk-label" for="search-scheme">{{ webCopy.search.label }}</label>
+      <input class="govuk-input" id="search-scheme" name="search-scheme" type="text" [(ngModel)]="searchTerm" />
+    </div>
+    <div class="govuk-grid-column-one-quarter govuk-button-alignment">
+      <button class="govuk-button search-button" (click)="onSearch()">{{ webCopy.search.button }}</button>
+    </div>
+  </div>
+</ng-template>
+
+<!-- Filter Section Template -->
+<ng-template #filterSection>
+  <fieldset class="govuk-fieldset govuk-!-margin-top-2 grey-border">
+    <!-- Filter checkboxes -->
+    <div class="govuk-checkboxes govuk-form-group">
+      <div class="govuk-checkboxes__item" *ngFor="let filter of filters">
+        <input class="govuk-checkboxes__input" id="{{ filter.id }}" type="checkbox" [checked]="filter.selected" (change)="onFilterChange(filter)" />
+        <label class="govuk-label govuk-checkboxes__label" for="{{ filter.id }}">{{ filter.label }}</label>
+      </div>
+    </div>
+
+    <!-- User Filter -->
+     @if (usersToFilterBy?.length > 0) {
+      <div class="govuk-form-group">
+        <label class="govuk-label" for="select-responsible-person">{{ webCopy.filters.userFilterLabel }}</label>
+        <select class="govuk-select" id="select-responsible-person" [(ngModel)]="selectedUser">
+          <option value="">{{ webCopy.filters.userFilter }}</option>
+          <option *ngFor="let userToFilterBy of usersToFilterBy" [value]="userToFilterBy">{{ userToFilterBy }}</option>
+        </select>
+      </div>
+    }
+
+    <!-- Year Filter -->
+    <div class="govuk-form-group">
+      <label class="govuk-label" for="select-year">{{ webCopy.filters.submissionYearFilter }}</label>
+      <select class="govuk-select" id="select-year" [(ngModel)]="selectedYear">
+        <option value="">{{ webCopy.filters.submissionYearFilter }}</option>
+        <option *ngFor="let year of years" [value]="year">{{ year }}</option>
+      </select>
+    </div>
+
+    <!-- Apply Filters Button -->
+    <button class="govuk-button govuk-!-margin-top-4" (click)="onApplyFilters()">
+      {{ webCopy.applyFiltersButton }}
+    </button>
+
+    <!-- Clear Filters Button -->
+    <button class="govuk-button govuk-!-margin-top-4 govuk-!-margin-left-2" (click)="clearFilters()">
+      {{ webCopy.clearFiltersButton }}
+    </button>
+  </fieldset>
+</ng-template>
+
+<!-- Filter Summary Template -->
+<ng-template #filterSummary>
+  <p class="govuk-body govuk-!-margin-top-6">
+    <span class="govuk-!-font-weight-bold">Applied filters:</span>
+    <br />
+    @if (selectedFilters) {
+      <span>{{ webCopy.filterSummary.byStatus }} {{ selectedFilters }}</span>
+      <br />
+    }
+    @if (selectedUser) {
+      <span>{{ webCopy.filterSummary.byUser }} {{ selectedUser }}</span>
+      <br />
+    }
+    @if (selectedYear) {
+      <span>{{ webCopy.filterSummary.byYear }} {{ selectedYear }}</span>
+      <br />
+    }
+    @if (searchTerm) {
+      <span>{{ webCopy.filterSummary.byNameOrReference }} {{ searchTerm }}</span>
+      <br />
+    }
+    <span>
+      <a class="govuk-link govuk-link--no-visited-state" (click)="clearFilters()">Remove filters</a>
+    </span>
+  </p>
+</ng-template>
+
+<!-- No Results Template -->
+<ng-template #noResultsTemplate>
+  <p class="govuk-body govuk-!-font-weight-bold">There are no matching results.</p>
+  <p class="govuk-body">Improve your search results by:</p>
+  <ul class="govuk-list govuk-list--bullet">
+    <li>removing filters</li>
+    <li>double-checking your spelling</li>
+    <li>using fewer words</li>
+    <li>searching for something less specific</li>
+  </ul>
+</ng-template>
+
+<!-- Table Section Template -->
+<ng-template #tableSection>
+  <ng-container *ngIf="paginatedSchemes.length > 0; else noSchemesFound">
+    <div class="scrollable-table-container">
+      <table class="govuk-table govuk-!-margin-top-8">
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header">
+              {{ webCopy.schemeTable.columns[0] }}
+              <a class="govuk-link" (click)="sort('name', $event)">
+                <span class="sorting-arrows" [ngClass]="sortField === 'name' ? sortOrder : ''">
+                  <span class="arrow-up"></span>
+                  <span class="arrow-down"></span>
+                </span>
+              </a>
+            </th>
+            <th scope="col" class="govuk-table__header">
+              {{ webCopy.schemeTable.columns[1] }}
+              <a class="govuk-link" (click)="sort('reference', $event)">
+                <span class="sorting-arrows" [ngClass]="sortField === 'reference' ? sortOrder : ''">
+                  <span class="arrow-up"></span>
+                  <span class="arrow-down"></span>
+                </span>
+              </a>
+            </th>
+            <th scope="col" class="govuk-table__header">
+              {{ webCopy.schemeTable.columns[2] }}
+              <a class="govuk-link" (click)="sort('latestSubmissionStatus', $event)">
+                <span class="sorting-arrows" [ngClass]="sortField === 'latestSubmissionStatus' ? sortOrder : ''">
+                  <span class="arrow-up"></span>
+                  <span class="arrow-down"></span>
+                </span>
+              </a>
+            </th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+          <tr class="govuk-table__row" *ngFor="let scheme of paginatedSchemes">
+            <td class="govuk-table__cell">
+              <a href="#" class="govuk-link" (click)="selectScheme($event, scheme)">{{ scheme.name }}</a>
+            </td>
+            <td class="govuk-table__cell">{{ scheme.reference }}</td>
+            <td class="govuk-table__cell">
+              <span class="govuk-tag" [ngClass]="scheme?.latestSubmissionStatus | statusToColor">
+                {{ scheme.latestSubmissionStatus | statusLabel }}
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </ng-container>
+</ng-template>
+
+<!-- Pagination Section Template -->
+<ng-template #paginationSection>
+  <app-pagination [totalItems]="filteredSchemes.length" [itemsPerPage]="itemsPerPage" (pageChanged)="onPageChange($event)"> </app-pagination>
+</ng-template>
+
+<!-- No Schemes Found Template -->
+<ng-template #noSchemesFound>
+  <p class="govuk-body">No schemes found.</p>
+</ng-template>

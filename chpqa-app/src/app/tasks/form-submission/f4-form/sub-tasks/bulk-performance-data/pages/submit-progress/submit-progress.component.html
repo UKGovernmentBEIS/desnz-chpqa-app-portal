@@ -1,0 +1,36 @@
+@if (apiUploadFilePost$ | async; as remoteData) {
+  @if (remoteData | isInProgress) {
+    <section [id]="webCopyInProgress.sectionId">
+      <ng-container *ngTemplateOutlet="contentSection"></ng-container>
+    </section>
+
+    <ng-template #contentSection>
+      <div class="govuk-grid-row govuk-!-margin-top-5">
+        <div class="govuk-grid-column-two-thirds" aria-live="polite">
+          <span class="govuk-caption-l">{{ webCopyInProgress.caption }}</span>
+          <h1 class="govuk-heading-l">{{ webCopyInProgress.heading }}</h1>
+          <p class="govuk-body">{{ webCopyInProgress.bodyParagraph1 }}</p>
+          <p class="govuk-body">{{ webCopyInProgress.bodyParagraph2 }}</p>
+        </div>
+      </div>
+    </ng-template>
+  } @else if (remoteData | isSuccess) {
+    <section [id]="webCopyCompleted.sectionId">
+      <ng-container *ngTemplateOutlet="contentSection"></ng-container>
+    </section>
+
+    <ng-template #contentSection>
+      <div class="govuk-grid-row govuk-!-margin-top-5">
+        <div class="govuk-grid-column-two-thirds" aria-live="polite">
+          <span class="govuk-caption-l">{{ webCopyCompleted.caption }}</span>
+          <h1 class="govuk-heading-l">{{ webCopyCompleted.heading }}</h1>
+          <p class="govuk-body">{{ webCopyCompleted.bodyParagraph }}</p>
+
+          <button class="govuk-button  govuk-!-margin-top-5" data-module="govuk-button" (click)="onContinue()">
+            {{ webCopyCompleted.continueButton }}
+          </button>
+        </div>
+      </div>
+    </ng-template>
+  }
+}

@@ -1,0 +1,39 @@
+<div [formGroup]="rootFormGroup.form">
+  <label class="govuk-label disabled" [attr.for]="controlName" [attr.aria-label] = "controlName">{{ label }} </label>
+  <div *ngIf="description" class="govuk-hint govuk-hint--disabled">
+    {{ description }}
+  </div>
+  <div
+    class="govuk-form-group"
+    [class.govuk-form-group--error]="this.hasError()">
+    <app-error-message
+      class="error-message"
+      [control]="control!"
+      [validationMessages]="validationMessages">
+    </app-error-message>
+    @if (unit) {
+      <div class="govuk-input__wrapper" [ngClass]="widthClass">
+        <input
+          class="govuk-input"
+          type="number"
+          [attr.maxLength]="maxLength"
+          [formControlName]="controlName"
+          [attr.id]="controlName"
+          [attr.name]="controlName"
+          [attr.aria-describedby]="label" />
+        <div class="govuk-input__suffix" aria-hidden="true">{{unit}}</div>
+      </div>
+    } @else {
+      <input
+        class="govuk-input govuk-!-width-two-thirds"
+        type="number"
+        [attr.maxLength]="maxLength"
+        [formControlName]="controlName"
+        [attr.id]="controlName"
+        [attr.name]="controlName"
+        [attr.aria-describedby]="label"
+        [ngClass]="widthClass" />
+    }
+
+  </div>
+</div>

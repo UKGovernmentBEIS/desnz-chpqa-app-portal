@@ -1,0 +1,214 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <nav aria-label="Back">
+      <a [routerLink]="[BACK]" class="govuk-back-link govuk-!-margin-bottom-5">Back</a>
+    </nav>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <span class="govuk-caption-l">Scheme details</span>
+  </div>
+</div>
+
+<ng-container *ngIf="vm$ | async as vm">
+  <ng-container *ngIf="submissionSectionStatus$ | async as submissionSectionStatus">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-three-quarters">
+        <h1 class="govuk-heading-l govuk-!-text-break-word">Scheme Name: {{ vm.submissionForm.scheme.name }}</h1>
+        <p class="govuk-body">
+          <span class="govuk-!-font-weight-bold">Assigned to:</span><span>{{assignedTo$ | async}}</span>
+        </p>
+      </div>
+
+      @if (hasRelatedActions(vm.submissionForm)) {
+        <div class="govuk-grid-column-one-quarter">
+          <app-related-actions [relatedActions]="buildRelatedActions(vm.submissionForm) | async"></app-related-actions>
+        </div>
+      }
+    </div>
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <nav aria-label="Task list">
+          <ng-container *ngFor="let category of categorizedSections | keyvalue: sortByMinDisplayOrder">
+            <section role="navigation">
+              <h1 class="govuk-heading-m">
+                {{ category.key | submissionGroupCategoryLabel }}
+              </h1>
+              <ul class="govuk-task-list" *ngIf="!readOnlyTableTasks(category.key) && !readOnlyWithLinksTableTasks(category.key)">
+                <li class="govuk-task-list__item govuk-task-list__item--with-link" *ngFor="let section of category.value">
+                  <div class="govuk-task-list__name-and-hint govuk-!-width-one-half" [class.disabled]="section.disabled">
+                    <ng-container
+                      *ngIf="
+                        (section.status === StatusEnum.CannotStartYet || section.status === StatusEnum.NotApplicable) &&
+                        !isGroupTypeForAssessor(section.groupType)
+                      ">
+                      <p class="govuk-summary-list__value">
+                        {{ ((isUserAnAssessor$ | async) || (isUserAnAssessorAdmin$ | async)) | displaySchemeName: section }}
+                      </p>
+                    </ng-container>
+
+                    <ng-container
+                      *ngIf="
+                        section.status !== StatusEnum.CannotStartYet &&
+                        section.status !== StatusEnum.NotApplicable &&
+                        !isGroupTypeForAssessor(section.groupType)
+                      ">
+                      <a
+                        class="govuk-link govuk-task-list__link"
+                        (click)="setSelectedGroup(section, $event)"
+                        [ngClass]="{
+                          disabled:
+                            (isSubmissionNonEditable$ | async) &&
+                            (section.groupType === SubmissionGroupType.SubmitToAssessor || section.assessorStatus === AssessorStatusEnum.CannotStartYet),
+                        }">
+                        {{ ((isUserAnAssessor$ | async) || (isUserAnAssessorAdmin$ | async)) | displaySchemeName: section }}
+                      </a>
+                    </ng-container>
+
+                    <ng-container *ngIf="section.groupType === SubmissionGroupType.SubmitToAssessor">
+                      <ng-container
+                        *ngIf="isSubmittedOrInReview && (section.status === StatusEnum.CannotStartYet || section.status === StatusEnum.NotApplicable)">
+                        <p class="govuk-summary-list__value">
+                          {{ ((isUserAnAssessor$ | async) || (isUserAnAssessorAdmin$ | async)) | displaySchemeName: section }}
+                        </p>
+                      </ng-container>
+                    </ng-container>
+
+                    <ng-container *ngIf="section.groupType === SubmissionGroupType.ProvideAssessmentDecision">
+                      <ng-container
+                        *ngIf="section.assessorStatus === AssessorStatusEnum.CannotStartYet || section.assessorStatus === AssessorStatusEnum.NotApplicable">
+                        <p class="govuk-summary-list__value">
+                          {{ isUserAnAssessor2$ | async | displaySchemeName: section }}
+                        </p>
+                      </ng-container>
+                      <ng-container
+                        *ngIf="section.assessorStatus !== AssessorStatusEnum.CannotStartYet && section.assessorStatus !== AssessorStatusEnum.NotApplicable">
+                        <a class="govuk-link govuk-task-list__link" (click)="setSelectedGroup(section, $event)">{{
+                          isUserAnAssessor2$ | async | displaySchemeName: section
+                        }}</a>
+                      </ng-container>
+                    </ng-container>
+
+                    <ng-container *ngIf="isAssessorAdminGroupType(section.groupType)">
+                      <a class="govuk-link govuk-task-list__link" (click)="setSelectedGroup(section, $event)">{{section.name}}</a>
+                    </ng-container>
+
+
+                  </div>
+                  <div *ngIf="section.status !== null || section.assessorStatus !== null" class="govuk-task-list__status" [id]="section.id + '-status'">
+                    @if (isUserAnAssessorAdmin$ | async) {
+                      @if (isAssessorAdminGroupType(section.groupType)) {
+                        <app-status [status]="section.assessorStatus" [isUserAnAssessor]="true"> </app-status>
+                      }
+                    } @else {
+                      @if ((isUserAnAssessor$ | async) || (isUserAnAssessor2$ | async)) {
+                        <app-status [status]="section.assessorStatus" [isUserAnAssessor]="true"> </app-status>
+                      } @else {
+                        <app-status [status]="section.status" [isUserAnAssessor]="false"> </app-status>
+                      }
+                    }
+                  </div>
+                </li>
+              </ul>
+
+              <table class="govuk-table" *ngIf="readOnlyWithLinksTableTasks(category.key)">
+                <tbody class="govuk-table__body" *ngFor="let section of category.value">
+                  <tr class="govuk-table__row">
+                    <td scope="row" class="govuk-table__cell govuk-!-width-one-half">
+                      <ng-container *ngIf="section.status === StatusEnum.CannotStartYet">
+                        <p class="govuk-summary-list__value">
+                          {{ ((isUserAnAssessor$ | async) || (isUserAnAssessorAdmin$ | async)) | displaySchemeName: section }}
+                        </p>
+                      </ng-container>
+                      <ng-container *ngIf="section.status !== StatusEnum.CannotStartYet">
+                        <a class="govuk-link" (click)="setSelectedGroup(section, $event)">
+                          {{ ((isUserAnAssessor$ | async) || (isUserAnAssessorAdmin$ | async)) | displaySchemeName: section }}
+                        </a>
+                      </ng-container>
+                    </td>
+                    <td
+                      class="govuk-table__cell"
+                      [ngClass]="{ 'govuk-table__cell--quality-index-threshold': section.groupType === SubmissionGroupType.QualityIndexThreshold }">
+                      <div [ngSwitch]="section.groupType">
+                        <div *ngSwitchCase="SubmissionGroupType.PowerEfficiencyStatus">
+                          {{ vm.submissionForm.powerEfficiency }}
+                        </div>
+                        <div *ngSwitchCase="SubmissionGroupType.QualityIndexStatus">
+                          {{ vm.submissionForm.qualityIndex }}
+                        </div>
+                        <div *ngSwitchCase="SubmissionGroupType.RocQualityIndexStatus">
+                          {{ vm.submissionForm.rocscfdQualityIndex ? 'Pass: ' + (vm.submissionForm.qualityIndexThreshold | number: '1.0-0') : '' }}
+                        </div>
+                        <div *ngSwitchCase="SubmissionGroupType.CfdQualityIndexStatus">
+                          {{ vm.submissionForm.rocscfdQualityIndex ? 'Pass: ' + (vm.submissionForm.qualityIndexThreshold | number: '1.0-0') : '' }}
+                        </div>
+                        <div *ngSwitchCase="SubmissionGroupType.QualityIndexThreshold">
+                          <app-status
+                            *ngIf="!(isUserAnAssessorAdmin$ | async)"
+                            [status]="(isUserAnAssessor$ | async) ? section.assessorStatus : section.status"
+                            [isUserAnAssessor]="isUserAnAssessor$ | async">
+                          </app-status>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <table class="govuk-table" *ngIf="readOnlyTableTasks(category.key)">
+                <tbody class="govuk-table__body" *ngFor="let section of category.value">
+                  <tr class="govuk-table__row" *ngIf="section.groupType !== SubmissionGroupType.TotalPowerCapUnderMaxHeatConditions">
+                    <th scope="row" class="govuk-table__header govuk-!-width-one-half">
+                      {{ ((isUserAnAssessor$ | async) || (isUserAnAssessorAdmin$ | async)) | displaySchemeName: section }}
+                    </th>
+
+                    <td class="govuk-table__cell">
+                      <div [ngSwitch]="section.groupType">
+                        <div *ngSwitchCase="SubmissionGroupType.ChpTotalPowerCapacity">
+                          {{ vm.submissionForm.chpTotalPowerCapacity }}
+                        </div>
+                        <div *ngSwitchCase="SubmissionGroupType.ChpMaxHeat">
+                          {{ vm.submissionForm.chpMaxHeat }}
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr class="govuk-table__row" *ngIf="isTotalPowerCapUnderMaxHeatConditions(section.groupType)">
+                    <td scope="row" class="govuk-table__cell">
+                      <ng-container *ngIf="section.status === StatusEnum.CannotStartYet">
+                        <p class="govuk-summary-list__value">
+                          {{ ((isUserAnAssessor$ | async) || (isUserAnAssessorAdmin$ | async)) | displaySchemeName: section }}
+                        </p>
+                      </ng-container>
+                      <ng-container *ngIf="section.status !== StatusEnum.CannotStartYet">
+                        <a
+                          class="govuk-link"
+                          [ngClass]="{ disabled: (isSubmissionNonEditable$ | async) && section.groupType === SubmissionGroupType.SubmitToAssessor }"
+                          (click)="setSelectedGroup(section, $event)">
+                          {{ ((isUserAnAssessor$ | async) || (isUserAnAssessorAdmin$ | async)) | displaySchemeName: section }}
+                        </a>
+                      </ng-container>
+                    </td>
+                    <td class="govuk-table__cell table__cell--status" [id]="section.id + '-status'">
+                      <app-status
+                        [status]="(isUserAnAssessor$ | async) ? section.assessorStatus : section.status"
+                        [isUserAnAssessor]="isUserAnAssessor$ | async">
+                      </app-status>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </section>
+          </ng-container>
+          <p class="govuk-body govuk-!-margin-top-9">
+            <a class="govuk-link" (click)="returnToDashboard()">Return to dashboard</a>
+          </p>
+        </nav>
+      </div>
+    </div>
+  </ng-container>
+</ng-container>

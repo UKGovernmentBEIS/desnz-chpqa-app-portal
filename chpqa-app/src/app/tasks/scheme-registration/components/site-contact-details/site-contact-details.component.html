@@ -1,0 +1,26 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <nav aria-label="Back">
+      <a [routerLink]="[BACK]" class="govuk-back-link govuk-!-margin-bottom-5">Back</a>
+    </nav>
+  </div>
+</div>
+
+<div class="govuk-grid-row" *ngIf="vm$ | async">
+  <div class="govuk-grid-column-two-thirds">
+    <form [formGroup]="form" [appFormError]="form" (ngSubmit)="onSubmit()">
+      <div class="govuk-form-group">
+        <span class="govuk-caption-xl">{{ copy.caption }}</span>
+        <h1 class="govuk-heading-l">Site contact details</h1>
+
+        <p class="govuk-body">Select if you are the site contact (as the Responsible Person for this scheme), or if you need to add a new contact.</p>
+
+        <div class="govuk-form-group">
+          <app-govuk-radio-input controlName="areYouTheSiteContactPerson" [options]="options"> </app-govuk-radio-input>
+        </div>
+      </div>
+
+      <button type="submit" class="govuk-button" data-module="govuk-button">{{ copy.continueButton }}</button>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,15 @@
+<div class="govuk-form-group" [class.govuk-form-group--error]="this.hasError()" [formGroup]="rootFormGroup.form">
+  <label class="govuk-label disabled" [for]="controlName" [attr.aria-label] = "controlName">{{ label }} </label>
+  <div id="more-detail-hint" class="govuk-caption-m govuk-!-margin-bottom-6">
+    {{ description }}
+  </div>
+  <app-error-message class="error-message" [control]="control" [validationMessages]="validationMessages"> </app-error-message>
+  <textarea
+    class="govuk-textarea"
+    rows="8"
+    aria-describedby="more-detail-hint"
+    [formControlName]="controlName"
+    [id]="controlName"
+    [attr.name]="controlName"></textarea>
+  <div id="more-detail-hint" class="govuk-caption-m">You can enter up to {{ maxChars }} characters</div>
+</div>

@@ -1,0 +1,84 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <nav aria-label="Back">
+      <a (click)="goBack()" class="govuk-back-link govuk-!-margin-top-5 govuk-!-margin-bottom-5">Back</a>
+    </nav>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds" aria-live="polite">
+    <form [formGroup]="form">
+      <app-dynamic-form-errors-summary
+        [formUpdated]="formUpdated"
+        [form]="form"
+        [validationMessages]="validationMessages">
+      </app-dynamic-form-errors-summary>
+      <span class="govuk-caption-l">Prime mover details</span>
+      <h1 class="govuk-heading-l">Provide prime mover figures</h1>
+
+      <div class="govuk-form-group">
+        <div class="govuk-form-group">
+          <app-govuk-unit-input
+            label="Total heat output"
+            controlName="totalHeatOutputKw"
+            [validationMessages]="validationMessages.totalHeatOutputKw">
+          </app-govuk-unit-input>
+        </div>
+        <div class="govuk-form-group">
+          <app-govuk-unit-input
+            label="Total power capacity"
+            controlName="totalPowerCapacityKw"
+            [validationMessages]="validationMessages.totalPowerCapacityKw">
+          </app-govuk-unit-input>
+        </div>
+        <div class="govuk-form-group">
+          <app-govuk-unit-input
+            label="Fuel input"
+            controlName="fuelInputKw"
+            [validationMessages]="validationMessages.fuelInputKw"
+            >
+          </app-govuk-unit-input>
+        </div>
+        <div class="govuk-form-group">
+          <app-govuk-number-input
+            label="Power efficiency"
+            controlName="powerEfficiency"
+            widthClass="govuk-!-width-one-half"
+            [validationMessages]="validationMessages.powerEfficiency">
+          </app-govuk-number-input>
+        </div>
+        <div class="govuk-form-group">
+          <app-govuk-number-input
+            label="Max heat to power ratio"
+            controlName="maxHeatToPowerRatio"
+            widthClass="govuk-!-width-one-half"
+            [validationMessages]="validationMessages.maxHeatToPowerRatio">
+          </app-govuk-number-input>
+        </div>
+        <div class="govuk-form-group">
+          <app-govuk-number-input
+            label="Max heat efficiency"
+            controlName="maxHeatEfficiency"
+            widthClass="govuk-!-width-one-half"
+            [validationMessages]="validationMessages.maxHeatEfficiency">
+          </app-govuk-number-input>
+        </div>
+        <div class="govuk-form-group">
+          <app-govuk-number-input
+            label="Max overall efficiency"
+            controlName="maxOverallEfficiency"
+            widthClass="govuk-!-width-one-half"
+            [validationMessages]="validationMessages.maxOverallEfficiency">
+          </app-govuk-number-input>
+        </div>
+      </div>
+      <button
+        class="govuk-button"
+        data-module="govuk-button"
+        (click)="onContinue()">
+        Continue
+      </button>
+    </form>
+  </div>
+</div>

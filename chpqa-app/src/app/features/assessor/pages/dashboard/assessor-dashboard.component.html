@@ -1,0 +1,198 @@
+<section id="assessor-dashboard" *ngIf="dashboardResponse$ | async as remoteData">
+  <div class="govuk-grid-row">
+    <div
+      class="govuk-grid-column-three-quarters govuk-body">
+      <ng-container *ngIf="remoteData | isSuccess as response">
+      <div class="govuk-grid-column-full">
+        <h1 class="govuk-heading-l">{{ copy.heading }}</h1>
+        <p class="govuk-body">{{ copy.description }}</p>
+
+        <!-- Search section -->
+        <ng-container *ngTemplateOutlet="searchSection"></ng-container>
+        <!-- Filter toggle link -->
+        <a href="#" class="govuk-link govuk-link--no-visited-state" (click)="toggleFilters($event)">
+          <span class="sorting-arrows govuk-!-margin-left-0">
+            <span *ngIf="filtersVisible; else arrowDown" class="arrow-down"></span>
+            <ng-template #arrowDown>
+              <span class="arrow-right"></span>
+            </ng-template>
+          </span>
+          {{ filtersVisible ? copy.filtersToggle.hide : copy.filtersToggle.show }}
+        </a>
+
+        <!-- Filters section -->
+        <ng-container *ngIf="filtersVisible">
+          <ng-container *ngTemplateOutlet="filterSection"></ng-container>
+        </ng-container>
+      </div>
+    </ng-container>
+    </div>
+    <div class="govuk-grid-column-one-quarter" *ngIf="isUserAnAssessorAdmin$ | async">
+      <h2 class="govuk-heading-m" id="subsection-title">Related actions</h2>
+      <section role="complementary" aria-labelledby="subsection-title">
+        <ul class="govuk-list govuk-!-font-size-16">
+          <li *ngFor="let action of relatedActions">
+            <a
+              class="govuk-link govuk-link--no-visited-state"
+              [routerLink]="action.link"
+              >{{ action.text }}</a
+            >
+          </li>
+        </ul>
+      </section>
+    </div>
+
+  
+  
+  <div>
+    <!-- Unhappy path: handle errors -->
+    <ng-container *ngIf="remoteData | isFailure">
+      <h4 style="color: red">{{ remoteData | failureValue }}</h4>
+    </ng-container>
+
+    <!-- Happy path (success) -->
+    <ng-container *ngIf="remoteData | isSuccess as response">
+        <div class="govuk-grid-column-full">
+          <!-- Scheme list table -->
+          <ng-container *ngTemplateOutlet="tableSection"></ng-container>
+
+          <!-- Pagination Component -->
+          <ng-container *ngTemplateOutlet="paginationSection"></ng-container>
+        </div>
+        
+    </ng-container>
+  </div>
+  </div>
+</section>
+
+<!-- Search Section Template -->
+<ng-template #searchSection>
+  <div class="govuk-form-group govuk-grid-row govuk-!-margin-bottom-2">
+    <div class="govuk-grid-column-three-quarters">
+      <label class="govuk-label" for="search-scheme">{{ copy.search.label }}</label>
+      <input class="govuk-input" id="search-scheme" name="search-scheme" type="text" [(ngModel)]="searchTerm" />
+    </div>
+    <div class="govuk-grid-column-one-quarter govuk-button-alignment">
+      <button class="govuk-button search-button" (click)="onSearch()">{{ copy.search.button }}</button>
+    </div>
+  </div>
+</ng-template>
+
+<!-- Filter Section Template -->
+<ng-template #filterSection>
+  <fieldset class="govuk-fieldset govuk-!-margin-top-2 grey-border">
+    <!-- Filter checkboxes -->
+    <div class="govuk-checkboxes govuk-form-group">
+      <div class="govuk-checkboxes__item" *ngFor="let filter of filters">
+        <input class="govuk-checkboxes__input" id="{{ filter.id }}" type="checkbox" [checked]="filter.selected" (change)="onFilterChange(filter)" />
+        <label class="govuk-label govuk-checkboxes__label" for="{{ filter.id }}">{{ filter.label }}</label>
+      </div>
+    </div>
+
+    <!-- Assessor Filter -->
+    <div class="govuk-form-group">
+      <label class="govuk-label" for="select-assessor">{{ copy.filters.assessorFilterLabel }}</label>
+      <select class="govuk-select" id="select-assessor" [(ngModel)]="selectedAssessor">
+        <option value="">{{ copy.filters.assessorFilter }}</option>
+        <option *ngFor="let assessor of assessors" [value]="assessor">{{ assessor }}</option>
+      </select>
+    </div>
+
+    <!-- Year Filter -->
+    <div class="govuk-form-group">
+      <label class="govuk-label" for="select-year">{{ copy.filters.submissionYearFilter }}</label>
+      <select class="govuk-select" id="select-year" [(ngModel)]="selectedYear">
+        <option value="">{{ copy.filters.submissionYearFilter }}</option>
+        <option *ngFor="let year of years" [value]="year">{{ year }}</option>
+      </select>
+    </div>
+
+    <!-- Apply Filters Button -->
+    <button class="govuk-button govuk-!-margin-top-4" (click)="applyFilters()">
+      {{ copy.applyFiltersButton }}
+    </button>
+
+    <!-- Clear Filters Button -->
+    <button class="govuk-button govuk-!-margin-top-4 govuk-!-margin-left-2" (click)="clearFilters()">
+      {{ copy.clearFiltersButton }}
+    </button>
+  </fieldset>
+</ng-template>
+
+<!-- Table Section Template -->
+<ng-template #tableSection>
+  <ng-container *ngIf="paginatedSchemes.length > 0; else noSchemesFound">
+    <div class="scrollable-table-container">
+      <table class="govuk-table govuk-!-margin-top-8">
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header">
+              {{ copy.schemeTable.columns[0] }}
+              <a class="govuk-link" (click)="sort('name', $event)">
+                <span class="sorting-arrows" [ngClass]="sortField === 'name' ? sortOrder : ''">
+                  <span class="arrow-up"></span>
+                  <span class="arrow-down"></span>
+                </span>
+              </a>
+            </th>
+            <th *ngIf="isUserAnAssessorAdmin$ | async" scope="col" class="govuk-table__header">
+              {{ copy.schemeTable.columns[3] }}
+              <a class="govuk-link" (click)="sort('assessor', $event)">
+                <span class="sorting-arrows" [ngClass]="sortField === 'assessor' ? sortOrder : ''">
+                  <span class="arrow-up"></span>
+                  <span class="arrow-down"></span>
+                </span>
+              </a>
+            </th>
+
+            <th scope="col" class="govuk-table__header">
+              {{ copy.schemeTable.columns[1] }}
+              <a class="govuk-link" (click)="sort('reference', $event)">
+                <span class="sorting-arrows" [ngClass]="sortField === 'reference' ? sortOrder : ''">
+                  <span class="arrow-up"></span>
+                  <span class="arrow-down"></span>
+                </span>
+              </a>
+            </th>
+            <th scope="col" class="govuk-table__header">
+              {{ copy.schemeTable.columns[2] }}
+              <a class="govuk-link" (click)="sort('statusText', $event)">
+                <span class="sorting-arrows" [ngClass]="sortField === 'statusText' ? sortOrder : ''">
+                  <span class="arrow-up"></span>
+                  <span class="arrow-down"></span>
+                </span>
+              </a>
+            </th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+          <tr class="govuk-table__row" *ngFor="let scheme of paginatedSchemes">
+            <td class="govuk-table__cell">
+              <a href="#" class="govuk-link" (click)="selectAssessorScheme($event, scheme)">{{ scheme.name }}  {{ scheme.createdon | date: 'dd/MM/yyyy' }}</a>
+            </td>
+            <td *ngIf="isUserAnAssessorAdmin$ | async" class="govuk-table__cell">
+              <ng-container *ngIf="scheme?.assessor?.firstName && scheme?.assessor?.lastName; else noName">
+                {{ scheme.assessor.firstName }} {{ scheme.assessor.lastName }}
+              </ng-container>
+              <ng-template #noName>-</ng-template>
+            </td>
+            <td class="govuk-table__cell">{{ scheme.reference }}</td>
+            <td class="govuk-table__cell">
+              <span class="govuk-tag govuk-tag--yellow">{{ scheme.latestSubmissionStatusText }}</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </ng-container>
+</ng-template>
+
+<!-- Pagination Section Template -->
+<ng-template #paginationSection>
+  <app-pagination [totalItems]="filteredSchemes.length" [itemsPerPage]="itemsPerPage" (pageChanged)="onPageChange($event)"> </app-pagination>
+</ng-template>
+
+<!-- No Schemes Found Template -->
+<ng-template #noSchemesFound>
+  <p class="govuk-body">No schemes found.</p>
+</ng-template>

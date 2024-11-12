@@ -1,0 +1,14 @@
+<div *ngIf="errors?.length > 0" class="govuk-error-summary" data-module="govuk-error-summary" #errorsummary>
+  <div role="alert">
+    <h2 class="govuk-error-summary__title">
+      There is a problem
+    </h2>
+    <div class="govuk-error-summary__body">
+      <ul class="govuk-list govuk-error-summary__list">
+        <li *ngFor="let error of errors">
+          <a (click)="onClick(error.field)" [routerLink]="[]">{{validationMessages[error.field][error.error]}}</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

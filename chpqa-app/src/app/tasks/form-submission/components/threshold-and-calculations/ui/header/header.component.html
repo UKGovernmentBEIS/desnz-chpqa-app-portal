@@ -1,0 +1,11 @@
+@switch (displayHeader) {
+  @case (POWER_EFFICIENCY_CONDITIONS_MET) {
+    <h1 class="govuk-heading-l">
+      You have met or exceeded the relevant power efficiency threshold
+    </h1>
+  } @case (POWER_EFFICIENCY_CONDITIONS_NOT_MET) {
+    <h1 class="govuk-heading-l">
+      You have not met the relevant power efficiency threshold
+    </h1>
+  }
+}

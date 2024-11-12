@@ -1,0 +1,33 @@
+/* You can add global styles to this file, and also import other style files */
+@import 'node_modules/govuk-frontend/dist/govuk/all';
+
+.govuk-link,
+.govuk-back-link {
+  cursor: pointer;
+}
+
+.govuk-link {
+  color: #1d70b8;
+}
+
+.govuk-link.disabled,
+.govuk-task-list__link.disabled {
+  pointer-events: none;
+  cursor: not-allowed;
+  color: #0b0c0c;
+  text-decoration: none;
+}
+
+.govuk-list .govuk-list--bold-marker::marker {
+  font-weight: 700 !important;
+}
+
+.govuk-tag {
+  max-width: 200px !important;
+}
+
+.scrollable-table-container {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+}

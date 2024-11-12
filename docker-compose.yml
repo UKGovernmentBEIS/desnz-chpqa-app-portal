@@ -1,0 +1,82 @@
+version: "3"
+
+services:
+  postgres-keycloak:
+    image: postgres
+    volumes:
+      - postgres-data-keycloak:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - 5432:5432
+  keycloak:
+    image: keycloak-chpqa
+    environment:
+      JAVA_OPTS: "-server -Xms64m -Xmx512m -XX:MetaspaceSize=96M -XX:MaxMetaspaceSize=256m -Djava.net.preferIPv4Stack=true -Djava.awt.headless=true"
+      STARTUP_COMMAND: start-dev
+      KC_HTTP_PORT: 8080
+      KC_HOSTNAME: localhost
+      KC_DB_SCHEMA: public
+      KC_DB_URL_HOST: postgres-keycloak
+      KC_DB_URL_DATABASE: ${KC_DB_URL_DATABASE}
+      KC_DB_USERNAME: ${KC_DB_USERNAME}
+      KC_DB_PASSWORD: ${KC_DB_PASSWORD}
+      KC_LOG_LEVEL: INFO
+      KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN}
+      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
+      CHPQA_REALM_DISPLAY_NAME: CHPQA-dev
+      CHPQA_WEB_APP_URL: ${CHPQA_WEB_APP_URL}
+      CHPQA_API_APP_URL: ${CHPQA_API_APP_URL}
+      CHPQA_WEB_APP_LOCALHOST_URL: ${CHPQA_WEB_APP_LOCALHOST_URL}
+      CHPQA_API_CLIENT_SECRET: ${CHPQA_API_CLIENT_SECRET}
+      MAIL_TLS:
+      MAIL_AUTH:
+      MAIL_PORT: 1025
+      MAIL_HOST: mailpit
+      MAIL_FROM: no-reply@keycloack.org
+      MAIL_SSL:
+      MAIL_USER:
+      MAIL_PASSWORD:
+    ports:
+      - 8091:8080
+    depends_on:
+      - postgres-keycloak
+    healthcheck:
+      test: curl --fail http://keycloak:8080/auth || exit 1
+      interval: 10s
+      retries: 5
+      start_period: 20s
+      timeout: 5s
+  chpqa-app:
+   image: chpqa-app
+   ports:
+     - 4200:4200
+   depends_on:
+     - keycloak
+  clamav:
+    image: clamav-custom
+    ports:
+     - 3310:3310
+    restart: unless-stopped
+    volumes:
+      - clam:/var/lib/clamav
+    environment:
+      CLAMAV_NO_CLAMD: "yes"
+    healthcheck:
+      test: ["CMD-SHELL", "echo 'PING' | nc -w 5 localhost 3310"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+  crm-webapi:
+    image: crm-webapi
+    ports:
+      - 5200:8080
+    depends_on:
+      keycloak:
+        condition: service_healthy
+volumes:
+  postgres-data-keycloak:
+    driver: local
+  clam:

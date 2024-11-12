@@ -1,0 +1,45 @@
+<div class="govuk-summary-card">
+    <div class="govuk-summary-card__title-wrapper">
+      <h2 class="govuk-summary-card__title">{{ title }}</h2>
+      <details class="govuk-details" [attr.open]="arrowPointsDown ? '' : null" (click)="toggleDetails()">
+        <summary class="govuk-details__summary">
+          <span class="govuk-details__summary-text">{{ isDetailsVisible ? 'Hide' : 'Show' }} {{ metric }} details
+          </span>
+        </summary>
+      </details>
+      <ul class="govuk-summary-card__actions">
+        @if ((latestSubmissionStatus <= SubmissionStatusEnum.DueForRenewal)) {
+          <li class="govuk-summary-card__action">
+            <a class="govuk-link" (click)="onDelete()">Delete</a>
+          </li>
+        }
+      </ul>
+    </div>
+    <div class="govuk-summary-card__content" *ngIf="isDetailsVisible">
+      <dl class="govuk-summary-list">
+        <div class="govuk-summary-list__row" *ngFor="let item of details">
+          <dt class="govuk-summary-list__key">{{ item.key }}</dt>
+          <dd class="govuk-summary-list__value  govuk-!-width-one-quarter govuk-!-padding-left-3">
+            @if (item.files && item.files.length > 0) {
+              @for (fileWithId of item.files; track fileWithId.file.name ) {
+                @if (fileWithId.id) {
+                  <a class="govuk-link" (click)="onDownloadFile(fileWithId.id,  fileWithId.file.name)">
+                    {{ fileWithId.file.name }}
+                  </a><br />
+                } @else {
+                  <p class="govuk-body">{{fileWithId.file.name}}</p>
+                }
+              }
+            } @else {
+              {{ item.value }}
+            }
+          </dd>
+          @if (item.changeLocation && (latestSubmissionStatus <= SubmissionStatusEnum.DueForRenewal)) {
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" (click)="onChange($event, item.changeLocation)" [attr.aria-label]="item.ariaLabel">Change</a>
+            </dd>
+          }
+        </div>
+      </dl>
+    </div>
+  </div>

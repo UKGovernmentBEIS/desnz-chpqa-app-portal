@@ -1,0 +1,6 @@
+@for (fileWithId of filesWithId; let i = $index; track fileWithId.file.name) {
+  <div class="uploaded-files">
+    <p class="govuk-heading-s break-all">{{ fileWithId.file.name }}</p>
+    <a (click)="deleteFile(fileWithId.id, i)" class="govuk-link govuk-link--no-visited-state">Delete</a>
+  </div>
+}

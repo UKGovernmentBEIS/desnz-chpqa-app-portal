@@ -1,0 +1,88 @@
+<section [id]="webCopy.sectionId">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <nav aria-label="Back">
+        <a [routerLink]="backButton" class="govuk-back-link govuk-!-margin-top-5 govuk-!-margin-bottom-5">Back</a>
+      </nav>
+    </div>
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters" aria-live="polite">
+      <app-dynamic-form-errors-summary [formUpdated]="formUpdated" [form]="form" [validationMessages]="validationMessages"> </app-dynamic-form-errors-summary>
+      <span class="govuk-caption-l">{{ webCopy.caption }}</span>
+      <h1 class="govuk-heading-l">{{ webCopy.heading }}</h1>
+      <p class="govuk-body">
+        Please enter the uncertainty adjustment factors, correct to 4 decimal places.
+        <br />
+        You can find examples of how to calculate these in <a href="https://www.chpqa.com/guidance_notes/GUIDANCE_NOTE_19.pdf" target="_blank" class="govuk-link govuk-link--no-visited-state">Guidance Note 19</a>.
+      </p>
+      <p class="govuk-body">The individual adjusment factor (FI) is given by:</p>
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-one-half">
+          <p class="govuk-body">
+            For energy inputs:
+            <br />
+            So if the UX = 1.50%,
+          </p>
+        </div>
+        <div class="govuk-grid-column-one-half">
+          <p class="govuk-body">
+            FI = 1 + (excess uncertainty (UX) / 100)
+            <br />
+            FI = 1 + (1.50 / 100) = <span class="govuk-!-font-weight-bold">1.0150</span>
+          </p>
+        </div>
+      </div>
+
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-one-half">
+          <p class="govuk-body">
+            For power or heat outputs:
+            <br />
+            So if the UX = 1.50%,
+          </p>
+        </div>
+        <div class="govuk-grid-column-one-half">
+          <p class="govuk-body">
+            FI = 1 - (UX / 100)
+            <br />
+            FI = 1 - (1.50 / 100) = <span class="govuk-!-font-weight-bold">0.9850</span>
+          </p>
+        </div>
+      </div>
+      <br /><br />
+
+      <form [formGroup]="form" [appFormError]="form">
+        <div class="govuk-form-group">
+          <app-govuk-text-input
+            id="foi"
+            label="Fuel Uncertainty Adjustment Factor FOI (energy inputs)"
+            controlName="foi"
+            widthClass="govuk-!-width-one-quarter"
+            [validationMessages]="validationMessages.foi">
+          </app-govuk-text-input>
+        </div>
+        <div class="govuk-form-group">
+          <app-govuk-text-input
+            id="fop"
+            label="Power Uncertainty Adjustment Factor FOP (power outputs)"
+            controlName="fop"
+            widthClass="govuk-!-width-one-quarter"
+            [validationMessages]="validationMessages.fop">
+          </app-govuk-text-input>
+        </div>
+        <div class="govuk-form-group">
+          <app-govuk-text-input
+            id="foh"
+            label="Heat Uncertainty Adjustment Factor FOH (heat outputs)"
+            controlName="foh"
+            widthClass="govuk-!-width-one-quarter"
+            [validationMessages]="validationMessages.foh">
+          </app-govuk-text-input>
+        </div>
+        <button type="submit" class="govuk-button" data-module="govuk-button" (click)="onContinue()">Continue</button>
+      </form>
+    </div>
+  </div>
+</section>

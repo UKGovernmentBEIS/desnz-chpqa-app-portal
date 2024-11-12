@@ -1,0 +1,38 @@
+<ng-container *ngIf="vm$ | async as vm">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <nav aria-label="Back">
+        <a [routerLink]="[vm.BACK]" class="govuk-back-link govuk-!-margin-top-5 govuk-!-margin-bottom-5">Back</a>
+      </nav>
+    </div>
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <form [formGroup]="vm.form" (ngSubmit)="onSubmit(vm.form)">
+        <div class="govuk-form-group">
+          <app-dynamic-form-errors-summary
+            [formUpdated]="formUpdated"
+            [form]="vm.form"
+            [validationMessages]="validationMessages">
+          </app-dynamic-form-errors-summary>
+          <span class="govuk-caption-l">Scheme details and performance</span>
+          <h1 class="govuk-heading-l">Is the scheme operational?</h1>
+
+          <div class="govuk-form-group">
+            <app-govuk-radio-input
+              label="For example, it has started providing heat output to consumers."
+              controlName="operational"
+              [options]="options"
+              [validationMessages]="validationMessages.operational">
+            </app-govuk-radio-input>
+          </div>
+        </div>
+
+        <button type="submit" class="govuk-button" data-module="govuk-button">
+          Continue
+        </button>
+      </form>
+    </div>
+  </div>
+</ng-container>

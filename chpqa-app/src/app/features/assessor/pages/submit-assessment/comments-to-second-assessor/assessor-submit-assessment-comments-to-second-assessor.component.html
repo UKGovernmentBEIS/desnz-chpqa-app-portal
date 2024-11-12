@@ -1,0 +1,11 @@
+<ng-container *ngIf="comments$ | async as comments">
+  <app-comments-summary
+    [formCaption]="copy.caption"
+    [formHeader]="copy.heading"
+    [description1]="copy.description"
+    [subheading]="copy.subheading"
+    [basePath]="basePath$ | async"
+    [comments]="comments">
+  </app-comments-summary>
+  <button class="govuk-button" (click)="onContinue()">{{ copy.button }}</button>
+</ng-container>

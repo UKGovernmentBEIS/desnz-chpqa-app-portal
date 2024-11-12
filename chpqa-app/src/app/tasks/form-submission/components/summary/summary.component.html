@@ -1,0 +1,46 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full" aria-live="polite">
+    <nav aria-label="Back">
+      <a [routerLink]="backButtonUrl" skipLocationChange class="govuk-back-link govuk-!-margin-top-5 govuk-!-margin-bottom-5">Back</a>
+    </nav>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds" aria-live="polite">
+    <span class="govuk-caption-l">
+      {{ summaryDetails.subtitle }}
+    </span>
+
+    <h1 class="govuk-heading-l">Check your answers</h1>
+
+    <dl class="govuk-summary-list">
+      <div
+        class="govuk-summary-list__row"
+        *ngFor="let entry of summaryDetails.keyValuePairs">
+        <dt class="govuk-summary-list__key govuk-!-width-one-half">
+          {{ entry.title }}
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <p *ngFor="let value of entry.values">{{ value }}</p>
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a
+            class="govuk-body govuk-link govuk-link--no-visited-state bluefont"
+            [routerLink]="backButtonUrl"
+            skipLocationChange
+            >Change</a
+          >
+        </dd>
+      </div>
+    </dl>
+
+    <button
+      type="submit"
+      class="govuk-button"
+      data-module="govuk-button"
+      (click)="submitClick()">
+      Confirm and complete
+    </button>
+  </div>
+</div>

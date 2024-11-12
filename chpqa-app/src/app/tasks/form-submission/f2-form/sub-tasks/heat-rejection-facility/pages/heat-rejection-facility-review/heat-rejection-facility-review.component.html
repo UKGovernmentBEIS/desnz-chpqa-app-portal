@@ -1,0 +1,8 @@
+<app-review-answers
+  formTitle="Heat rejection facility"
+  [formHeader]="isAnAssessor ? 'Review heat rejection facility' : 'Check your answers'"
+  [backLink]="backButton$ | async"
+  [reviewScreenValues]="reviewScreenValues"
+  [sectionStatus]="heatRejectionFacilitySectionStatus$ | async"
+  (formSubmitted)="handleFormSubmitted()">
+</app-review-answers>

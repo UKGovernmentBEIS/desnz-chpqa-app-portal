@@ -1,0 +1,27 @@
+<nav aria-label="Back">
+  <a [routerLink]="[BACK]" class="govuk-back-link govuk-!-margin-bottom-5">Back</a>
+</nav>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-l">
+      Create a Combined Heat and Power Programme account
+    </h1>
+    <h2 class="govuk-heading-m">Before you start</h2>
+    <p class="govuk-body">To create an account you'll need:</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>a work email address that isn't shared with anyone else</li>
+      <li>
+        a smartphone, tablet or web browser to set up two-factor authentication
+      </li>
+      <li>basic information about your company</li>
+    </ul>
+
+    <button
+      type="button"
+      class="govuk-button"
+      data-module="govuk-button"
+      (click)="onContinue()">
+      Continue
+    </button>
+  </div>
+</div>

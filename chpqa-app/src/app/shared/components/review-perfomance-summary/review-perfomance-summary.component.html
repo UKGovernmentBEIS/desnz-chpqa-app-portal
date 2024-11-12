@@ -1,0 +1,50 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full" aria-live="polite">
+    <span class="govuk-caption-l">{{ subtask | titlecase }}</span>
+    <h1 class="govuk-heading-l">Review {{ subtask }} for {{ details.tag }}</h1>
+    <p class="govuk-body">
+      <span class="govuk-!-font-weight-bold">{{ categoryLabel }}</span>
+      <br />
+      {{ details.category }}
+    </p>
+    <p class="govuk-body">
+      <span class="govuk-!-font-weight-bold">{{ typeLabel }}</span>
+      <br />
+      {{ details.type }}
+    </p>
+    <p class="govuk-body">
+      <span class="govuk-!-font-weight-bold">Include in CHPQA calculations?</span>
+      <br />
+      <span class="govuk-hint govuk-hint--disabled">
+        This will determine if the meter readings will be taken into consideration for the fraction of total fuel input </span
+      ><br />
+      {{ details.includeInCalculations ? 'Yes' : 'No' }}
+    </p>
+    @if (monthsArray) {
+      <ng-container *ngTemplateOutlet="monthsSection"></ng-container>
+    }
+    @if (showTFI) {
+      <p class="govuk-body">
+        Fraction of total fuel input
+        <br />
+        {{ (details.tfi | decimalFormatter) + '%' }}
+      </p>
+    }
+    <p class="govuk-body">
+      <span class="govuk-body govuk-!-font-weight-bold">Annual Totals</span><br />
+      {{ details.annualTotal }} {{ measurementUnit }}
+    </p>
+    <button class="govuk-button" data-module="govuk-button" (click)="onReturn()">Return</button>
+  </div>
+</div>
+
+<ng-template #monthsSection>
+  <div *ngFor="let month of monthsArray">
+    @if (monthsData[month] !== undefined) {
+      <p class="govuk-body">
+        {{ month | capitalizeFirstLetter }}<br />
+        {{ monthsData[month] }} {{ measurementUnit }}
+      </p>
+    }
+  </div>
+</ng-template>

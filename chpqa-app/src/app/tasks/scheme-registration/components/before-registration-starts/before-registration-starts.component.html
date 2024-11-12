@@ -1,0 +1,37 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <nav aria-label="Back">
+      <a [routerLink]="[BACK]" class="govuk-back-link govuk-!-margin-top-5 govuk-!-margin-bottom-5">Back</a>
+    </nav>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-l">{{ copy.heading }}</h1>
+
+    <p class="govuk-body">
+      This form will take you approximately 10 minutes to complete.
+    </p>
+    <p class="govuk-body">
+      The form saves your details as you enter them - you can return to it at
+      any time.
+    </p>
+
+    <h2 class="govuk-heading-m">Before you start</h2>
+
+    <p class="govuk-body">You will need:</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>the address of the site associated with this scheme</li>
+      <li>the details of a contact at this site</li>
+    </ul>
+
+    <button
+      class="govuk-button"
+      data-module="govuk-button"
+      (click)="onContinue()"
+    >
+    {{ copy.continueButton }}
+    </button>
+  </div>
+</div>

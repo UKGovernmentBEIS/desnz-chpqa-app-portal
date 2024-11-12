@@ -1,0 +1,28 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <nav aria-label="Back">
+      <a [routerLink]="backButton" class="govuk-back-link govuk-!-margin-top-5 govuk-!-margin-bottom-5">Back</a>
+    </nav>
+  </div>
+</div>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds" aria-live="polite">
+    <form [formGroup]="form">
+      <app-dynamic-form-errors-summary [formUpdated]="formUpdated" [form]="form" [validationMessages]="validationMessages"> </app-dynamic-form-errors-summary>
+      <span class="govuk-caption-l">Quality Index Threshold</span>
+      <h1 class="govuk-heading-l">Select the quality index threshold for your scheme to be assessed against</h1>
+      <div class="govuk-form-group">
+        <app-govuk-radio-input
+          controlName="qualityIndexThreshold"
+          label="A scheme must achieve the relevant QI threshold to be
+          considered 'Good Quality' CHP. If your scheme is in initial
+          operation it must be assessed against a quality index threshold
+           of 95. Otherwise, the threshold should be 100."
+          [options]="qualityIndexThresholdOptions"
+          [validationMessages]="validationMessages.qualityIndexThreshold">
+        </app-govuk-radio-input>
+      </div>
+      <button type="submit" class="govuk-button" data-module="govuk-button" (click)="onContinue()">Continue</button>
+    </form>
+  </div>
+</div>

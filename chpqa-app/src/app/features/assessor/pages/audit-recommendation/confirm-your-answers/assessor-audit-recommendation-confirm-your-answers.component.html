@@ -1,0 +1,41 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full" aria-live="polite">
+    <nav aria-label="Back">
+      <a [routerLink]="backButton" skipLocationChange class="govuk-back-link govuk-!-margin-top-5 govuk-!-margin-bottom-5"> Back </a>
+    </nav>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds" aria-live="polite">
+    <span class="govuk-caption-l">Audit recommendation</span>
+    <h1 class="govuk-heading-l">Confirm your answers</h1>
+
+    <dl class="govuk-summary-list">
+      <ng-container *ngFor="let field of reviewScreenValues">
+        <div class="govuk-summary-list__row govuk-!-padding-left-0">
+          <dt class="govuk-summary-list__key govuk-!-width-one-half">{{ field.label }}</dt>
+          <dd class="govuk-summary-list__value">
+            <ng-container [ngSwitch]="field.type">
+              <ng-container *ngSwitchCase="'text'">
+                {{ field.value }}
+              </ng-container>
+              <ng-container *ngSwitchCase="'textarea'">
+                {{ field.value }}
+              </ng-container>
+            </ng-container>
+          </dd>
+          <ng-container *ngIf="selectedScheme$ | async as selectedScheme">
+            <ng-container
+              *ngIf="selectedScheme?.latestSubmissionStatus === SubmissionStatus.Submitted">
+              <dd class="govuk-summary-list__actions">
+                <a class="govuk-link" [routerLink]="field.changeLink" [attr.aria-label]="field.ariaLabel" skipLocationChange>Change</a>
+              </dd>
+            </ng-container>
+          </ng-container>
+        </div>
+      </ng-container>
+    </dl>
+    <button type="submit" class="govuk-button" data-module="govuk-button" (click)="handleFormSubmitted()">Confirm and complete</button>
+  </div>
+</div>

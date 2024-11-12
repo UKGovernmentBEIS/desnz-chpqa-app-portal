@@ -1,0 +1,86 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <nav aria-label="Back">
+      <a [routerLink]="backButton" class="govuk-back-link govuk-!-margin-top-5 govuk-!-margin-bottom-5">Back</a>
+    </nav>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds" aria-live="polite">
+    <!-- Error Summary Component -->
+    <app-dynamic-form-errors-summary
+      [form]="form"
+      [validationMessages]="validationMessages"
+    ></app-dynamic-form-errors-summary>
+
+    <form [formGroup]="form" [appFormError]="form">
+      <span class="govuk-caption-l">Financial benefits</span>
+      <h1 class="govuk-heading-l">
+        Provide information about your financial benefits (optional)
+      </h1>
+      <p class="govuk-body">
+        Due to the significant benefits that come with CHPQA certification, we
+        would like to know which policy and financial support you are currently
+        receiving, so we can gather data on Good Quality CHP schemes.
+      </p>
+      <p class="govuk-body">
+        You do not have to give us this information, but it will help us in our
+        ongoing work towards decarbonisation.
+      </p>
+      <p class="govuk-body">
+        Provide actual or your best estimate of the claimed operational benefits
+        over the submission year as a result of CHPQA certification.
+      </p>
+      <div class="govuk-form-group">
+        <app-govuk-currency-input
+          label="Annual Climate Change Levy amount"
+          controlName="annualClimateChangeLevyAmount"
+          [validationMessages]="validationMessages.annualClimateChangeLevyAmount"
+        ></app-govuk-currency-input>
+      </div>
+      <div class="govuk-form-group">
+        <app-govuk-currency-input
+          label="Annual Carbon Price Support amount"
+          controlName="annualCarbonPriceSupportAmount"
+          [validationMessages]="validationMessages.annualCarbonPriceSupportAmount"
+        ></app-govuk-currency-input>
+      </div>
+      <div class="govuk-form-group">
+        <app-govuk-currency-input
+          label="Annual Renewable Heat Incentive uplift amount (optional)"
+          controlName="annualRenewableHeatIncentiveUpliftAmount"
+          [validationMessages]="validationMessages.annualRenewableHeatIncentiveUpliftAmount"
+        ></app-govuk-currency-input>
+      </div>
+      <div class="govuk-form-group">
+        <app-govuk-currency-input
+          label="Annual Renewables Obligation Certificate amount (optional)"
+          controlName="annualRenewablesObligationCertificateAmount"
+          [validationMessages]="validationMessages.annualRenewablesObligationCertificateAmount"
+        ></app-govuk-currency-input>
+      </div>
+      <div class="govuk-form-group">
+        <app-govuk-currency-input
+          label="Annual Contracts for Difference amount (optional)"
+          controlName="annualContractsForDifferenceAmount"
+          [validationMessages]="validationMessages.annualContractsForDifferenceAmount"
+        ></app-govuk-currency-input>
+      </div>
+      <div class="govuk-form-group">
+        <app-govuk-currency-input
+          label="Annual Business Rates Reduction amount (optional)"
+          controlName="annualBusinessRatesReductionAmount"
+          [validationMessages]="validationMessages.annualBusinessRatesReductionAmount"
+        ></app-govuk-currency-input>
+      </div>
+      <button
+        type="submit"
+        class="govuk-button"
+        data-module="govuk-button"
+        (click)="onContinue()">
+        Continue
+      </button>
+    </form>
+  </div>
+</div>

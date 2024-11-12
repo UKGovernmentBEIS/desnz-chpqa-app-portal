@@ -1,0 +1,24 @@
+@switch (displayBody) {
+  @case (POWER_EFFICIENCY_CONDITIONS_MET) {
+    <p class="govuk-body">
+      A scheme must meet or exceed the relevant power efficiency threshold
+      for all fuel inputs to qualify as Good Quality CHP.
+    </p>
+    <p class="govuk-body govuk-!-font-weight-bold">
+      Power efficiency threshold for this scheme
+    </p>
+  } @case (POWER_EFFICIENCY_CONDITIONS_NOT_MET) {
+    <p class="govuk-body">
+      A scheme must meet or exceed the relevant power efficiency threshold
+      for all fuel inputs to qualify as Good Quality CHP.
+    </p>
+    <p class="govuk-body">
+      As you have not met this threshold, the scheme might miss out on
+      certain financial incentives that are designed to encourage energy
+      efficiency.
+    </p>
+    <p class="govuk-body govuk-!-font-weight-bold">
+      Power efficiency threshold for this scheme
+    </p>
+  }
+}
