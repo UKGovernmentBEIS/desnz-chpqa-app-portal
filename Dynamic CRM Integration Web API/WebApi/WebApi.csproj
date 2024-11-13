@@ -1,0 +1,70 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <InvariantGlobalization>true</InvariantGlobalization>
+	<GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="wwwroot\**" />
+    <Content Remove="wwwroot\**" />
+    <EmbeddedResource Remove="wwwroot\**" />
+    <None Remove="wwwroot\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Controllers\AddFile.cs" />
+    <Compile Remove="Controllers\AssignSecondAssessorOrRp_rafa.cs" />
+    <Compile Remove="Controllers\CreateCase.cs" />
+    <Compile Remove="Controllers\GetAssessorSubmissionGroups.cs" />
+    <Compile Remove="Controllers\GetCases.cs" />
+    <Compile Remove="Controllers\GetCasesSubmissions .cs" />
+    <Compile Remove="Controllers\GetContactById.cs" />
+    <Compile Remove="Controllers\GetContacts.cs" />
+    <Compile Remove="Controllers\GetEngines.cs" />
+    <Compile Remove="Controllers\GetManufacturers.cs" />
+    <Compile Remove="Controllers\GetModels.cs" />
+    <Compile Remove="Controllers\GetOrganisationById.cs" />
+    <Compile Remove="Controllers\GetOrganisationByRegNum.cs" />
+    <Compile Remove="Controllers\GetOrganisations.cs" />
+    <Compile Remove="Controllers\GetSchemebyRefNum.cs" />
+    <Compile Remove="Controllers\GetSchemebyRpEmail.cs" />
+    <Compile Remove="Controllers\GetSchemes.cs" />
+    <Compile Remove="Controllers\GetSectionForReview.cs" />
+    <Compile Remove="Controllers\GetSubmissionDetails.cs" />
+    <Compile Remove="Controllers\GetSubmissions.cs" />
+    <Compile Remove="Controllers\GetSubmission_old.cs" />
+    <Compile Remove="Controllers\UpdateSubmissionEconSector.cs" />
+    <Compile Remove="Controllers\UpdStatusAndQueriesforAssessor.cs" />
+    <Compile Remove="Controllers\UpdSubmCalcEfficAndQI.cs" />
+    <Compile Remove="Model\Case.cs" />
+    <Compile Remove="Services\SendEmailTA2_rafa.cs" />
+    <Compile Remove="Services\SendEmail_rafa.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ClosedXML" Version="0.104.1" />
+    <PackageReference Include="GovukNotify" Version="7.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.10" />
+    <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks" Version="8.0.10" />
+    <PackageReference Include="Microsoft.IdentityModel.Protocols.OpenIdConnect" Version="8.2.0" />
+    <PackageReference Include="Microsoft.PowerPlatform.Dataverse.Client" Version="1.1.32" />
+    <PackageReference Include="nClam" Version="9.0.0" />
+    <PackageReference Include="RestSharp" Version="112.1.0" />
+    <PackageReference Include="Serilog" Version="4.1.0" />
+    <PackageReference Include="Serilog.AspNetCore" Version="8.0.3" />
+    <PackageReference Include="Serilog.Sinks.File" Version="6.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.9.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.9.0" />
+    <PackageReference Include="System.Formats.Asn1" Version="8.0.1" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.2.0" />
+    <PackageReference Include="System.IO.Packaging" Version="8.0.1" />
+    <PackageReference Include="System.Security.Cryptography.Pkcs" Version="8.0.1" />
+    <PackageReference Include="System.Text.Json" Version="8.0.5" />
+    <PackageReference Include="System.Text.RegularExpressions" Version="4.3.1" />
+  </ItemGroup>
+
+</Project>
