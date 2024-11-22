@@ -1,0 +1,11 @@
+.vs/
+.vscode/
+Dynamic CRM Code/
+Dynamic CRM Data Migration/
+node_modules/
+Performance Testing/
+azure-pipelines.yml
+github-sync-pipeline.yml
+package-lock.json
+.env
+chpqa-keycloak/.env
